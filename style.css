@@ -1,0 +1,145 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  padding: 0.5em;
+  background: #aaaaaa;
+  font-family: Calibri, 'Trebuchet MS', Trebuchet, 'Lucida Sans Unicode', helvetica, 'Lucida Grande', 'Lucida Sans', Arial, 'DejaVu Sans', sans-serif;
+}
+
+header#top {
+  background: #dddddd;
+}
+
+h1 {
+  padding: 0.25em;
+}
+
+h2 {
+  padding: 0.1em;
+  padding-left: 1em;
+  background: #cccccc;
+}
+
+article {
+  background: #eeeeee;
+}
+
+p {
+  padding: 0.25em;
+}
+
+.formrow {
+  border-bottom: 1px dashed #cccccc;
+  margin: 1.5em;
+}
+
+.label {
+  float: left;
+  width: 100px;
+  font-weight: bold;
+  color: #777777;
+  padding: 1em;
+}
+
+.required label {
+  color: #990000;
+}
+
+.required .input:before {
+  color: #990000;
+  content: "*";
+}
+
+input:focus:invalid {
+  border: 1px solid red;
+}
+
+.input {
+  float: left;
+  margin-top: 0.8em;
+  display: block;
+}
+
+.desc {
+  clear: both;
+  padding-left: 4em;
+  padding-right: 2em;
+  padding-bottom: 1.5em;
+  font-size: 0.8em;
+  color: #777777;
+}
+
+.datetimeformat-label {
+  font-size: 0.6em;
+}
+
+input[type="datetime-local"] {
+  background: none;
+  border: 2px dotted #cccccc;
+  width: 12em;
+}
+
+input[type="number"].price {
+  width: 5em;
+}
+
+.inputlabel {
+  font-size: 0.8em;
+}
+
+.currencyinput:before {
+  color: #007700;
+  content: "$";
+}
+
+.distanceinput:after {
+  content: "mi";
+}
+
+.liquidinput:after {
+  content: "gal";
+}
+
+input[type="number"].mileage {
+  width: 8em;
+}
+
+.location {
+  width: 20em;
+}
+
+.ppg {
+  
+}
+
+.grade {
+  
+}
+
+.gals {
+  width: 6em;
+}
+
+.pumpprice {
+  
+}
+
+.notes {
+  width: 100%;
+}
+
+.submit {
+  background: #cccccc;
+  padding: 1em;
+  text-align: right;
+}
+
+.link-button {
+  color: blue;
+  text-decoration: underline;
+  font-size: 0.8em;
+  cursor: pointer;
+}
