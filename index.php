@@ -382,6 +382,19 @@ else {
           // Submit the form input
           echo "I'll submitya";
           print_r($_POST);
+          
+          //TODO: actually clean the values. Could probably put it in the 
+          // case above...
+          $cleanVals = array();
+          $cleanVals['datetime'] = $_POST['datetime'];
+          $cleanVals['mi'] = $_POST['mi'];
+          $cleanVals['loc'] = $_POST['loc'];
+          $cleanVals['ppg'] = $_POST['ppg'];
+          $cleanVals['gals'] = $_POST['gals'];
+          $cleanVals['pumpprice'] = $_POST['pumpprice'];
+          $cleanVals['notes'] = htmlspecialchars($_POST['notes']);
+          
+          $doc->insert($cleanVals);
         }
       }
     }

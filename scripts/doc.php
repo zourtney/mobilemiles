@@ -72,6 +72,10 @@ class GlDoc {
     return $this->app->getService()->getWorksheetEntry($query);
   }
   
+  public function insert($vals) {
+    echo "<h3>I can't let you do that.</h3>";
+  }
+  
   public function id() {
     return $this->id;
   }
