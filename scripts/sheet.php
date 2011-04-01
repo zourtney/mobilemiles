@@ -8,8 +8,8 @@
  */
 
 class GlSheet {
-  protected $doc; /* GlDoc */
-  public $sheet;  /* Zend_Gdata_Spreadsheets_WorksheetEntry */
+  protected $doc;   /* GlDoc */
+  protected $sheet; /* Zend_Gdata_Spreadsheets_WorksheetEntry */
   
   public function __construct($d, $s) {
     if (! isset($d) || ! ($d instanceof GlDoc)) {
@@ -40,7 +40,7 @@ class GlDataSheet extends GlSheet {
     parent::__construct($d, $s);
     
     if ($this->sheet->title->text !== GlDataSheet::SHEET_TITLE) {
-      throw new Exception('GlDataSheet::__construct(): wrong sheet \'' . this->sheet->title->text . '\'');
+      throw new Exception('GlDataSheet::__construct(): wrong sheet ');
     }
   }
   
@@ -76,7 +76,8 @@ class GlCalcSheet extends GlSheet {
     parent::__construct($d, $s);
     
     if ($this->sheet->title->text !== GlCalcSheet::SHEET_TITLE) {
-      throw new Exception('GlCalcSheet::__construct(): wrong sheet \'' . this->sheet->title->text . '\'');
+      throw new Exception('GlCalcSheet::__construct(): wrong sheet');
+      // "'" . this->sheet->title->text . "'"
     }
   }
   

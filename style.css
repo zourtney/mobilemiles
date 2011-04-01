@@ -53,8 +53,41 @@ p {
   content: "*";
 }
 
+.invalid {
+  background: #ffbbbb;
+}
+
+.errornotice {
+  background: #ffbbbb;
+  margin: 1em 4em 1em 4em;
+  padding: 2em;
+  border: 1px dashed #770000;
+}
+
+input, textarea {
+  font-family: Arial;
+}
+
 input:focus:invalid {
   border: 1px solid red;
+}
+
+input[type="datetime-local"] {
+  background: none;
+  border: 2px dotted #cccccc;
+  width: 12em;
+}
+
+input[type="number"].price {
+  width: 5.5em;
+}
+
+.inputlabel {
+  font-size: 0.8em;
+}
+
+.inputlabel input {
+  font-size: 1em;
 }
 
 .input {
@@ -74,20 +107,8 @@ input:focus:invalid {
 
 .datetimeformat-label {
   font-size: 0.6em;
-}
-
-input[type="datetime-local"] {
-  background: none;
-  border: 2px dotted #cccccc;
-  width: 12em;
-}
-
-input[type="number"].price {
-  width: 5em;
-}
-
-.inputlabel {
-  font-size: 0.8em;
+  color: #777777;
+  padding-left: 3em;
 }
 
 .currencyinput:before {
