@@ -55,7 +55,7 @@ require_once 'scripts/sheet.php';
     // Set focus to the mileage box
     $(document).bind('autofocus_ready', function() {
       if (! ('autofocus' in document.createElement('input'))) {
-        $('#mi').focus();
+        $('#mileage').focus();
       }
     });
     
@@ -74,6 +74,8 @@ require_once 'scripts/sheet.php';
         // Set default date/time
         $('#datetime').val(getCurrentTimeString());
       });
+      
+      //TODO: clear button which works on all forms (get parent form ID, etc)
     });
   </script>
 </head>
@@ -109,7 +111,7 @@ function printForm($doc, $errors) {
         }
         else {
           ?>
-          <p>You have <?php echo $numErrors; ?> in your input. Please correct these errors, then press the 'Submit' button.</p>
+          <p>You have <?php echo $numErrors; ?> errors in your input. Please correct these errors, then press the 'Submit' button.</p>
           <?php
             /*echo '<ul>';
             foreach ($errors as $error) {
@@ -133,7 +135,7 @@ function printForm($doc, $errors) {
       </div>
       <div class="input">
         <span class="inputlabel">
-          <input type="datetime-local" name="datetime" id="datetime" form="frmNew" class="datetime" required="required" aria-required="true" value="<?php echo date('Y-m-d H:i:s'); ?>" />
+          <input type="datetime-local" name="datetime" id="datetime" form="frmNew" class="datetime" required="required" aria-required="true" value="<?php echo date(GlApp::DATE_FORMAT); ?>" />
          <button id="btnNow">Now</button>
         </span>
         <br />
@@ -144,13 +146,13 @@ function printForm($doc, $errors) {
     </div>
     
     <!-- Mileage -->
-    <div class="formrow required<?php if (isset($errors['mi'])) echo " invalid";?>">
+    <div class="formrow required<?php if (isset($errors['mileage'])) echo " invalid";?>">
       <div class="label">
-        <label for="mi">Mileage</label>
+        <label for="mileage">Mileage</label>
       </div>
       <div class="input">
         <span class="distanceinput inputlabel">
-          <input type="number" name="mi" id="mi" form="frmNew"  class="mileage" maxlength="6" required="required" min="0" max="1000000" step="1" placeholder="Current mileage" autofocus <?php if (isset($_POST['mi'])) echo 'value="' . $_POST['mi'] . '"'; ?> />
+          <input type="number" name="mileage" id="mileage" form="frmNew"  class="mileage" maxlength="6" required="required" min="0" max="1000000" step="1" placeholder="Current mileage" autofocus <?php if (isset($_POST['mileage'])) echo 'value="' . $_POST['mileage'] . '"'; ?> />
           <script>$(document).trigger('autofocus_ready');</script>
         </span>
       </div>
@@ -159,13 +161,13 @@ function printForm($doc, $errors) {
     </div>
     
     <!-- Location -->
-    <div class="formrow<?php if (isset($errors['loc'])) echo " invalid";?>">
+    <div class="formrow<?php if (isset($errors['location'])) echo " invalid";?>">
       <div class="label">
-        <label for="loc">Location</label>
+        <label for="location">Location</label>
       </div>
       <div class="input">
         <span class="inputlabel">
-          <input type="text" name="loc" id="loc" form="frmNew" class="location" placeholder="Current location" <?php if (isset($_POST['loc'])) echo 'value="' . $_POST['loc'] . '"'; ?> />
+          <input type="text" name="location" id="location" form="frmNew" class="location" placeholder="Current location" <?php if (isset($_POST['location'])) echo 'value="' . $_POST['location'] . '"'; ?> />
         </span>
       </div>
       <div class="desc"><p>The location of the fillup. This will probably be the name of the gas station, but it doesn't really matter.</p>
@@ -173,13 +175,13 @@ function printForm($doc, $errors) {
     </div>
     
     <!-- Price per Gallon -->
-    <div class="formrow required<?php if (isset($errors['ppg'])) echo " invalid";?>">
+    <div class="formrow required<?php if (isset($errors['pricepergallon'])) echo " invalid";?>">
       <div class="label">
-        <label for="ppg">Price per Gallon</label>
+        <label for="pricepergallon">Price per Gallon</label>
       </div>
       <div class="input">
         <span class="currencyinput inputlabel">
-          <input type="number" name="ppg" id="ppg" form="frmNew"  maxlength="5" class="price ppg" required="required" min="0.0" max="9.999" step="0.01" placeholder="Price/gallon" <?php if (isset($_POST['ppg'])) echo 'value="' . $_POST['ppg'] . '"'; ?> />
+          <input type="number" name="pricepergallon" id="pricepergallon" form="frmNew"  maxlength="5" class="price pricepergallon" required="required" min="0.0" max="9.999" step="0.01" placeholder="Price/gallon" <?php if (isset($_POST['pricepergallon'])) echo 'value="' . $_POST['pricepergallon'] . '"'; ?> />
         </span>
       </div>
       <div class="desc"><p>The price of fuel per gallon. Don't forget the extra <math><mfrac><mn>9</mn><mn>10</mn></mfrac></math>!</p>
@@ -187,18 +189,18 @@ function printForm($doc, $errors) {
     </div>
     
     <!-- Gallons -->
-    <div class="formrow required<?php if (isset($errors['gals'])) echo " invalid";?>">
+    <div class="formrow required<?php if (isset($errors['gallons'])) echo " invalid";?>">
       <div class="label">
-        <label for="gals">Gallons</label>
+        <label for="gallons">Gallons</label>
       </div>
       <div class="input">
         <span class="liquidinput inputlabel">
-          <input type="number" name="gals" id="gals" form="frmNew"  maxlength="6" class="gals" required="required" min="0" max="99.999" step="0.001" placeholder="# of gallons" <?php if (isset($_POST['gals'])) echo 'value="' . $_POST['gals'] . '"'; ?> />
+          <input type="number" name="gallons" id="gallons" form="frmNew"  maxlength="6" class="gallons" required="required" min="0" max="99.999" step="0.001" placeholder="# of gallons" <?php if (isset($_POST['gallons'])) echo 'value="' . $_POST['gallons'] . '"'; ?> />
         </span>
-        <select name="grade" id="grade" class="grade">
-          <option name="reg" id="reg">Regular Unleaded</option>
-          <option name="plus" id="plus">Plus</option>
-          <option name="sup" id="sup">Supreme</option>
+        <select name="grade" id="grade" form="frmNew" class="grade">
+          <option name="reg" id="reg" value="0">Regular Unleaded</option>
+          <option name="plus" id="plus" value="1">Plus</option>
+          <option name="sup" id="sup" value="2">Supreme</option>
         </select>
       </div>
       <div class="desc"><p>The number of gallons added during the fillup. For the most meaningful statistical results, always fill the tank completely.</p>
@@ -249,23 +251,79 @@ function printForm($doc, $errors) {
 }
 
 /**
+ * Prints the message shown after a successful entry
+ */
+function printStats($doc, $message = null) {
+?>
+<header id="top">
+  <hgroup>
+    <h1><?php //echo $doc->title(); ?></h1>
+    <h2>Stats</h2>
+  </hgroup>
+</header>
+<article>
+  <?php
+  //$message = "testing the message box";
+  if ($message != null) {
+    ?>
+    <p>&nbsp;</p>
+    <div class="message">
+    <?php
+      echo $message;
+    ?>
+    </div>
+    <?php
+  }
+  ?>
+  
+  <p>At the gas station now? Add a <a href="<?php echo $doc->newUrl(); ?>">new entry</a> to the log.
+  </p>
+  
+  <?php
+    $stats = $doc->stats();
+    
+    //IDEA: screw the words. Just put the number and a big up or down arrow to
+    // indicate trends based on 2 month, 6 month, and all-time values. Make
+    // varying shades of green and red.
+  ?>
+  
+  <fieldset class="stats">
+    <legend>Stats & Trends</legend>
+    
+    <div class="statrow">
+      <div class="value">
+        <p>You average <span class="mpg"><?php echo round($stats['all']['mpg'], 2); ?></span> mpg.</p>
+      </div>
+      <div class="desc">
+      </div>
+    </div>
+  <?php
+    
+    //print_r($doc->stats());
+  ?>
+  </fieldset>
+</arcticle>
+<?php
+}
+
+/**
  * Prints out the options for the requested document
  */
-function printDocOptions($doc) {
+/*function printDocOptions($doc) {
 ?>
 <header id="top">
   <hgroup>
     <h1><?php echo $doc->title(); ?></h1>
     <h2>Options</h2>
   </hgroup>
-  <article>
-    <ul>
-      <li><a href="<?php echo $doc->newUrl(); ?>">Add Entry</a></li>
-    </ul>
-  </article>
 </header>
+<article>
+  <ul>
+    <li><a href="<?php echo $doc->newUrl(); ?>">Add Entry</a></li>
+  </ul>
+</article>
 <?php
-}
+}*/
 
 /**
  * Prints out the appropriate error HTML when the document requested via GET
@@ -289,17 +347,76 @@ function printDocLoadFailed() {
 /**
  * Prints the list of available documents
  */
-function printDocList($docs) {
+function printDocList($app, $docs) {
 ?>
-<ul>
+<header id="top">
+  <hgroup>
+    <h1>Available Documents</h1>
+    <?php /*<h2>Create New or Select Existing</h2>*/ ?>
+    <h2>Select an existing gas log</h2>
+  </hgroup>
+</header>
+<article>
+  <?php
+  /*<p>You can create a <a href="<?php echo $app->newDocUrl(); ?>">new document</a>, or select from one of the existing documents listed below.
+  </p>
+  */
+  ?>
+  <p>Select from the list of existing gas logs. If you do not have any, create a copy of the master document and store it in your Google Docs.
+  </p>
+  <ul>
 <?php
   foreach ($docs as $doc) {
     echo '<li><a href="' . $doc->url() . '">' . $doc->title() . '</a></li>';
   }
 ?>
-</ul>
+  </ul>
+</article>
 <?php
 }
+
+/**
+ * Prints the form which allows you to enter the name of a new document.
+ */
+/*function printNewDocForm($app, $errors) {
+?>
+<header id="top">
+  <hgroup>
+    <h1>New Document</h1>
+    <h2>Enter the information about your new gas log</h2>
+  </hgroup>
+</header>
+<article>
+  <fieldset>
+    <!-- Mileage -->
+    <div class="formrow required<?php if (isset($errors['docname'])) echo " invalid";?>">
+      <div class="label">
+        <label for="mi">Vehicle Name</label>
+      </div>
+      <div class="input">
+        <span class="inputlabel">
+          <input type="text" name="docname" id="docname" form="frmNewDoc"  class="docname" required="required" placeholder="General Lee" autofocus  <?php if (isset($_POST['docname'])) echo 'value="' . $_POST['docname'] . '"'; ?> />
+          <script>$(document).trigger('autofocus_ready');</script>
+        </span>
+      </div>
+      <div class="desc"><p>Enter a uniquely identifying name for the vehicle. This will become part of the spreadsheet filename. For example, entering <code>General Lee</code> will result in the spreadsheet name <code>General Lee Gas Log</code>.</p>
+      </div>
+    </div>
+    <form id="frmNewDoc" method="post" action="<?php echo $app->newDocFormUrl(); ?>">
+    <div class="formrow">
+      <div class="submit">
+        <span id="btnClear" class="link-button">Clear</span>
+        &nbsp;
+        <input type="submit" name="submit" value="Submit" />
+      </div>
+    </div>
+  </fieldset>
+</article>
+<?php
+}
+*/
+
+
 
 /**
  * Entry point
@@ -332,17 +449,43 @@ else {
   $mode = $app->getMode();
   echo "mode=$mode";
   
-  if ($mode == GlApp::MODE_DOCONLY ||
-      $mode == GlApp::MODE_NEW || 
-      $mode == GlApp::MODE_SUBMITNEW
+  /*if ($mode == GlApp::MODE_NEWDOC ||
+      $mode == GlApp::MODE_SUBMITNEWDOC
      ) {
+    // Creating a new document (or doing server-side input verification)
+    $errors = array();
+    
+    if ($mode == GlApp::MODE_SUBMITNEWDOC) {
+      // Not really anything to validate (yet...)
+      if (! isset($_POST['docname']) || strlen($_POST['docname']) < 1) {
+        $errors['docname'] = true;
+      }
+    }
+    
+    if ($mode == GlApp::MODE_NEWDOC || count($errors) > 0) {
+      // We are creating a new spreadsheet
+      printNewDocForm($app, $errors);
+    }
+    else {
+      // Ready to submit...
+      $cleanVals = array();
+      
+      $cleanVals['docname'] = htmlspecialchars($_POST['docname']);
+      echo "Creating new document " . $cleanVals['docname'];
+    }
+  }
+  else*/
+  if ($mode == GlApp::MODE_DOCONLY ||
+           $mode == GlApp::MODE_NEW || 
+           $mode == GlApp::MODE_SUBMITNEW
+          ) {
     // Try to open and display the document specified in the GET param
     if ($app->open()) {
       $doc = $app->getDoc();
       
       if ($mode == GlApp::MODE_DOCONLY) {        
         // Shows the options available for the requested document
-        printDocOptions($doc);
+        printStats($doc);
       }
       else {
         $errors = array();
@@ -353,16 +496,22 @@ else {
             $errors['datetime'] = true;
           }
           
-          if (! isset($_POST['mi']) || ! is_numeric($_POST['mi'])) {
-            $errors['mi'] = true;
+          if (! isset($_POST['mileage']) || ! is_numeric($_POST['mileage'])) {
+            $errors['mileage'] = true;
           }
           
-          if (! isset($_POST['ppg']) || ! is_numeric($_POST['ppg'])) {
-            $errors['ppg'] = true;
+          if (! isset($_POST['pricepergallon']) || ! is_numeric($_POST['pricepergallon'])) {
+            $errors['pricepergallon'] = true;
           }
           
-          if (! isset($_POST['gals']) || ! is_numeric($_POST['gals'])) {
-            $errors['gals'] = true;
+          if (! isset($_POST['gallons']) || ! is_numeric($_POST['gallons'])) {
+            $errors['gallons'] = true;
+          }
+          
+          if (! isset($_POST['grade']) || 
+              ($_POST['grade'] != 0  && $_POST['grade'] != 1 && $_POST['grade'] != 2)
+             ) {
+            $errors['grade'] = true;
           }
           
           if (isset($_POST['pumpprice']) && $_POST['pumpprice'] != '' && ! is_numeric($_POST['pumpprice'])) {
@@ -380,21 +529,28 @@ else {
         }
         else {
           // Submit the form input
-          echo "I'll submitya";
-          print_r($_POST);
           
           //TODO: actually clean the values. Could probably put it in the 
           // case above...
+          //
+          // Also, this is probably overkill when we could just copy the
+          // entirety of $_POST...not that we can guarantee people won't
+          // jam malicious data into it.
           $cleanVals = array();
-          $cleanVals['datetime'] = $_POST['datetime'];
-          $cleanVals['mi'] = $_POST['mi'];
-          $cleanVals['loc'] = $_POST['loc'];
-          $cleanVals['ppg'] = $_POST['ppg'];
-          $cleanVals['gals'] = $_POST['gals'];
+          $cleanVals['datetime'] = date(GlApp::DATE_FORMAT, strtotime($_POST['datetime']));
+          $cleanVals['mileage'] = $_POST['mileage'];
+          $cleanVals['location'] = $_POST['location'];
+          $cleanVals['pricepergallon'] = $_POST['pricepergallon'];
+          $cleanVals['gallons'] = $_POST['gallons'];
+          $cleanVals['grade'] = $_POST['grade'];
           $cleanVals['pumpprice'] = $_POST['pumpprice'];
           $cleanVals['notes'] = htmlspecialchars($_POST['notes']);
           
           $doc->insert($cleanVals);
+          
+          // Print confirmation page
+          $message = '<p>Your fill-up information has been successfully recorded. If you\'re interested, take a peek at your stats below. If not, just close this window and drive safely!</p>';
+          printStats($doc, $message);
         }
       }
     }
@@ -406,245 +562,10 @@ else {
   else {
     // No document specified in GET param. Show list of available docs
     $docs = $app->getAvailable();
-    printDocList($docs);
+    printDocList($app, $docs);
   }
 }
 
-
-//TODO: login using userid? How does the current thing do it?
-/*if (! isset($_SESSION['sessionToken']) && ! isset($_GET['token'])) {
-  requestUserLogin('Please login to your Google Account.');
-}
-else {
-  $client = getAuthSubHttpClient();
-  //TOOD: um, where did my check go?
-  
-  $service = new Zend_Gdata_Spreadsheets($client);
-  
-  if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    //TODO: make session variable
-    // --> if different from session variable, need to start over
-    //     regardless of what's in GET or POST
-    
-    // Find the document being requsted
-    try {
-      $query = new Zend_Gdata_Spreadsheets_DocumentQuery();
-      $query->setSpreadsheetKey($id);
-      $doc = $service->getSpreadsheetEntry($query);
-    }
-    catch (Zend_Gdata_App_Exception $e) {
-      ?>
-      <p>Error: Could not find document <strong><?php echo $id; ?></strong></p> 
-      <?php
-      echo $e;
-      exit;
-    }
-    
-    // Find the raw data input sheet
-    try {
-      $query = new Zend_Gdata_Spreadsheets_DocumentQuery();
-      $query->setSpreadsheetKey($id);
-      $query->setTitle(DATA_SHEET);
-      $sheet = $service->getWorksheetEntry($query);
-    }
-    catch (Zend_Gdata_App_Exception $e) {
-      ?>
-      <p>Error: Could not find worksheet <strong><?php echo DATA_SHEET; ?></strong></p> 
-      <?php
-      echo $e;
-      exit;
-    }
-    
-    // Define behavior based on "action" parameter
-    if (isset($_GET['action']) && $_GET['action'] == 'new') {
-      
-      if (count($_POST) > 0) {
-        $errors = array();
-        if (! isset($_POST['datetime']) || strtotime($_POST['datetime']) === FALSE) {
-          $errors['datetime'] = true;
-        }
-        
-        if (! isset($_POST['mi']) || ! is_numeric($_POST['mi'])) {
-          $errors['mi'] = true;
-        }
-        
-        if (! isset($_POST['ppg']) || ! is_numeric($_POST['ppg'])) {
-          $errors['ppg'] = true;
-        }
-        
-        if (! isset($_POST['gals']) || ! is_numeric($_POST['gals'])) {
-          $errors['gals'] = true;
-        }
-        
-        print_r($_POST);
-        echo "You have " . count($errors) . " errors";
-        print_r($errors);
-      }
-      else {
-      ?>
-      <header id="top">
-        <hgroup>
-          <h1><?php echo $doc->title->text; ?></h1>
-          <h2>New Entry</h2>
-        </hgroup>
-      </header>
-      <article>
-        <form method="post" action="<?php echo BASE_URL; ?>?id=<?php echo $id; ?>&action=new">
-          <fieldset>
-            <!-- Date and Time -->
-            <div class="formrow required">
-              <div class="label">
-                <label for="datetime">Date/Time</label>
-                <span class="datetimeformat-label">(YYYY-MM-DD)</span>
-              </div>
-              <div class="input">
-                <span class="inputlabel">
-                  <input type="datetime-local" name="datetime" id="datetime" class="datetime" required="required" aria-required="true" />
-                 <button id="btnNow">Now</button>
-                </span>
-              </div>
-              <div class="desc"><p>The date and time of the fillup. A value should be automatically filled in for you. However, if you need to change it, do so in the field above.</p>
-              </div>
-            </div>
-            
-            <!-- Mileage -->
-            <div class="formrow required">
-              <div class="label">
-                <label for="mi">Mileage</label>
-              </div>
-              <div class="input">
-                <span class="distanceinput inputlabel">
-                  <input type="number" name="mi" id="mi" class="mileage" maxlength="6" required="required" min="0" max="1000000" step="1" placeholder="Current mileage" autofocus />
-                  <script>$(document).trigger('autofocus_ready');</script>
-                </span>
-              </div>
-              <div class="desc"><p>The mileage at the time of the fillup. Round to the nearest mile. Do not use puncuation.</p>
-              </div>
-            </div>
-            
-            <!-- Location -->
-            <div class="formrow">
-              <div class="label">
-                <label for="loc">Location</label>
-              </div>
-              <div class="input">
-                <span class="inputlabel">
-                  <input type="text" name="loc" id="loc" class="location" placeholder="Current location" />
-                </span>
-              </div>
-              <div class="desc"><p>The location of the fillup. This will probably be the name of the gas station, but it doesn't really matter.</p>
-              </div>
-            </div>
-            
-            <!-- Price per Gallon -->
-            <div class="formrow required">
-              <div class="label">
-                <label for="ppg">Price per Gallon</label>
-              </div>
-              <div class="input">
-                <span class="currencyinput inputlabel">
-                  <input type="number" name="ppg" id="ppg" maxlength="5" class="price ppg" required="required" min="0.0" max="9.999" step="0.01" placeholder="Price/gallon" />
-                </span>
-              </div>
-              <div class="desc"><p>The price of fuel per gallon. Don't forget the extra <math><mfrac><mn>9</mn><mn>10</mn></mfrac></math>!</p>
-              </div>
-            </div>
-            
-            <!-- Gallons -->
-            <div class="formrow required">
-              <div class="label">
-                <label for="gals">Gallons</label>
-              </div>
-              <div class="input">
-                <span class="liquidinput inputlabel">
-                  <input type="number" name="gals" id="gals" maxlength="6" class="gals" required="required" min="0" max="99.999" step="0.001" placeholder="# of gallons"/>
-                </span>
-                <select name="grade" id="grade" class="grade">
-                  <option name="reg" id="reg">Regular Unleaded</option>
-                  <option name="plus" id="plus">Plus</option>
-                  <option name="sup" id="sup">Supreme</option>
-                </select>
-              </div>
-              <div class="desc"><p>The number of gallons added during the fillup. For the most meaningful statistical results, always fill the tank completely.</p>
-              </div>
-            </div>
-            
-            <!-- Pump Price -->
-            <div class="formrow">
-              <div class="label">
-                <label for="pumpprice">Pump Price</label>
-              </div>
-              <div class="input">
-                  <span class="currencyinput inputlabel">
-                    <input type="number" name="pumpprice" id="pumpprice" maxlength="6" class="price pumpprice" min="0" max="999.99" step="0.01" placeholder="Price paid" />
-                  </span>
-              </div>
-              <div class="desc">The total price paid at the pump. Recording this number is not necessary since it ought to be extremely close to the calculated <math><mi>gallons</mi><mo>*</mo><mi>price_per_gallon</mi></math>. For those tin-foil hat days, it may be an interesting fact to track.
-              </div>
-            </div>
-            
-            <!-- Notes -->
-            <div class="formrow">
-              <div class="label">
-                <label for="notes">Notes</label>
-              </div>
-              <div class="input">
-                <span class="inputlabel">
-                  <textarea name="notes" id="notes" class="notes" placeholder="Any additional notes"></textarea>
-                </span>
-              </div>
-              <div class="desc"><p>Any additional notes you wish to put here. This could be justification for terrible gas mileage, the primary mode of driving during the past tank of gas, etc. Anything you desire!</p>
-              </div>
-            </div>
-            
-            <!-- Form Buttons -->
-            <div class="formrow">
-              <div class="submit">
-                <span id="btnClear" class="link-button">Clear</span>
-                &nbsp;
-                <input type="submit" name="submit" value="Submit" />
-              </div>
-            </div>
-          </fieldset>
-        </form>
-      </article>
-      <?php
-      }
-    }
-    else {
-      ?>
-      <header id="top">
-        <hgroup>
-          <h1><?php echo $doc->title->text; ?></h1>
-          <h2><?php echo $sheet->title->text; ?></h2>
-        </hgroup>
-      </header>
-      
-      <p>This will be improved in the future to show historical data.</p>
-      <p>For now, just create a <a href="<?php echo BASE_URL . '?action=new&id=' . $id; ?>">new entry</a>.</p>
-      <?php
-    }
-  }
-  else {
-    ?>
-    <h1>Gas Logs</h1>
-    <ul>
-  <?php
-    $docs = $service->getSpreadsheetFeed();
-    
-    foreach ($docs as $doc) {
-      if (stripos($doc->title->text, 'gas log') !== FALSE) {
-        $id = explode('/', $doc->id->text);
-        $url = BASE_URL . '?id=' . $id[5];
-        $title = $doc->title->text;
-        echo "<li><a href=\"$url\">$title</a></li>\n";
-        //echo '<pre>' . print_r($doc, TRUE) . '</pre>';
-      }
-    }
-    echo "</ul>";
-  }
-}*/
 // ****************************************************************************
 ?>
 </body>

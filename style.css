@@ -132,7 +132,7 @@ input[type="number"].mileage {
   width: 20em;
 }
 
-.ppg {
+.pricepergallon {
   
 }
 
@@ -140,7 +140,7 @@ input[type="number"].mileage {
   
 }
 
-.gals {
+.gallons {
   width: 6em;
 }
 
@@ -163,4 +163,37 @@ input[type="number"].mileage {
   text-decoration: underline;
   font-size: 0.8em;
   cursor: pointer;
+}
+
+.docname {
+}
+
+.message {
+  background: #fffdcc;
+  margin: 1em 4em 1em 4em;
+  padding: 2em;
+  border: 1px dashed #ffdf01;
+}
+
+fieldset.stats {
+  margin: 1.5em;
+  background: white;
+  border: 1px solid #777777;
+}
+
+fieldset.stats legend {
+  font-size: 1.33em;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+  padding: 0.25em;
+  border: 1px solid #777777;
+  background: #eeeeee;
+}
+
+div.statrow {
+  margin: 1em;
+}
+
+span.mpg {
+  color: #007700;
 }

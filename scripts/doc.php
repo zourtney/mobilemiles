@@ -12,18 +12,19 @@ class GlDoc {
   protected $doc;       /* Zend_Gdata_SpreadsheetEntry */
   protected $id;        /* string */
   protected $dataSheet; /* GlDataSheet */
+  protected $statSheet; /* GlStatSheet */
   
-  public static function createNew() {
+  /*public static function createNew() {
     //TODO: figure out how to create a document with all of the worksheets we
     // want. Append GlDataSheet::createNew(), and others. This will be the way 
     // to create a new "log"
     $dataSheet = GlDataSheet::createNew();
-    $calcSheet = GlCalcSheet::createNew();
+    $calcSheet = GlStatSheet::createNew();
     
     //TODO: append to new spreadsheet
     
     return null;
-  }
+  }*/
   
   public function __construct($app, $id, $getSheets = true) {
     if (! $app instanceof GlApp) {
@@ -61,8 +62,12 @@ class GlDoc {
       $this->dataSheet = new GlDataSheet($this, $this->getSheetByTitle(GlDataSheet::SHEET_TITLE));
       
       // Get the calculations sheet
-      $this->calcSheet = new GlCalcSheet($this, $this->getSheetByTitle(GlCalcSheet::SHEET_TITLE));
+      $this->statSheet = new GlStatSheet($this, $this->getSheetByTitle(GlStatSheet::SHEET_TITLE));
     }
+  }
+  
+  public function getApp() {
+    return $this->app;
   }
   
   protected function getSheetByTitle($title) {
@@ -72,8 +77,9 @@ class GlDoc {
     return $this->app->getService()->getWorksheetEntry($query);
   }
   
-  public function insert($vals) {
-    echo "<h3>I can't let you do that.</h3>";
+  public function insert($values) {
+    // Insert into the 'Form Data' sheet
+    $entry = $this->dataSheet->insert($values);
   }
   
   public function id() {
@@ -94,5 +100,11 @@ class GlDoc {
   
   public function title() {
     return $this->doc->title->text;
+  }
+  
+  public function stats() {
+    // Get the 'Calculations' entry matching $entry's time
+    //TODO: more like ...->getStats(LAST)...with LAST = 'last' = column name
+    return $this->statSheet->getStats();
   }
 }
