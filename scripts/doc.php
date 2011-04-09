@@ -103,8 +103,7 @@ class GlDoc {
   }
   
   public function stats() {
-    // Get the 'Calculations' entry matching $entry's time
-    //TODO: more like ...->getStats(LAST)...with LAST = 'last' = column name
-    return $this->statSheet->getStats();
+    $stats = $this->statSheet->getStats();
+    return $stats;
   }
 }

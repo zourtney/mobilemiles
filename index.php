@@ -84,6 +84,128 @@ require_once 'scripts/sheet.php';
 // ****************************************************************************
 
 /**
+ * Returns a green or red color based on how close $value is to $max. 
+ * Additionally, you may narrow the color range by setting $dimmest and/or
+ * $brightest (dec equivilent of a single hex character)
+ */
+function getTrendColor($value, $max, $dimmest = 0x3, $brightest = 0xe) {
+    // Do a simple range conversion:
+    //   $value     $hex
+    //  -------- = ------
+    //    $max       15
+    //
+    // ...then use min() and max() to make sure it falls in the desired color
+    // range. NOTE: $dimmest and $brightest are defined in HEX while the
+    // equation is defined in DEC. The min() and max() functions seem to handle
+    // this properly. Yay!
+    //
+    // ...finally, convert it to HEX.
+    $hex = dechex(min(max((abs($value) * 15) / $max, $dimmest), $brightest));
+    
+    // Use single hex value to create a 6-digit color code.
+    if ($value >= 0)
+      $color = "#00" . $hex . $hex . "00";
+    else
+      $color = "#" . $hex . $hex . "0000";
+    
+    // Debug...
+    //echo "(|$value| * 16) / $max = $result ==> $result = $hex => <span style='color: $color'>$color</span>";
+    return $color;
+}
+
+/**
+ * Returns a text string based on where $value is compared to $slight and 
+ * $significant. Examples:
+ *   (5, 10, 50)  => "slightly better"
+ *   (20, 10, 50) => "better"
+ *   (60, 10, 50) => "significantly better"
+ *
+ * Similarly, you'll get "worse" text if $value is negative.
+ */
+function getThresholdText($value, $slightValue, $significantValue, 
+  $better = 'better', $worse = 'worse', 
+  $slightly = 'slightly', $significantly = 'significantly') {
+  // Create return string
+  $str = '';  
+
+  // Add 'slightly' or 'significantly' values, if applicable
+  if (abs($value) <= $slightValue && strlen($slightly) > 0)
+    $str .= $slightly . ' ';
+  else if (abs($value) > $significantValue && strlen($significantly) > 0) 
+    $str .= $significantly . ' ';
+  
+  // Add 'better' or 'worse' text.
+  if ($value >= 0)
+    $str .= $better;
+  else 
+    $str .= $worse;
+  
+  return $str;
+}
+
+function getFriendlyDatetime($datetime) {
+  $str = '';
+  // Do a time-independent day's between calculation (there might be a better
+  // way to do this...)
+  $daysBetween = ((strtotime(date('Y-m-d')) - strtotime(date('Y-m-d',$datetime))) / 86400);
+  
+  // Print out the day
+  //echo $daysBetween;
+  if ($daysBetween < 0)
+    $str .= "on some future ";
+  else if ($daysBetween < 1)
+    $str .= "this ";
+  else if ($daysBetween < 2)
+    $str .= "yesterday ";
+  else if ($daysBetween <= 7)
+    $str .= "last " . strftime("%A", $datetime) . " ";
+  else
+    $str .= "on " . $stats['last']['datetime'] . " ";
+  
+  // If recent, give them the time of day
+  if ($daysBetween <= 7) {
+    $lastHour = date("G", $datetime);
+    if ($lastHour < 12)
+      $str .= "morning";
+    else if ($lastHour < 16)
+      $str .= "afternoon";
+    else if ($lastHour < 21)
+      $str .= "evening";
+    else
+      $str .= "night";
+  }
+  
+  return $str;
+}
+
+function getArrowHtml($color, $value) {
+  $str = '<span class="arrow" style="color: ' . $color . ';">';
+  
+  if ($value >= 0)
+    $str .= '&uarr;';
+  else
+    $str .= '&darr;';
+  
+  return $str . '</span>'; 
+}
+
+function getMpg($value) {
+  return round($value, 2);
+}
+
+function getMiles($value) {
+  return (int)$value;
+}
+
+function getMoney($value) {
+  return sprintf("%01.2f", round($value, 2));
+}
+
+function getPercent($value) {
+  return sprintf("%01.2f", round($value, 2));
+}
+
+/**
  * Prints out the HTML for the input form. Displays errors, if applicable
  */
 function printForm($doc, $errors) {
@@ -263,21 +385,19 @@ function printStats($doc, $message = null) {
 </header>
 <article>
   <?php
-  //$message = "testing the message box";
-  if ($message != null) {
+  if ($message == null) {
+    $message = "At the gas station now? Add a <a href=" . $doc->newUrl() . ">new entry</a> to the log.";
+  }
+  
+  //if ($message != null) {
     ?>
     <p>&nbsp;</p>
     <div class="message">
-    <?php
-      echo $message;
-    ?>
+      <p><?php echo $message; ?></p>
     </div>
     <?php
-  }
+  //}
   ?>
-  
-  <p>At the gas station now? Add a <a href="<?php echo $doc->newUrl(); ?>">new entry</a> to the log.
-  </p>
   
   <?php
     $stats = $doc->stats();
@@ -288,19 +408,201 @@ function printStats($doc, $message = null) {
   ?>
   
   <fieldset class="stats">
-    <legend>Stats & Trends</legend>
+    <?php
+      $lastDatetime = strtotime($stats['last']['datetime']);
+      $dateStr = date(GlApp::DATE_FORMAT_FULL, $lastDatetime);
+    ?>
+    <legend>Most Recent Fill-up, <span class="datetime" title="<?php echo date(GlApp::DATE_FORMAT, $lastDatetime); ?>"><?php echo $dateStr; ?></span></legend>
     
-    <div class="statrow">
-      <div class="value">
-        <p>You average <span class="mpg"><?php echo round($stats['all']['mpg'], 2); ?></span> mpg.</p>
+    <div class="statdesc">
+      <p>The following stats are based on your most recent fill-up at 
+      <?php
+        if ($stats['last']['location'] == $stats['all']['location'])
+          echo 'your <span class="location" title="' . $stats['all']['location'] . '">favorite station</span> ';
+        else
+          echo $stats['last']['location'] . ' ';
+        
+        $dateStr = getFriendlyDatetime($lastDatetime);
+        echo '<span class="datetime" title="' . date(GlApp::DATE_FORMAT, $lastDatetime) . '">' . $dateStr . '</span>';
+      ?>.
+      </p>
+    </div>
+    
+    <!-- Gas mileage -->
+    <div class="statrow mpg">
+      <?php
+      $change = $stats['last']['mpg'] - $stats['all']['mpg'];
+      
+      // These are only used to change the text description. 0.25mpg and below
+      // is a "slight" change, more than 2 is a "significant" change.
+      $thresholdText = getThresholdText($change, 0.25, 2, 'increased', 'dropped');
+      
+      // Determine the brightness of the color. A change of > 0.75mpg will be
+      // visually apparent.
+      $color = getTrendColor($change, 0.75);
+      
+      ?>
+      <div class="arrow">
+        <?php echo getArrowHtml($color, $change); ?>
       </div>
-      <div class="desc">
+      <div class="content">
+        <div class="value">
+          <p>
+          <span class="number" style="color: <?php echo $color; ?>" title="<?php echo $stats['last']['mpg']; ?>"><?php echo getMpg($stats['last']['mpg']); ?></span></p>
+        </div>
+        <div class="desc">
+          <p>
+          During your last tank of gas, your mileage <span class="<?php echo ($change >= 0) ? 'better' : 'worse'; ?>"><?php echo $thresholdText; ?></span>, by <span class="number" title="<?php echo abs($change); ?>"><?php echo getMpg(abs($change)); ?></span>. This is
+          <?php
+            $change = (($stats['last']['mpg'] * 100) / $stats['all']['mpg']);
+            
+            if ($change >= 0)
+              echo '<span class="better">';
+            else
+              echo '<span class="worse">';
+            
+            echo '<span class="percent" title="' . abs(100 - $change) . '">' . abs(100 - getPercent($change)) . '</span>';
+            
+            if ($change >= 0)
+              echo ' better';
+            else
+              echo ' worse';
+            echo '</span>';
+            ?>
+            than your all-time average <span class="number" title="<?php echo $stats['all']['mpg']; ?>"><?php echo getMpg($stats['all']['mpg']); ?></span>. 
+          </p>
+        </div>
       </div>
     </div>
-  <?php
     
-    //print_r($doc->stats());
-  ?>
+    <!-- Trip distance -->
+    <div class="statrow tripdistance">
+      <?php
+      $change = $stats['last']['tripdistance'] - $stats['all']['tripdistance'];
+      
+      // These are only used to change the text description. 10 miles and below
+      // is a "slight" change, more than 50 miles is a "significant" change.
+      $thresholdText = getThresholdText($change, 10, 50, 'farther', 'less distance');
+      
+      // Determine the brightness of the color. A change of > 50mi will be
+      // visually apparent.
+      $color = getTrendColor($change, 50);
+      
+      ?>
+      <div class="arrow">
+        <?php echo getArrowHtml($color, $change); ?>
+      </div>
+      <div class="content">
+        <div class="value">
+            <p><span class="number" style="color: <?php echo $color; ?>" title="<?php echo $stats['last']['tripdistance']; ?>"><?php echo getMiles($stats['last']['tripdistance']); ?></p>
+          </div>
+          <div class="desc">
+          <p>
+          During your last tank of gas, you went <span class="<?php echo ($change >= 0) ? 'better' : 'worse'; ?>"><?php echo $thresholdText; ?></span> between fill-ups. Your trip distance was
+          <?php
+            if ($change >= 0)
+              echo '<span class="better">';
+            else
+              echo '<span class="worse">';
+          ?>
+          <span class="number" title="<?php echo abs($change); ?>"><?php echo getMiles(abs($change)); ?></span>
+          <?php
+            if ($change >= 0)
+              echo ' farther</span>';
+            else
+              echo ' shorter</span>';
+          ?> than your average trip distance of <span class="number" title="<?php echo $stats['all']['tripdistance']; ?>"><?php echo getMiles($stats['all']['tripdistance']); ?></span>.
+          </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Pump price -->
+    <div class="statrow cost">
+      <?php
+      $change = $stats['last']['cost'] - $stats['month']['cost'];
+      
+      // These are only used to change the text description. $3 and below is a 
+      // "slight" change, more than $10 is a "significant" change.
+      $thresholdText = getThresholdText($change, 3, 10, 'more', 'less', '', '');
+      
+      // Determine the brightness of the color. A change of > $7.50 will be
+      // visually apparent.
+      $color = getTrendColor(-$change, 7.5);
+      
+      ?>
+      <div class="arrow">
+        <?php echo getArrowHtml($color, $change); ?>
+      </div>
+      <div class="content">
+        <div class="value">
+            <p><span class="number" style="color: <?php echo $color; ?>" title="<?php echo $stats['last']['cost']; ?>"><?php echo getMoney($stats['last']['cost']); ?></p>
+          </div>
+          <div class="desc">
+          <p>
+          During your last tank of gas, you spent <span class="<?php echo ($change >= 0) ? 'worse' : 'better'; ?>"><span class="number" title="<?php echo abs($change); ?>"><?php echo getMoney(abs($change)); ?></span> <?php echo $thresholdText; ?></span> than your one-month average of <span class="number" title="<?php echo $stats['month']['cost']; ?>"><?php echo getMoney($stats['month']['cost']); ?></span>.
+          This is
+          <?php 
+            $change = $stats['last']['cost'] - $stats['previous']['cost'];
+            $threshold = getThresholdText($change, 3, 10, 'more', 'less', '', '');
+          ?>
+          <span class="<?php echo ($change >= 0) ? 'worse' : 'better'; ?>"><span class="number" title="<?php echo abs($change); ?>"><?php echo getMoney($change); ?></span> <?php echo $thresholdText; ?></span> than your previous fill-up.
+          </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Cost per day -->
+    <div class="statrow costperday">
+      <?php
+      $change = $stats['last']['costperday'] - $stats['month']['costperday'];
+      
+      // These are only used to change the text description. $1 and below is a
+      // "slight" change, more than $3 is a "significant" change.
+      $thresholdText = getThresholdText($change, 1, 3, 'more', 'less', '', '');
+      
+      // Determine the brightness of the color. A change of > $3 will be
+      // visually apparent.
+      $color = getTrendColor(-$change, 3);
+      
+      ?>
+      <div class="arrow">
+        <?php echo getArrowHtml($color, $change); ?>
+      </div>
+      <div class="content">
+        <div class="value">
+            <p><span class="number" style="color: <?php echo $color; ?>" title="<?php echo $stats['last']['costperday']; ?>"><?php echo getMoney($stats['last']['costperday']); ?></p>
+          </div>
+          <div class="desc">
+          <p>
+          During your last tank of gas, you spent <span class="<?php echo ($change >= 0) ? 'worse' : 'better'; ?>"><span class="number" title="<?php echo abs($change); ?>"><?php echo getMoney(abs($change)); ?></span> <?php echo $thresholdText; ?></span> per day than your one-month average of <span class="number" title="<?php echo $stats['month']['costperday']; ?>"><?php echo getMoney($stats['month']['costperday']); ?></span>.
+          You spent 
+          <?php 
+            $change = $stats['last']['costperday'] - $stats['previous']['costperday'];
+            $threshold = getThresholdText($change, 1, 3, 'more', 'less', '', '');
+          ?>
+          <span class="<?php echo ($change >= 0) ? 'worse' : 'better'; ?>">s<span class="number" title="<?php echo abs($change); ?>"><?php echo getMoney(abs($change)); ?></span> <?php echo $thresholdText; ?></span> per day than during your previous trip.
+          </p>
+          <p>For this tank, you spent <span class="number"><?php echo getMoney($stats['last']['costpermile']); ?></span> per mile, which is
+          <?php
+            // Get change as a percentage
+            $change = ($stats['last']['costpermile'] * 100) / $stats['month']['costpermile'];
+          
+            if ($change >= 0)
+              echo '<span class="percent worse">up ';
+            else
+              echo '<span class="percent better">down ';
+            
+            echo abs(100 - getPercent($change)) . '</span>';
+            ?>
+            from last month.
+          </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </fieldset>
 </arcticle>
 <?php

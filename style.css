@@ -190,10 +190,109 @@ fieldset.stats legend {
   background: #eeeeee;
 }
 
-div.statrow {
-  margin: 1em;
+fieldset.stats legend .datetime {
+  color: #007700;
 }
 
-span.mpg {
+.statdesc {
+  padding: 1em;
+}
+
+.statdesc .location {
+  border-bottom: 1px dotted #777777;
+}
+
+.statdesc .datetime {
+  border-bottom: 1px dotted #007700;
+}
+
+div.statrow {
+  margin: 1em;
+  border-bottom: 1px dashed #777777; 
+}
+
+.statrow div.arrow {
+  float: left;
+  display: block;
+  padding-left: 0.5em;
+}
+
+.statrow span.arrow {
+  font-size: 4.5em;
+  
+  /* http://css-tricks.com/examples/TextStroke/ */
+  text-shadow: 2px 2px 0 black,
+    -1px -1px 0 black,  
+     1px -1px 0 black,
+    -1px  1px 0 black,
+     1px  1px 0 black;
+}
+
+.statrow .content {
+  margin-left: 5em;
+}
+
+.statrow .value .number {
+  font-size: 2.5em;
+  /* http://css-tricks.com/examples/TextStroke/ */
+  text-shadow: 2px 2px 0 black,
+    -1px -1px 0 black,  
+     1px -1px 0 black,
+    -1px  1px 0 black,
+     1px  1px 0 black;
+}
+
+.statrow .value .number:after {
+  padding-left: 0.25em;
+  font-size: 0.75em;
+  color: #eeeeee;
+  
+  /* http://css-tricks.com/examples/TextStroke/ */
+  text-shadow: 2px 2px 0 black,
+    -1px -1px 0 black,
+     1px -1px 0 black,
+    -1px  1px 0 black,
+     1px  1px 0 black;
+}
+
+.statrow .desc .number {
+  font-size: 1em;
+  text-shadow: none;
+  font-family: Consolas, Lucidatypewriter, monospace, "Courier New";
+}
+
+.statrow .desc .better {
   color: #007700;
+}
+
+.statrow .desc .worse {
+  color: #770000;
+}
+
+.statrow.mpg .number:after {
+  content: "mpg";
+}
+
+.statrow.tripdistance .number:after {
+  content: "mi";
+}
+
+.statrow.cost .number:before {
+  content: "$";
+}
+
+.statrow .percent:after {
+  content: "%";
+}
+
+.statrow.cost .value .number:after {
+  content: "to fill up";
+}
+
+.statrow.costperday .number:before {
+  content: "$";
+}
+
+.statrow.costperday .value .number:after {
+  content: "per day";
 }

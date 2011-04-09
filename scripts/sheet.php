@@ -54,17 +54,7 @@ class GlDataSheet extends GlSheet {
   }
   
   public function insert($values) {
-    //$service = $this->doc->getApp()->getService();
-    //echo "<p><code>insertRow(..., " . $this->doc->id() . ", " . $this->id . ");</code></p>";
-    //$entries = $this->sheet->getContentsAsRows();
-    //echo var_export($values, true);
-    
     $entry = $this->service()->insertRow($values, $this->doc->id(), $this->id);
-    
-    //TODO: not the right command. Do I need to explicitly save?
-    //$this->sheet->save();
-    //print_r($entry);
-    
     return $values;
   }
 }
@@ -95,12 +85,23 @@ class GlStatSheet extends GlSheet {
     $raw = $this->sheet->getContentsAsCells();
     $ret = array();
     
-    $ret['all']['mpg']         = $raw['G2']['value'];
-    $ret['all']['price']       = $raw['G3']['value'];
-    $ret['all']['distance']    = $raw['G4']['value'];
-    $ret['all']['daysbetween'] = $raw['G5']['value'];
-    $ret['all']['costperday']  = $raw['G6']['value'];
-    $ret['all']['location']    = $raw['G7']['value'];
+    $cols = array(
+      'last' => 'B', 
+      'previous' => 'C',
+      'month' => 'D',
+      'all' => 'G'
+    );
+    
+    foreach ($cols as $colName => $colLetter) {
+      $ret[$colName]['datetime']     = (isset($raw[$colLetter . '2']) ? $raw[$colLetter . '2']['value'] : null);
+      $ret[$colName]['mpg']          = $raw[$colLetter . '3']['value'];
+      $ret[$colName]['cost']         = $raw[$colLetter . '4']['value'];
+      $ret[$colName]['tripdistance'] = $raw[$colLetter . '5']['value'];
+      $ret[$colName]['daysbetween']  = $raw[$colLetter . '6']['value'];
+      $ret[$colName]['costperday']   = $raw[$colLetter . '7']['value'];
+      $ret[$colName]['costpermile']  = $raw[$colLetter . '8']['value'];
+      $ret[$colName]['location']     = $raw[$colLetter . '9']['value'];
+    }
     
     return $ret;
   }
