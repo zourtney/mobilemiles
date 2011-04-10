@@ -25,7 +25,7 @@ class GlSheet {
     $this->sheet = $s;
     
     $parts = explode('/', $this->sheet->id->text);
-    print_r($parts);
+    //print_r($parts);
     $this->id = $parts[8];
   }
   

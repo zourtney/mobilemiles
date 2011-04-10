@@ -14,8 +14,46 @@ Zend_Loader::loadClass('Zend_Gdata_Spreadsheets');
 // So PHP doesn't complain...
 date_default_timezone_set('America/Los_Angeles');
 
+/**
+ * Returns the full URL of the current page, based upon env variables
+ *
+ * Env variables used:
+ * $_SERVER['HTTPS'] = (on|off|)
+ * $_SERVER['HTTP_HOST'] = value of the Host: header
+ * $_SERVER['SERVER_PORT'] = port number (only used if not http/80,https/443)
+ * $_SERVER['REQUEST_URI'] = the URI after the method of the HTTP request
+ *
+ * @return string Current URL
+ */
+function getCurrentUrl()
+{
+    global $_SERVER;
+
+    /**
+     * Filter php_self to avoid a security vulnerability.
+     */
+    $php_request_uri = htmlentities(substr($_SERVER['REQUEST_URI'], 0,
+    strcspn($_SERVER['REQUEST_URI'], "\n\r")), ENT_QUOTES);
+
+    if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
+        $protocol = 'https://';
+    } else {
+        $protocol = 'http://';
+    }
+    $host = $_SERVER['HTTP_HOST'];
+    if ($_SERVER['SERVER_PORT'] != '' &&
+        (($protocol == 'http://' && $_SERVER['SERVER_PORT'] != '80') ||
+        ($protocol == 'https://' && $_SERVER['SERVER_PORT'] != '443'))) {
+            $port = ':' . $_SERVER['SERVER_PORT'];
+    } else {
+        $port = '';
+    }
+    return $protocol . $host . $port . $php_request_uri;
+}
+
 // Constants
-define('BASE_URL', 'http://localhost/gaslog/trunk/');
+define('BASE_URL', getCurrentUrl());
+echo "BASE_URL: " . BASE_URL;
 define('DATA_SHEET', 'Form Data');
 
 // Authentication functions
@@ -32,6 +70,7 @@ require_once 'scripts/sheet.php';
 <head>
   <title>RandomDoc Test</title>
   <link rel="stylesheet" href="style.css" type="text/css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
   <script type="text/javascript">
@@ -454,14 +493,14 @@ function printStats($doc, $message = null) {
           <p>
           During your last tank of gas, your mileage <span class="<?php echo ($change >= 0) ? 'better' : 'worse'; ?>"><?php echo $thresholdText; ?></span>, by <span class="number" title="<?php echo abs($change); ?>"><?php echo getMpg(abs($change)); ?></span>. This is
           <?php
-            $change = (($stats['last']['mpg'] * 100) / $stats['all']['mpg']);
+            $change = (($stats['last']['mpg'] * 100) / $stats['all']['mpg']) - 100;
             
             if ($change >= 0)
               echo '<span class="better">';
             else
               echo '<span class="worse">';
             
-            echo '<span class="percent" title="' . abs(100 - $change) . '">' . abs(100 - getPercent($change)) . '</span>';
+            echo '<span class="percent" title="' . abs($change) . '">' . abs(getPercent($change)) . '</span>';
             
             if ($change >= 0)
               echo ' better';
@@ -545,9 +584,13 @@ function printStats($doc, $message = null) {
           This is
           <?php 
             $change = $stats['last']['cost'] - $stats['previous']['cost'];
-            $threshold = getThresholdText($change, 3, 10, 'more', 'less', '', '');
           ?>
-          <span class="<?php echo ($change >= 0) ? 'worse' : 'better'; ?>"><span class="number" title="<?php echo abs($change); ?>"><?php echo getMoney($change); ?></span> <?php echo $thresholdText; ?></span> than your previous fill-up.
+          <span class="<?php echo ($change >= 0) ? 'worse' : 'better'; ?>"><span class="number" title="<?php echo $change; ?>"><?php
+            if ($change >= 0)
+              echo getMoney(abs($change)) . '</span> more</span>';
+            else
+              echo getMoney(abs($change)) . '</span> less</span>';
+          ?></span> than your previous fill-up.
           </p>
           </div>
         </div>
@@ -583,19 +626,19 @@ function printStats($doc, $message = null) {
             $change = $stats['last']['costperday'] - $stats['previous']['costperday'];
             $threshold = getThresholdText($change, 1, 3, 'more', 'less', '', '');
           ?>
-          <span class="<?php echo ($change >= 0) ? 'worse' : 'better'; ?>">s<span class="number" title="<?php echo abs($change); ?>"><?php echo getMoney(abs($change)); ?></span> <?php echo $thresholdText; ?></span> per day than during your previous trip.
+          <span class="<?php echo ($change >= 0) ? 'worse' : 'better'; ?>"><span class="number" title="<?php echo abs($change); ?>"><?php echo getMoney(abs($change)); ?></span> <?php echo $thresholdText; ?></span> per day than during your previous trip.
           </p>
           <p>For this tank, you spent <span class="number"><?php echo getMoney($stats['last']['costpermile']); ?></span> per mile, which is
           <?php
             // Get change as a percentage
-            $change = ($stats['last']['costpermile'] * 100) / $stats['month']['costpermile'];
-          
+            $change = (($stats['last']['costpermile'] * 100) / $stats['month']['costpermile']) - 100;
+            
             if ($change >= 0)
               echo '<span class="percent worse">up ';
             else
               echo '<span class="percent better">down ';
             
-            echo abs(100 - getPercent($change)) . '</span>';
+            echo abs(getPercent($change)) . '</span>';
             ?>
             from last month.
           </p>
@@ -749,7 +792,7 @@ else {
   // Create instance of the app
   $app = new GlApp($auth);
   $mode = $app->getMode();
-  echo "mode=$mode";
+  //echo "mode=$mode";
   
   /*if ($mode == GlApp::MODE_NEWDOC ||
       $mode == GlApp::MODE_SUBMITNEWDOC
