@@ -10,7 +10,8 @@
 class GlAuth {
   const SESSION_TOKEN = 'sessionToken';
   const GET_TOKEN = 'token';
-  const SCOPE = 'http://spreadsheets.google.com/feeds/';
+  const NEXT = 'http://gas.randomland.net';
+  const SCOPE = 'http://spreadsheets.google.com/feeds https://spreadsheets.google.com/feeds http://docs.google.com/feeds';
   
   protected $client; /* Zend_Gdata_HttpClient */
   
@@ -19,22 +20,24 @@ class GlAuth {
   }
   
   public function isLoggedIn() {
-     return isset($_SESSION[GlAuth::SESSION_TOKEN]);
+    global $_SESSION;
+    return isset($_SESSION[GlAuth::SESSION_TOKEN]);
   }
   
   public function hasGetToken() {
+    global $_GET;
     return isset($_GET[GlAuth::GET_TOKEN]);
   }
   
   public function getUrl() {
-    $next = BASE_URL;
+    $next = GlAuth::NEXT;
     $scope = GlAuth::SCOPE;
     $session = true;
     $secure = false;
     
     return Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure, $session);
   }
-
+  
   public function login() {
     global $_SESSION, $_GET;
     $this->client = new Zend_Gdata_HttpClient();

@@ -25,14 +25,14 @@ date_default_timezone_set('America/Los_Angeles');
  *
  * @return string Current URL
  */
-function getCurrentUrl()
+/*function getCurrentUrl()
 {
     global $_SERVER;
 
     /**
      * Filter php_self to avoid a security vulnerability.
      */
-    $php_request_uri = htmlentities(substr($_SERVER['REQUEST_URI'], 0,
+/*    $php_request_uri = htmlentities(substr($_SERVER['REQUEST_URI'], 0,
     strcspn($_SERVER['REQUEST_URI'], "\n\r")), ENT_QUOTES);
 
     if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
@@ -49,11 +49,11 @@ function getCurrentUrl()
         $port = '';
     }
     return $protocol . $host . $port . $php_request_uri;
-}
+}*/
 
 // Constants
-define('BASE_URL', getCurrentUrl());
-echo "BASE_URL: " . BASE_URL;
+define('BASE_URL', 'http://gas.randomland.net');
+//echo "BASE_URL: " . BASE_URL;
 define('DATA_SHEET', 'Form Data');
 
 // Authentication functions
