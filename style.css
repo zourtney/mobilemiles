@@ -23,12 +23,17 @@ h2 {
   background: #cccccc;
 }
 
+ul {
+  padding-left: 2em;
+}
+
 article {
-  background: #eeeeee;
+  background: white;
+  padding-bottom: 2em;
 }
 
 p {
-  padding: 0.25em;
+  padding: 0.5em;
 }
 
 .formrow {
@@ -212,13 +217,16 @@ div.statrow {
 }
 
 .statrow div.arrow {
-  float: left;
-  display: block;
-  padding-left: 0.5em;
+  position: relative;
 }
 
 .statrow span.arrow {
+  position: absolute;
+  right: 0;
+  bottom: 0;
   font-size: 4.5em;
+  opacity: 0.1; /* for Firefox */
+  filter:alpha(opacity=0.1); /* for IE */
   
   /* http://css-tricks.com/examples/TextStroke/ */
   text-shadow: 2px 2px 0 black,
@@ -229,10 +237,10 @@ div.statrow {
 }
 
 .statrow .content {
-  margin-left: 5em;
+  margin-left: 2em;
 }
 
-.statrow .value .number {
+.statrow .value {
   font-size: 2.5em;
   /* http://css-tricks.com/examples/TextStroke/ */
   text-shadow: 2px 2px 0 black,
@@ -242,8 +250,8 @@ div.statrow {
      1px  1px 0 black;
 }
 
-.statrow .value .number:after {
-  padding-left: 0.25em;
+.statrow .value:after {
+  padding-left: 0em;
   font-size: 0.75em;
   color: #eeeeee;
   
@@ -255,10 +263,16 @@ div.statrow {
      1px  1px 0 black;
 }
 
-.statrow .desc .number {
-  font-size: 1em;
-  text-shadow: none;
-  font-family: Consolas, Lucidatypewriter, monospace, "Courier New";
+.statrow.cost .value:after {
+  content: "to fill up";
+}
+
+.statrow.costperday .value:after {
+  content: "per day";
+}
+
+.statrow .desc {
+  padding: 0;
 }
 
 .statrow .desc .better {
@@ -269,30 +283,28 @@ div.statrow {
   color: #770000;
 }
 
-.statrow.mpg .number:after {
+.statrow .desc .mpg, 
+.statrow .desc .distance,
+.statrow .desc .cost,
+.statrow .desc .percent {
+  font-size: 1em;
+  font-weight: bold;
+  text-shadow: none;
+  font-family: Consolas, Lucidatypewriter, monospace, "Courier New";
+}
+
+.statrow .mpg:after {
   content: "mpg";
 }
 
-.statrow.tripdistance .number:after {
+.statrow .distance:after {
   content: "mi";
 }
 
-.statrow.cost .number:before {
+.statrow .cost:before {
   content: "$";
 }
 
 .statrow .percent:after {
   content: "%";
-}
-
-.statrow.cost .value .number:after {
-  content: "to fill up";
-}
-
-.statrow.costperday .number:before {
-  content: "$";
-}
-
-.statrow.costperday .value .number:after {
-  content: "per day";
 }

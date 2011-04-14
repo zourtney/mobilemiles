@@ -10,7 +10,7 @@
 class GlAuth {
   const SESSION_TOKEN = 'sessionToken';
   const GET_TOKEN = 'token';
-  const NEXT = 'http://gas.randomland.net';
+  const NEXT = BASE_URL;//'http://gas.randomland.net';
   const SCOPE = 'http://spreadsheets.google.com/feeds https://spreadsheets.google.com/feeds http://docs.google.com/feeds';
   
   protected $client; /* Zend_Gdata_HttpClient */

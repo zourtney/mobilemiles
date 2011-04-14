@@ -1,0 +1,50 @@
+body {
+  padding: 0em;
+  background: white;
+}
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.2em;
+}
+
+.message {
+  margin: 1em;
+  padding: 1em;
+}
+
+.statrow span.arrow {
+  position: absolute;
+  right: 0.1em;
+  bottom: 0.2em;
+  font-size: 6em;
+}
+
+.statrow .content {
+  margin-left: 0;
+  text-align: center;
+}
+
+.statrow .desc {
+  text-align: left;
+}
+
+.statrow .desc .number {
+  color: black;
+}
+
+fieldset.stats {
+  margin: 0em 0.25em;
+}
+
+.statdesc .location {
+  border: none;
+}
+
+.statdesc .datetime {
+  border: none;
+}

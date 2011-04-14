@@ -14,47 +14,8 @@ Zend_Loader::loadClass('Zend_Gdata_Spreadsheets');
 // So PHP doesn't complain...
 date_default_timezone_set('America/Los_Angeles');
 
-/**
- * Returns the full URL of the current page, based upon env variables
- *
- * Env variables used:
- * $_SERVER['HTTPS'] = (on|off|)
- * $_SERVER['HTTP_HOST'] = value of the Host: header
- * $_SERVER['SERVER_PORT'] = port number (only used if not http/80,https/443)
- * $_SERVER['REQUEST_URI'] = the URI after the method of the HTTP request
- *
- * @return string Current URL
- */
-/*function getCurrentUrl()
-{
-    global $_SERVER;
-
-    /**
-     * Filter php_self to avoid a security vulnerability.
-     */
-/*    $php_request_uri = htmlentities(substr($_SERVER['REQUEST_URI'], 0,
-    strcspn($_SERVER['REQUEST_URI'], "\n\r")), ENT_QUOTES);
-
-    if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
-        $protocol = 'https://';
-    } else {
-        $protocol = 'http://';
-    }
-    $host = $_SERVER['HTTP_HOST'];
-    if ($_SERVER['SERVER_PORT'] != '' &&
-        (($protocol == 'http://' && $_SERVER['SERVER_PORT'] != '80') ||
-        ($protocol == 'https://' && $_SERVER['SERVER_PORT'] != '443'))) {
-            $port = ':' . $_SERVER['SERVER_PORT'];
-    } else {
-        $port = '';
-    }
-    return $protocol . $host . $port . $php_request_uri;
-}*/
-
-// Constants
-define('BASE_URL', 'http://gas.randomland.net');
-//echo "BASE_URL: " . BASE_URL;
-define('DATA_SHEET', 'Form Data');
+// Global constants
+require_once 'scripts/globals.php';
 
 // Authentication functions
 require_once 'scripts/auth.php';
@@ -64,13 +25,25 @@ require_once 'scripts/glapp.php';
 require_once 'scripts/doc.php';
 require_once 'scripts/sheet.php';
 
+// Start the session
+session_start();
+
 // ****************************************************************************
 ?>
 <html>
 <head>
   <title>RandomDoc Test</title>
+  
   <link rel="stylesheet" href="style.css" type="text/css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <?php
+    // Add mobile stylesheet. It will override a lot of what's in style.css.
+    if (isset($_SESSION['mobile'])) {
+    ?>
+      <link rel="stylesheet" href="m/style.css" type="text/css" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <?php 
+    }
+  ?>
   
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
   <script type="text/javascript">
@@ -289,124 +262,124 @@ function printForm($doc, $errors) {
     }
     ?>
     
-    <!-- Date and Time -->
-    <div class="formrow required<?php if (isset($errors['datetime'])) echo " invalid";?>">
-      <div class="label">
-        <label for="datetime">Date/Time</label>
-      </div>
-      <div class="input">
-        <span class="inputlabel">
-          <input type="datetime-local" name="datetime" id="datetime" form="frmNew" class="datetime" required="required" aria-required="true" value="<?php echo date(GlApp::DATE_FORMAT); ?>" />
-         <button id="btnNow">Now</button>
-        </span>
-        <br />
-        <span class="datetimeformat-label">(YYYY-MM-DD HH:MM:SS)</span>
-      </div>
-      <div class="desc"><p>The date and time of the fillup. A value should be automatically filled in for you. However, if you need to change it, do so in the field above.</p>
-      </div>
-    </div>
-    
-    <!-- Mileage -->
-    <div class="formrow required<?php if (isset($errors['mileage'])) echo " invalid";?>">
-      <div class="label">
-        <label for="mileage">Mileage</label>
-      </div>
-      <div class="input">
-        <span class="distanceinput inputlabel">
-          <input type="number" name="mileage" id="mileage" form="frmNew"  class="mileage" maxlength="6" required="required" min="0" max="1000000" step="1" placeholder="Current mileage" autofocus <?php if (isset($_POST['mileage'])) echo 'value="' . $_POST['mileage'] . '"'; ?> />
-          <script>$(document).trigger('autofocus_ready');</script>
-        </span>
-      </div>
-      <div class="desc"><p>The mileage at the time of the fillup. Round to the nearest mile. Do not use puncuation.</p>
-      </div>
-    </div>
-    
-    <!-- Location -->
-    <div class="formrow<?php if (isset($errors['location'])) echo " invalid";?>">
-      <div class="label">
-        <label for="location">Location</label>
-      </div>
-      <div class="input">
-        <span class="inputlabel">
-          <input type="text" name="location" id="location" form="frmNew" class="location" placeholder="Current location" <?php if (isset($_POST['location'])) echo 'value="' . $_POST['location'] . '"'; ?> />
-        </span>
-      </div>
-      <div class="desc"><p>The location of the fillup. This will probably be the name of the gas station, but it doesn't really matter.</p>
-      </div>
-    </div>
-    
-    <!-- Price per Gallon -->
-    <div class="formrow required<?php if (isset($errors['pricepergallon'])) echo " invalid";?>">
-      <div class="label">
-        <label for="pricepergallon">Price per Gallon</label>
-      </div>
-      <div class="input">
-        <span class="currencyinput inputlabel">
-          <input type="number" name="pricepergallon" id="pricepergallon" form="frmNew"  maxlength="5" class="price pricepergallon" required="required" min="0.0" max="9.999" step="0.01" placeholder="Price/gallon" <?php if (isset($_POST['pricepergallon'])) echo 'value="' . $_POST['pricepergallon'] . '"'; ?> />
-        </span>
-      </div>
-      <div class="desc"><p>The price of fuel per gallon. Don't forget the extra <math><mfrac><mn>9</mn><mn>10</mn></mfrac></math>!</p>
-      </div>
-    </div>
-    
-    <!-- Gallons -->
-    <div class="formrow required<?php if (isset($errors['gallons'])) echo " invalid";?>">
-      <div class="label">
-        <label for="gallons">Gallons</label>
-      </div>
-      <div class="input">
-        <span class="liquidinput inputlabel">
-          <input type="number" name="gallons" id="gallons" form="frmNew"  maxlength="6" class="gallons" required="required" min="0" max="99.999" step="0.001" placeholder="# of gallons" <?php if (isset($_POST['gallons'])) echo 'value="' . $_POST['gallons'] . '"'; ?> />
-        </span>
-        <select name="grade" id="grade" form="frmNew" class="grade">
-          <option name="reg" id="reg" value="0">Regular Unleaded</option>
-          <option name="plus" id="plus" value="1">Plus</option>
-          <option name="sup" id="sup" value="2">Supreme</option>
-        </select>
-      </div>
-      <div class="desc"><p>The number of gallons added during the fillup. For the most meaningful statistical results, always fill the tank completely.</p>
-      </div>
-    </div>
-    
-    <!-- Pump Price -->
-    <div class="formrow<?php if (isset($errors['pumpprice'])) echo " invalid";?>">
-      <div class="label">
-        <label for="pumpprice">Pump Price</label>
-      </div>
-      <div class="input">
-          <span class="currencyinput inputlabel">
-            <input type="number" name="pumpprice" id="pumpprice" form="frmNew" maxlength="6" class="price pumpprice" min="0" max="999.99" step="0.01" placeholder="Price paid" <?php if (isset($_POST['pumpprice'])) echo 'value="' . $_POST['pumpprice'] . '"'; ?> />
+    <form id="frmNew" method="post" action="<?php echo $doc->formUrl(); ?>">    
+      <!-- Date and Time -->
+      <div class="formrow required<?php if (isset($errors['datetime'])) echo " invalid";?>">
+        <div class="label">
+          <label for="datetime">Date/Time</label>
+        </div>
+        <div class="input">
+          <span class="inputlabel">
+            <input type="datetime-local" name="datetime" id="datetime" form="frmNew" class="datetime" required="required" aria-required="true" value="<?php echo date(GlApp::DATE_FORMAT); ?>" />
+           <button id="btnNow">Now</button>
           </span>
+          <br />
+          <span class="datetimeformat-label">(YYYY-MM-DD HH:MM:SS)</span>
+        </div>
+        <div class="desc"><p>The date and time of the fillup. A value should be automatically filled in for you. However, if you need to change it, do so in the field above.</p>
+        </div>
       </div>
-      <div class="desc">The total price paid at the pump. Recording this number is not necessary since it ought to be extremely close to the calculated <math><mi>gallons</mi><mo>*</mo><mi>price_per_gallon</mi></math>. For those tin-foil hat days, it may be an interesting fact to track.
+      
+      <!-- Mileage -->
+      <div class="formrow required<?php if (isset($errors['mileage'])) echo " invalid";?>">
+        <div class="label">
+          <label for="mileage">Mileage</label>
+        </div>
+        <div class="input">
+          <span class="distanceinput inputlabel">
+            <input type="number" name="mileage" id="mileage" form="frmNew"  class="mileage" maxlength="6" required="required" min="0" max="1000000" step="1" placeholder="Current mileage" autofocus <?php if (isset($_POST['mileage'])) echo 'value="' . $_POST['mileage'] . '"'; ?> />
+            <script>$(document).trigger('autofocus_ready');</script>
+          </span>
+        </div>
+        <div class="desc"><p>The mileage at the time of the fillup. Round to the nearest mile. Do not use puncuation.</p>
+        </div>
       </div>
-    </div>
-    
-    <!-- Notes -->
-    <div class="formrow<?php if (isset($errors['notes'])) echo " invalid";?>">
-      <div class="label">
-        <label for="notes">Notes</label>
+      
+      <!-- Location -->
+      <div class="formrow<?php if (isset($errors['location'])) echo " invalid";?>">
+        <div class="label">
+          <label for="location">Location</label>
+        </div>
+        <div class="input">
+          <span class="inputlabel">
+            <input type="text" name="location" id="location" form="frmNew" class="location" placeholder="Current location" <?php if (isset($_POST['location'])) echo 'value="' . $_POST['location'] . '"'; ?> />
+          </span>
+        </div>
+        <div class="desc"><p>The location of the fillup. This will probably be the name of the gas station, but it doesn't really matter.</p>
+        </div>
       </div>
-      <div class="input">
-        <span class="inputlabel">
-          <textarea name="notes" id="notes" form="frmNew" class="notes" placeholder="Any additional notes"><?php if (isset($_POST['notes'])) echo $_POST['notes']; ?></textarea>
-        </span>
+      
+      <!-- Price per Gallon -->
+      <div class="formrow required<?php if (isset($errors['pricepergallon'])) echo " invalid";?>">
+        <div class="label">
+          <label for="pricepergallon">Price per Gallon</label>
+        </div>
+        <div class="input">
+          <span class="currencyinput inputlabel">
+            <input type="number" name="pricepergallon" id="pricepergallon" form="frmNew"  maxlength="5" class="price pricepergallon" required="required" min="0.0" max="9.999" step="0.01" placeholder="Price/gallon" <?php if (isset($_POST['pricepergallon'])) echo 'value="' . $_POST['pricepergallon'] . '"'; ?> />
+          </span>
+        </div>
+        <div class="desc"><p>The price of fuel per gallon. Don't forget the extra <math><mfrac><mn>9</mn><mn>10</mn></mfrac></math>!</p>
+        </div>
       </div>
-      <div class="desc"><p>Any additional notes you wish to put here. This could be justification for terrible gas mileage, the primary mode of driving during the past tank of gas, etc. Anything you desire!</p>
+      
+      <!-- Gallons -->
+      <div class="formrow required<?php if (isset($errors['gallons'])) echo " invalid";?>">
+        <div class="label">
+          <label for="gallons">Gallons</label>
+        </div>
+        <div class="input">
+          <span class="liquidinput inputlabel">
+            <input type="number" name="gallons" id="gallons" form="frmNew"  maxlength="6" class="gallons" required="required" min="0" max="99.999" step="0.001" placeholder="# of gallons" <?php if (isset($_POST['gallons'])) echo 'value="' . $_POST['gallons'] . '"'; ?> />
+          </span>
+          <select name="grade" id="grade" form="frmNew" class="grade">
+            <option name="reg" id="reg" value="0">Regular Unleaded</option>
+            <option name="plus" id="plus" value="1">Plus</option>
+            <option name="sup" id="sup" value="2">Supreme</option>
+          </select>
+        </div>
+        <div class="desc"><p>The number of gallons added during the fillup. For the most meaningful statistical results, always fill the tank completely.</p>
+        </div>
       </div>
-    </div>
-    
-    <!-- Form Buttons -->
-  <form id="frmNew" method="post" action="<?php echo $doc->formUrl(); ?>">
-    <div class="formrow">
-      <div class="submit">
-        <span id="btnClear" class="link-button">Clear</span>
-        &nbsp;
-        <input type="submit" name="submit" value="Submit" />
+      
+      <!-- Pump Price -->
+      <div class="formrow<?php if (isset($errors['pumpprice'])) echo " invalid";?>">
+        <div class="label">
+          <label for="pumpprice">Pump Price</label>
+        </div>
+        <div class="input">
+            <span class="currencyinput inputlabel">
+              <input type="number" name="pumpprice" id="pumpprice" form="frmNew" maxlength="6" class="price pumpprice" min="0" max="999.99" step="0.01" placeholder="Price paid" <?php if (isset($_POST['pumpprice'])) echo 'value="' . $_POST['pumpprice'] . '"'; ?> />
+            </span>
+        </div>
+        <div class="desc">The total price paid at the pump. Recording this number is not necessary since it ought to be extremely close to the calculated <math><mi>gallons</mi><mo>*</mo><mi>price_per_gallon</mi></math>. For those tin-foil hat days, it may be an interesting fact to track.
+        </div>
       </div>
-    </div>
+      
+      <!-- Notes -->
+      <div class="formrow<?php if (isset($errors['notes'])) echo " invalid";?>">
+        <div class="label">
+          <label for="notes">Notes</label>
+        </div>
+        <div class="input">
+          <span class="inputlabel">
+            <textarea name="notes" id="notes" form="frmNew" class="notes" placeholder="Any additional notes"><?php if (isset($_POST['notes'])) echo $_POST['notes']; ?></textarea>
+          </span>
+        </div>
+        <div class="desc"><p>Any additional notes you wish to put here. This could be justification for terrible gas mileage, the primary mode of driving during the past tank of gas, etc. Anything you desire!</p>
+        </div>
+      </div>
+      
+      <!-- Form Buttons -->
+      <div class="formrow">
+        <div class="submit">
+          <span id="btnClear" class="link-button">Clear</span>
+          &nbsp;
+          <input type="submit" name="submit" value="Submit" />
+        </div>
+      </div>
+    </form>
   </fieldset>
-</form>
 </article>
 <?php
 }
@@ -418,7 +391,7 @@ function printStats($doc, $message = null) {
 ?>
 <header id="top">
   <hgroup>
-    <h1><?php //echo $doc->title(); ?></h1>
+    <h1><?php echo $doc->title(); ?></h1>
     <h2>Stats</h2>
   </hgroup>
 </header>
@@ -428,25 +401,19 @@ function printStats($doc, $message = null) {
     $message = "At the gas station now? Add a <a href=" . $doc->newUrl() . ">new entry</a> to the log.";
   }
   
-  //if ($message != null) {
-    ?>
-    <p>&nbsp;</p>
+  // Get the 'stats' table from the current document
+  $stats = $doc->stats();
+  ?>
+  
+  <!-- Strange rendering issue where there will be a large gap between article
+       and header backgrounds...This empty paragraph seems to fix it.
+  -->
+  <p></p>
+  
+  <fieldset class="stats">
     <div class="message">
       <p><?php echo $message; ?></p>
     </div>
-    <?php
-  //}
-  ?>
-  
-  <?php
-    $stats = $doc->stats();
-    
-    //IDEA: screw the words. Just put the number and a big up or down arrow to
-    // indicate trends based on 2 month, 6 month, and all-time values. Make
-    // varying shades of green and red.
-  ?>
-  
-  <fieldset class="stats">
     <?php
       $lastDatetime = strtotime($stats['last']['datetime']);
       $dateStr = date(GlApp::DATE_FORMAT_FULL, $lastDatetime);
@@ -481,17 +448,13 @@ function printStats($doc, $message = null) {
       $color = getTrendColor($change, 0.75);
       
       ?>
-      <div class="arrow">
-        <?php echo getArrowHtml($color, $change); ?>
-      </div>
       <div class="content">
-        <div class="value">
-          <p>
-          <span class="number" style="color: <?php echo $color; ?>" title="<?php echo $stats['last']['mpg']; ?>"><?php echo getMpg($stats['last']['mpg']); ?></span></p>
+        <div class="value mpg" style="color: <?php echo $color; ?>" title="<?php echo $stats['last']['mpg']; ?>">
+          <?php echo getMpg($stats['last']['mpg']); ?>
         </div>
         <div class="desc">
           <p>
-          During your last tank of gas, your mileage <span class="<?php echo ($change >= 0) ? 'better' : 'worse'; ?>"><?php echo $thresholdText; ?></span>, by <span class="number" title="<?php echo abs($change); ?>"><?php echo getMpg(abs($change)); ?></span>. This is
+          During your last tank of gas, your mileage <span class="<?php echo ($change >= 0) ? 'better' : 'worse'; ?>"><?php echo $thresholdText; ?></span>, by <span class="mpg" title="<?php echo abs($change); ?>"><?php echo getMpg(abs($change)); ?></span>. This is
           <?php
             $change = (($stats['last']['mpg'] * 100) / $stats['all']['mpg']) - 100;
             
@@ -508,9 +471,12 @@ function printStats($doc, $message = null) {
               echo ' worse';
             echo '</span>';
             ?>
-            than your all-time average <span class="number" title="<?php echo $stats['all']['mpg']; ?>"><?php echo getMpg($stats['all']['mpg']); ?></span>. 
+            than your all-time average <span class="mpg" title="<?php echo $stats['all']['mpg']; ?>"><?php echo getMpg($stats['all']['mpg']); ?></span>. 
           </p>
         </div>
+      </div>
+      <div class="arrow">
+        <?php echo getArrowHtml($color, $change); ?>
       </div>
     </div>
     
@@ -528,14 +494,11 @@ function printStats($doc, $message = null) {
       $color = getTrendColor($change, 50);
       
       ?>
-      <div class="arrow">
-        <?php echo getArrowHtml($color, $change); ?>
-      </div>
       <div class="content">
-        <div class="value">
-            <p><span class="number" style="color: <?php echo $color; ?>" title="<?php echo $stats['last']['tripdistance']; ?>"><?php echo getMiles($stats['last']['tripdistance']); ?></p>
-          </div>
-          <div class="desc">
+        <div class="value distance" style="color: <?php echo $color; ?>" title="<?php echo $stats['last']['tripdistance']; ?>">
+          <?php echo getMiles($stats['last']['tripdistance']); ?>
+        </div>
+        <div class="desc">
           <p>
           During your last tank of gas, you went <span class="<?php echo ($change >= 0) ? 'better' : 'worse'; ?>"><?php echo $thresholdText; ?></span> between fill-ups. Your trip distance was
           <?php
@@ -544,16 +507,18 @@ function printStats($doc, $message = null) {
             else
               echo '<span class="worse">';
           ?>
-          <span class="number" title="<?php echo abs($change); ?>"><?php echo getMiles(abs($change)); ?></span>
+          <span class="distance" title="<?php echo abs($change); ?>"><?php echo getMiles(abs($change)); ?></span>
           <?php
             if ($change >= 0)
               echo ' farther</span>';
             else
               echo ' shorter</span>';
-          ?> than your average trip distance of <span class="number" title="<?php echo $stats['all']['tripdistance']; ?>"><?php echo getMiles($stats['all']['tripdistance']); ?></span>.
+          ?> than your average trip distance of <span class="distance" title="<?php echo $stats['all']['tripdistance']; ?>"><?php echo getMiles($stats['all']['tripdistance']); ?></span>.
           </p>
-          </div>
         </div>
+      </div>
+      <div class="arrow">
+        <?php echo getArrowHtml($color, $change); ?>
       </div>
     </div>
     
@@ -571,32 +536,31 @@ function printStats($doc, $message = null) {
       $color = getTrendColor(-$change, 7.5);
       
       ?>
-      <div class="arrow">
-        <?php echo getArrowHtml($color, $change); ?>
-      </div>
       <div class="content">
-        <div class="value">
-            <p><span class="number" style="color: <?php echo $color; ?>" title="<?php echo $stats['last']['cost']; ?>"><?php echo getMoney($stats['last']['cost']); ?></p>
-          </div>
-          <div class="desc">
+        <div class=" value cost" style="color: <?php echo $color; ?>" title="<?php echo $stats['last']['cost']; ?>">
+          <?php echo getMoney($stats['last']['cost']); ?>
+        </div>
+        <div class="desc">
           <p>
-          During your last tank of gas, you spent <span class="<?php echo ($change >= 0) ? 'worse' : 'better'; ?>"><span class="number" title="<?php echo abs($change); ?>"><?php echo getMoney(abs($change)); ?></span> <?php echo $thresholdText; ?></span> than your one-month average of <span class="number" title="<?php echo $stats['month']['cost']; ?>"><?php echo getMoney($stats['month']['cost']); ?></span>.
+          During your last tank of gas, you spent <span class="<?php echo ($change >= 0) ? 'worse' : 'better'; ?>"><span class="cost" title="<?php echo abs($change); ?>"><?php echo getMoney(abs($change)); ?></span> <?php echo $thresholdText; ?></span> than your one-month average of <span class="cost" title="<?php echo $stats['month']['cost']; ?>"><?php echo getMoney($stats['month']['cost']); ?></span>.
           This is
           <?php 
             $change = $stats['last']['cost'] - $stats['previous']['cost'];
           ?>
-          <span class="<?php echo ($change >= 0) ? 'worse' : 'better'; ?>"><span class="number" title="<?php echo $change; ?>"><?php
+          <span class="<?php echo ($change >= 0) ? 'worse' : 'better'; ?>"><span class="cost" title="<?php echo $change; ?>"><?php
             if ($change >= 0)
               echo getMoney(abs($change)) . '</span> more</span>';
             else
               echo getMoney(abs($change)) . '</span> less</span>';
           ?></span> than your previous fill-up.
           </p>
-          </div>
         </div>
       </div>
-    </div>
-    
+      <div class="arrow">
+        <?php echo getArrowHtml($color, $change); ?>
+      </div>
+    </div> <!-- end statrow -->
+  
     <!-- Cost per day -->
     <div class="statrow costperday">
       <?php
@@ -611,39 +575,42 @@ function printStats($doc, $message = null) {
       $color = getTrendColor(-$change, 3);
       
       ?>
-      <div class="arrow">
-        <?php echo getArrowHtml($color, $change); ?>
-      </div>
       <div class="content">
-        <div class="value">
-            <p><span class="number" style="color: <?php echo $color; ?>" title="<?php echo $stats['last']['costperday']; ?>"><?php echo getMoney($stats['last']['costperday']); ?></p>
-          </div>
-          <div class="desc">
+        <div class="value cost" style="color: <?php echo $color; ?>" title="<?php echo $stats['last']['costperday']; ?>">
+          <?php echo getMoney($stats['last']['costperday']); ?>
+        </div>
+        <div class="desc">
           <p>
-          During your last tank of gas, you spent <span class="<?php echo ($change >= 0) ? 'worse' : 'better'; ?>"><span class="number" title="<?php echo abs($change); ?>"><?php echo getMoney(abs($change)); ?></span> <?php echo $thresholdText; ?></span> per day than your one-month average of <span class="number" title="<?php echo $stats['month']['costperday']; ?>"><?php echo getMoney($stats['month']['costperday']); ?></span>.
+          During your last tank of gas, you spent <span class="<?php echo ($change >= 0) ? 'worse' : 'better'; ?>"><span class="cost" title="<?php echo abs($change); ?>"><?php echo getMoney(abs($change)); ?></span> <?php echo $thresholdText; ?></span> per day than your one-month average of <span class="cost" title="<?php echo $stats['month']['costperday']; ?>"><?php echo getMoney($stats['month']['costperday']); ?></span>.
           You spent 
           <?php 
             $change = $stats['last']['costperday'] - $stats['previous']['costperday'];
             $threshold = getThresholdText($change, 1, 3, 'more', 'less', '', '');
           ?>
-          <span class="<?php echo ($change >= 0) ? 'worse' : 'better'; ?>"><span class="number" title="<?php echo abs($change); ?>"><?php echo getMoney(abs($change)); ?></span> <?php echo $thresholdText; ?></span> per day than during your previous trip.
+          <span class="<?php echo ($change >= 0) ? 'worse' : 'better'; ?>"><span class="cost" title="<?php echo abs($change); ?>"><?php echo getMoney(abs($change)); ?></span> <?php echo $thresholdText; ?></span> per day than during your previous trip.
           </p>
-          <p>For this tank, you spent <span class="number"><?php echo getMoney($stats['last']['costpermile']); ?></span> per mile, which is
+          <p>For this tank, you spent <span class="cost"><?php echo getMoney($stats['last']['costpermile']); ?></span> per mile, which is
           <?php
             // Get change as a percentage
             $change = (($stats['last']['costpermile'] * 100) / $stats['month']['costpermile']) - 100;
             
             if ($change >= 0)
-              echo '<span class="percent worse">up ';
+              echo '<span class="worse">up ';
             else
-              echo '<span class="percent better">down ';
+              echo '<span class="better">down ';
             
-            echo abs(getPercent($change)) . '</span>';
+            echo '<span class="percent">' . abs(getPercent($change)) . '</span></span>';
             ?>
             from last month.
           </p>
-          </div>
         </div>
+      </div>
+      <div class="arrow">
+        <?php
+        // Have to set this again...
+        $change = $stats['last']['costperday'] - $stats['month']['costperday'];
+        echo getArrowHtml($color, $change);
+        ?>
       </div>
     </div>
   </fieldset>
@@ -696,9 +663,9 @@ function printDocList($app, $docs) {
 ?>
 <header id="top">
   <hgroup>
-    <h1>Available Documents</h1>
+    <h1>Gas Logs</h1>
     <?php /*<h2>Create New or Select Existing</h2>*/ ?>
-    <h2>Select an existing gas log</h2>
+    <h2>Select an existing document</h2>
   </hgroup>
 </header>
 <article>
@@ -707,7 +674,7 @@ function printDocList($app, $docs) {
   </p>
   */
   ?>
-  <p>Select from the list of existing gas logs. If you do not have any, create a copy of the master document and store it in your Google Docs.
+  <p>Select from the list of documents below. If you wish to create another, get the <a href="#" title="Not yet implemented">master document</a> and store a copy of it in your Google Docs with the extension <code><?php echo GlApp::FILTER_TEXT; ?></code>.
   </p>
   <ul>
 <?php
@@ -764,9 +731,8 @@ function printDocList($app, $docs) {
 
 
 /**
- * Entry point
+ * Entry point (sorta)
  */
-session_start();
 $auth = new GlAuth();
 
 if (! $auth->isLoggedIn() && ! $auth->hasGetToken()) {
