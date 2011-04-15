@@ -7,5 +7,5 @@ if (DEBUG) {
   define('BASE_URL', 'http://localhost/gaslog/trunk/');
 }
 else {
-  define('BASE_URL', 'http://gas.randomland.net/  ');
+  define('BASE_URL', 'http://gas.randomland.net/');
 }
