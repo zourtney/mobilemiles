@@ -155,6 +155,12 @@ function getThresholdText($value, $slightValue, $significantValue,
   return $str;
 }
 
+/**
+ * Returns a user-friendly description of the date. For example:
+ *   - last Wednesday night
+ *   - yesterday evening
+ *   - 2011-04-14
+ */
 function getFriendlyDatetime($datetime) {
   $str = '';
   // Do a time-independent day's between calculation (there might be a better
@@ -213,6 +219,10 @@ function getMoney($value) {
   return sprintf("%01.2f", round($value, 2));
 }
 
+function getGasMoney($value) {
+  return sprintf("%01.3f", round($value, 3));
+}
+
 function getPercent($value) {
   return sprintf("%01.2f", round($value, 2));
 }
@@ -260,6 +270,10 @@ function printForm($doc, $errors) {
     </div>
     <?php
     }
+    
+    // Get 'stats' so we can fill in some default values
+    $stats = $doc->stats();
+    
     ?>
     
     <form id="frmNew" method="post" action="<?php echo $doc->formUrl(); ?>">    
@@ -271,7 +285,7 @@ function printForm($doc, $errors) {
         <div class="input">
           <span class="inputlabel">
             <input type="datetime-local" name="datetime" id="datetime" form="frmNew" class="datetime" required="required" aria-required="true" value="<?php echo date(GlApp::DATE_FORMAT); ?>" />
-           <button id="btnNow">Now</button>
+           <a id="btnNow" class="link-button">Now</a>
           </span>
           <br />
           <span class="datetimeformat-label">(YYYY-MM-DD HH:MM:SS)</span>
@@ -287,7 +301,12 @@ function printForm($doc, $errors) {
         </div>
         <div class="input">
           <span class="distanceinput inputlabel">
-            <input type="number" name="mileage" id="mileage" form="frmNew"  class="mileage" maxlength="6" required="required" min="0" max="1000000" step="1" placeholder="Current mileage" autofocus <?php if (isset($_POST['mileage'])) echo 'value="' . $_POST['mileage'] . '"'; ?> />
+            <input type="number" name="mileage" id="mileage" form="frmNew"  class="mileage" maxlength="6" required="required" min="0" max="1000000" step="1" placeholder="Current mileage" autofocus <?php 
+              if (isset($_POST['mileage']))
+                echo 'value="' . $_POST['mileage'] . '"';
+              else if (isset($stats['last']['mileage']) && isset($stats['all']['tripdistance']))
+                echo 'value="' . getMiles($stats['last']['mileage'] + $stats['all']['tripdistance']) . '"';
+            ?> />
             <script>$(document).trigger('autofocus_ready');</script>
           </span>
         </div>
@@ -302,7 +321,12 @@ function printForm($doc, $errors) {
         </div>
         <div class="input">
           <span class="inputlabel">
-            <input type="text" name="location" id="location" form="frmNew" class="location" placeholder="Current location" <?php if (isset($_POST['location'])) echo 'value="' . $_POST['location'] . '"'; ?> />
+            <input type="text" name="location" id="location" form="frmNew" class="location" placeholder="Current location" <?php 
+            if (isset($_POST['location']))
+              echo 'value="' . $_POST['location'] . '"';
+            else if (isset($stats['all']['location']))
+              echo 'value="' . $stats['all']['location'] . '"';
+            ?> />
           </span>
         </div>
         <div class="desc"><p>The location of the fillup. This will probably be the name of the gas station, but it doesn't really matter.</p>
@@ -316,7 +340,12 @@ function printForm($doc, $errors) {
         </div>
         <div class="input">
           <span class="currencyinput inputlabel">
-            <input type="number" name="pricepergallon" id="pricepergallon" form="frmNew"  maxlength="5" class="price pricepergallon" required="required" min="0.0" max="9.999" step="0.01" placeholder="Price/gallon" <?php if (isset($_POST['pricepergallon'])) echo 'value="' . $_POST['pricepergallon'] . '"'; ?> />
+            <input type="number" name="pricepergallon" id="pricepergallon" form="frmNew"  maxlength="5" class="price pricepergallon" required="required" min="0.0" max="9.999" step="0.01" placeholder="Price/gallon" <?php
+              if (isset($_POST['pricepergallon'])) 
+                echo 'value="' . $_POST['pricepergallon'] . '"';
+              else if (isset($stats['last']['pricepergallon']))
+                echo 'value="' . getGasMoney($stats['last']['pricepergallon']) . '"';
+              ?> />
           </span>
         </div>
         <div class="desc"><p>The price of fuel per gallon. Don't forget the extra <math><mfrac><mn>9</mn><mn>10</mn></mfrac></math>!</p>
@@ -829,9 +858,9 @@ else {
             $errors['pumpprice'] = true;
           }
           
-          print_r($_POST);
-          echo "You have " . count($errors) . " errors";
-          print_r($errors);
+          //print_r($_POST);
+          //echo "You have " . count($errors) . " errors";
+          //print_r($errors);
         }
         
         if ($mode == GlApp::MODE_NEW || count($errors) > 0) {

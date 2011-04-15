@@ -17,6 +17,39 @@ h2 {
   padding: 1em;
 }
 
+.errornotice {
+  margin: 1em;
+  padding: 1em;
+}
+
+.formrow {
+  margin: 0.5em;
+}
+
+.formrow .desc {
+  margin: 0.5em;
+  padding: 0;
+}
+
+.label {
+  font-size: 1.75em;
+  padding: 0;
+  float: none;
+  width: auto;
+}
+
+.input {
+  float: none;
+}
+
+.inputlabel, textarea {
+  font-size: 1.25em;
+}
+
+.location {
+  width: 100%;
+}
+
 .statrow span.arrow {
   position: absolute;
   right: 0.1em;

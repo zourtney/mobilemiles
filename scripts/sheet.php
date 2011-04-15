@@ -101,6 +101,8 @@ class GlStatSheet extends GlSheet {
       $ret[$colName]['costperday']   = $raw[$colLetter . '7']['value'];
       $ret[$colName]['costpermile']  = $raw[$colLetter . '8']['value'];
       $ret[$colName]['location']     = $raw[$colLetter . '9']['value'];
+      $ret[$colName]['mileage']      = (isset($raw[$colLetter . '10']['value']) ? $raw[$colLetter . '10']['value'] : null);
+      $ret[$colName]['pricepergallon'] = $raw[$colLetter . '11']['value'];
     }
     
     return $ret;
