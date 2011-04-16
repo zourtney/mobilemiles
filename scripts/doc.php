@@ -100,7 +100,7 @@ class GlDoc {
   }
   
   public function title() {
-    return $this->doc->title->text;
+    return trim(str_replace(FILTER_TEXT, '', $this->doc->title->text));
   }
   
   public function stats() {

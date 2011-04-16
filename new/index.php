@@ -1,4 +1,12 @@
 <?php
+/**
+ * @copyright: Copyright 2011 randomland.net.
+ * @license:   Apache 2.0; see `license.txt`
+ * @author:    zourtney@randomland.net
+ * 
+ * This psuedo-page redirects you to the main application with the document ID
+ * passed in, and takes you straight to the 'new entry' form.
+ */
 
 // Global constants
 require_once '../scripts/globals.php';

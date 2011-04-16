@@ -15,9 +15,9 @@ if (DEBUG) {
   echo '<div style="margin: 0; padding: 1em; display: block; background: #ff7777;">Debug Mode -- localhost</div>';
   
   define('BASE_URL', 'http://localhost/gaslog/trunk/');
-  define('FILTER_TEXT', 'occlness');
+  define('FILTER_TEXT', '(occlness)');
 }
 else {
   define('BASE_URL', 'http://gas.randomland.net/');
-  define('FILTER_TEXT', 'rlgaslog');
+  define('FILTER_TEXT', '(rlgaslog)');
 }
