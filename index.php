@@ -1,5 +1,17 @@
 <!DOCTYPE html>
 <?php
+/**
+ * @copyright: Copyright 2011 randomland.net.
+ * @license:   Apache 2.0; see `license.txt`
+ * @author:    zourtney@randomland.net
+ * 
+ * This simple application utilizes a Google Spreadsheet to keep track of gas
+ * fill-up stats. There are two main functions right now:
+ *   - printStats(): prints average mpg, cost, etc
+ *   - printForm(): shows a form which allows the user to add a new entry.
+ *                  Use this every time you fill up :-)
+ */
+
 // ****************************************************************************
 // Include the loader script
 require_once 'Zend/Loader.php';
@@ -28,16 +40,26 @@ require_once 'scripts/sheet.php';
 // Start the session
 session_start();
 
+// Respect mobile flag in GET parameters
+if (isset($_GET['m'])) {
+  if ($_GET['m'] == true) {
+    $_SESSION['mobile'] = true;
+  }
+  else {
+    $_SESSION['mobile'] = false;
+  }
+}
+
 // ****************************************************************************
 ?>
 <html>
 <head>
-  <title>RandomDoc Test</title>
+  <title>Gas Log</title>
   
   <link rel="stylesheet" href="style.css" type="text/css" />
   <?php
     // Add mobile stylesheet. It will override a lot of what's in style.css.
-    if (isset($_SESSION['mobile'])) {
+    if (isset($_SESSION['mobile']) && $_SESSION['mobile'] == true) {
     ?>
       <link rel="stylesheet" href="m/style.css" type="text/css" />
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -196,6 +218,10 @@ function getFriendlyDatetime($datetime) {
   return $str;
 }
 
+/**
+ * Returns an up or down arrow, formatted in HTML and assigned the color passed
+ * in.
+ */
 function getArrowHtml($color, $value) {
   $str = '<span class="arrow" style="color: ' . $color . ';">';
   
@@ -207,22 +233,43 @@ function getArrowHtml($color, $value) {
   return $str . '</span>'; 
 }
 
+/**
+ * Returns a copy of the value passed in, formatted for MPG display.
+ * NOTE: does not apend 'mpg'. This is done using CSS.
+ */
 function getMpg($value) {
   return round($value, 2);
 }
 
+/**
+ * Returns a copy of the value passed in, formatted for distance display.
+ * NOTE: does not append 'mi'. This is done using CSS.
+ */
 function getMiles($value) {
   return (int)$value;
 }
 
+/**
+ * Returns a copy of the value passed in, formatted for monetary display.
+ * NOTE: does not prepend '$'. This is done using CSS.
+ */
 function getMoney($value) {
   return sprintf("%01.2f", round($value, 2));
 }
 
+/**
+ * Returns a copy of the value passed in, formatted for price-per-gallon 
+ * display.
+ * NOTE: does not prepend '$'. This is done using CSS.
+ */
 function getGasMoney($value) {
   return sprintf("%01.3f", round($value, 3));
 }
 
+/**
+ * Returns a copy of the value passed in, formatted for percentage display.
+ * NOTE: does not append '%'. This is done using CSS.
+ */
 function getPercent($value) {
   return sprintf("%01.2f", round($value, 2));
 }
@@ -703,7 +750,7 @@ function printDocList($app, $docs) {
   </p>
   */
   ?>
-  <p>Select from the list of documents below. If you wish to create another, get the <a href="#" title="Not yet implemented">master document</a> and store a copy of it in your Google Docs with the extension <code><?php echo GlApp::FILTER_TEXT; ?></code>.
+  <p>Select from the list of documents below. If you wish to create another, get the <a href="#" title="Not yet implemented">master document</a> and store a copy of it in your Google Docs with the extension <code><?php echo FILTER_TEXT; ?></code>.
   </p>
   <ul>
 <?php
@@ -776,6 +823,10 @@ if (! $auth->isLoggedIn() && ! $auth->hasGetToken()) {
   <p>Before we can continue, you must <a href="<?php echo $auth->getUrl(); ?>" title="Authorize your Google account">authorize</a> access to your Google account.
   </p>
   <?php
+  
+  // Save get parameters. We will reuse these upon redirect...
+  $app = new GlApp($auth);
+  $app->saveGetVars();
 }
 else if (! $auth->login()) {
   // I don't know how you got here.
@@ -786,7 +837,13 @@ else if (! $auth->login()) {
 else {
   // Create instance of the app
   $app = new GlApp($auth);
+  
+  // Merge in pre-login vars (if any)
+  $app->mergeSavedGetVars();
+  
+  // Get the application mode (show, new, etc)
   $mode = $app->getMode();
+  
   //echo "mode=$mode";
   
   /*if ($mode == GlApp::MODE_NEWDOC ||

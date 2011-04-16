@@ -42,6 +42,7 @@ class GlDoc {
         $this->doc = $this->app->getService()->getSpreadsheetEntry($query);
       }
       catch (Zend_Gdata_App_Exception $e) {
+        echo $e;
         GlApp::setLastError($e);
         throw new Exception('GlDoc::__construct(): unable to create document');
       }

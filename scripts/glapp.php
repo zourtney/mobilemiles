@@ -9,12 +9,11 @@
  */
 
 class GlApp {
-  const FILTER_TEXT = 'occlness';
-  
   const GET_ID = 'id';
   const GET_ACTION = 'action';
   const GET_ACTION_NEW = 'new';
   const GET_ACTION_SUBMITNEW = 'submitnew';
+  const SESSION_STORED_GET = 'preloginget';
   //const GET_ACTION_NEWDOC = 'newdoc';
   //const GET_ACTION_SUBMITNEWDOC = 'submitnewdoc';
   
@@ -97,12 +96,26 @@ class GlApp {
     $available = array();
     
     foreach ($docs as $doc) {
-      if (stripos($doc->title->text, GlApp::FILTER_TEXT) !== FALSE) {
+      if (stripos($doc->title->text, FILTER_TEXT) !== FALSE) {
         array_push($available, new GlDoc($this, $doc, false));
       }
     }
     
     return $available;
+  }
+  
+  public function saveGetVars() {
+    $_SESSION[GlApp::SESSION_STORED_GET] = serialize($_GET);
+  }
+  
+  public function mergeSavedGetVars() {
+    // Merge $_GET parameters with stored parameters. If $_GET contains some
+    // parameters stored in $preLoginState, $_GET will take precedence.
+    if (isset($_SESSION[GlApp::SESSION_STORED_GET])) {
+      $storedGet = unserialize($_SESSION[GlApp::SESSION_STORED_GET]);
+      $_GET = array_merge($storedGet, $_GET);
+      unset($_SESSION[GlApp::SESSION_STORED_GET]);
+    }
   }
   /*
   public function createNewDoc($name) {
