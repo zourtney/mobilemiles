@@ -10,7 +10,7 @@ body {
 }
 
 header#top {
-  background: #dddddd;
+  background: url('images/pump.png') no-repeat;
 }
 
 h1 {
@@ -34,6 +34,12 @@ article {
 
 p {
   padding: 0.5em;
+}
+
+#top h1 a {
+  text-decoration: none;
+  color: #333333;
+  display: block;
 }
 
 .formrow {

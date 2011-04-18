@@ -281,7 +281,7 @@ function printForm($doc, $errors) {
 ?>
 <header id="top">
   <hgroup>
-    <h1><?php echo $doc->title(); ?></h1>
+    <h1><a href="<?php echo BASE_URL . '?' . GlApp::GET_ID . '=' . $_GET[GlApp::GET_ID]; ?>"><?php echo $doc->title(); ?></a></h1>
     <h2>New Entry</h2>
   </hgroup>
 </header>
@@ -320,7 +320,6 @@ function printForm($doc, $errors) {
     
     // Get 'stats' so we can fill in some default values
     $stats = $doc->stats();
-    
     ?>
     
     <form id="frmNew" method="post" action="<?php echo $doc->formUrl(); ?>">    
@@ -467,7 +466,7 @@ function printStats($doc, $message = null) {
 ?>
 <header id="top">
   <hgroup>
-    <h1><?php echo $doc->title(); ?></h1>
+    <h1><a href="<?php echo BASE_URL . '?' . GlApp::GET_ID . '=' . $_GET[GlApp::GET_ID]; ?>"><?php echo $doc->title(); ?></a></h1>
     <h2>Stats</h2>
   </hgroup>
 </header>
@@ -750,7 +749,7 @@ function printDocList($app, $docs) {
   </p>
   */
   ?>
-  <p>Select from the list of documents below. If you wish to create another, get the <a href="#" title="Not yet implemented">master document</a> and store a copy of it in your Google Docs with the extension <code><?php echo FILTER_TEXT; ?></code>.
+  <p>Select from the list of documents below. If you wish to add a new gas log, make a copy of the <a href="https://spreadsheets.google.com/ccc?key=0AnRif0EzefXxdEViXzFGdjlJLXNXYlBhdXFmUERqTnc&hl=en" title="Master document" target="_blank">master document</a> via <code>File -> Make a copy..</code>. Save it with the extension <code><?php echo FILTER_TEXT; ?></code> so it shows up in the list below.
   </p>
   <ul>
 <?php
@@ -762,49 +761,6 @@ function printDocList($app, $docs) {
 </article>
 <?php
 }
-
-/**
- * Prints the form which allows you to enter the name of a new document.
- */
-/*function printNewDocForm($app, $errors) {
-?>
-<header id="top">
-  <hgroup>
-    <h1>New Document</h1>
-    <h2>Enter the information about your new gas log</h2>
-  </hgroup>
-</header>
-<article>
-  <fieldset>
-    <!-- Mileage -->
-    <div class="formrow required<?php if (isset($errors['docname'])) echo " invalid";?>">
-      <div class="label">
-        <label for="mi">Vehicle Name</label>
-      </div>
-      <div class="input">
-        <span class="inputlabel">
-          <input type="text" name="docname" id="docname" form="frmNewDoc"  class="docname" required="required" placeholder="General Lee" autofocus  <?php if (isset($_POST['docname'])) echo 'value="' . $_POST['docname'] . '"'; ?> />
-          <script>$(document).trigger('autofocus_ready');</script>
-        </span>
-      </div>
-      <div class="desc"><p>Enter a uniquely identifying name for the vehicle. This will become part of the spreadsheet filename. For example, entering <code>General Lee</code> will result in the spreadsheet name <code>General Lee Gas Log</code>.</p>
-      </div>
-    </div>
-    <form id="frmNewDoc" method="post" action="<?php echo $app->newDocFormUrl(); ?>">
-    <div class="formrow">
-      <div class="submit">
-        <span id="btnClear" class="link-button">Clear</span>
-        &nbsp;
-        <input type="submit" name="submit" value="Submit" />
-      </div>
-    </div>
-  </fieldset>
-</article>
-<?php
-}
-*/
-
-
 
 /**
  * Entry point (sorta)
@@ -844,34 +800,6 @@ else {
   // Get the application mode (show, new, etc)
   $mode = $app->getMode();
   
-  //echo "mode=$mode";
-  
-  /*if ($mode == GlApp::MODE_NEWDOC ||
-      $mode == GlApp::MODE_SUBMITNEWDOC
-     ) {
-    // Creating a new document (or doing server-side input verification)
-    $errors = array();
-    
-    if ($mode == GlApp::MODE_SUBMITNEWDOC) {
-      // Not really anything to validate (yet...)
-      if (! isset($_POST['docname']) || strlen($_POST['docname']) < 1) {
-        $errors['docname'] = true;
-      }
-    }
-    
-    if ($mode == GlApp::MODE_NEWDOC || count($errors) > 0) {
-      // We are creating a new spreadsheet
-      printNewDocForm($app, $errors);
-    }
-    else {
-      // Ready to submit...
-      $cleanVals = array();
-      
-      $cleanVals['docname'] = htmlspecialchars($_POST['docname']);
-      echo "Creating new document " . $cleanVals['docname'];
-    }
-  }
-  else*/
   if ($mode == GlApp::MODE_DOCONLY ||
            $mode == GlApp::MODE_NEW || 
            $mode == GlApp::MODE_SUBMITNEW

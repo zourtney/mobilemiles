@@ -14,15 +14,11 @@ class GlApp {
   const GET_ACTION_NEW = 'new';
   const GET_ACTION_SUBMITNEW = 'submitnew';
   const SESSION_STORED_GET = 'preloginget';
-  //const GET_ACTION_NEWDOC = 'newdoc';
-  //const GET_ACTION_SUBMITNEWDOC = 'submitnewdoc';
   
   const MODE_NONE = 0;
   const MODE_DOCONLY = 1;
   const MODE_NEW = 2;
   const MODE_SUBMITNEW = 3;
-  //const MODE_NEWDOC = 4;
-  //const MODE_SUBMITNEWDOC = 5;
   
   const DATE_FORMAT = 'Y-m-d H:i:s';
   const DATE_FORMAT_FULL = 'l, F jS, Y';
@@ -57,16 +53,6 @@ class GlApp {
       // No action, but we do have an ID
       return GlApp::MODE_DOCONLY;
     }
-    /*else if (isset($_GET[GlApp::GET_ACTION])) {
-      // Action, but no document
-      if ($_GET[GlApp::GET_ACTION] == GlApp::GET_ACTION_NEWDOC)
-        return GlApp::MODE_NEWDOC;
-      if ($_GET[GlApp::GET_ACTION] == GlApp::GET_ACTION_SUBMITNEWDOC)
-        return GlApp::MODE_SUBMITNEWDOC;
-      
-      // What are you trying to do?
-      return GlApp::MODE_NONE;
-    }*/
     
     // No ID, no discernible mode
     return GlApp::MODE_NONE;
@@ -117,19 +103,7 @@ class GlApp {
       unset($_SESSION[GlApp::SESSION_STORED_GET]);
     }
   }
-  /*
-  public function createNewDoc($name) {
-    
-  }
   
-  public function newDocUrl() {
-    return BASE_URL . '?' . GlApp::GET_ACTION . '=' . GlApp::GET_ACTION_NEWDOC;
-  }
-  
-  public function newDocFormUrl() {
-    return BASE_URL . '?' . GlApp::GET_ACTION . '=' . GlApp::GET_ACTION_SUBMITNEWDOC;
-  }
-  */
   public static function setLastError($e) {
     GlApp::$lastError = $e;
   }
