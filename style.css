@@ -10,7 +10,7 @@ body {
 }
 
 header#top {
-  background: url('images/pump.png') no-repeat;
+  background: #dddddd;
 }
 
 h1 {
