@@ -1,3 +1,8 @@
+<?php
+  // Start the session
+  session_start();
+?>
+
 <!DOCTYPE html>
 <?php
 /**
@@ -37,9 +42,6 @@ require_once 'scripts/glapp.php';
 require_once 'scripts/doc.php';
 require_once 'scripts/sheet.php';
 
-// Start the session
-session_start();
-
 // Respect mobile flag in GET parameters
 if (isset($_GET['m'])) {
   if ($_GET['m'] == true) {
@@ -57,6 +59,7 @@ if (isset($_GET['m'])) {
   <title>Gas Log</title>
   
   <link rel="stylesheet" href="style.css" type="text/css" />
+  <link rel="shortcut icon" href="favicon.ico" />
   <?php
     // Add mobile stylesheet. It will override a lot of what's in style.css.
     if (isset($_SESSION['mobile']) && $_SESSION['mobile'] == true) {
@@ -73,6 +76,10 @@ if (isset($_GET['m'])) {
       if (val < 10)
         return '0' + val;
       return val;
+    }
+    
+    function getMoney(val) {
+      return val.toFixed(2);
     }
     
     function getCurrentTimeString() {
@@ -110,6 +117,9 @@ if (isset($_GET['m'])) {
       });
       
       //TODO: clear button which works on all forms (get parent form ID, etc)
+      
+      //TODO: auto-calculate cost when ppg and gallons are filled
+      
     });
   </script>
 </head>
@@ -412,6 +422,13 @@ function printForm($doc, $errors) {
             <option name="plus" id="plus" value="1">Plus</option>
             <option name="sup" id="sup" value="2">Supreme</option>
           </select>
+          
+          <script type="text/javascript">
+            $('#gallons').change(function() {
+              var estCost = $('#pricepergallon').val() * $('#gallons').val();
+              $('#pumpprice').val(getMoney(estCost));
+            });
+          </script>
         </div>
         <div class="desc"><p>The number of gallons added during the fillup. For the most meaningful statistical results, always fill the tank completely.</p>
         </div>
