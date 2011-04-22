@@ -50,6 +50,8 @@ class GlDoc {
     $this->id = $parts[count($parts) - 1];
     
     // You may not want to get references to the worksheets
+    //TODO: change so you specify the sheets you want, or just get them when you
+    // need them.
     if ($getSheets) {
       // Get the raw-data input sheet
       $this->dataSheet = new GlDataSheet($this, $this->getSheetByTitle(GlDataSheet::SHEET_TITLE));

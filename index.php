@@ -91,7 +91,7 @@ session_start();
 
 // Respect mobile flag in GET parameters
 if (isset($_GET['m'])) {
-  if ($_GET['m'] == true) {
+  if ($_GET['m'] === 'true') {
     $_SESSION['mobile'] = true;
   }
   else {
@@ -137,11 +137,11 @@ else {
       // spreadsheet when I realize that I've messed up some calculations. :-P
       $minVersion = $doc->getVersionInfo();
       
-      if ($minVersion['app'] > GlApp::VERSION) {
+      if ($minVersion['app'] == null || $minVersion['app'] > GlApp::VERSION) {
         // Display message saying this app is too old (shouldn't happen).
         printOldApp($minVersion['app']);
       }
-      else if ($minVersion['doc'] < GlDoc::VERSION) {
+      else if ($minVersion['doc'] == null || $minVersion['doc'] < GlDoc::VERSION) {
         // Display message saying the spreadsheet is out of date. This prevents
         // us from writing to old documents. Sure, it's rude to not be backwards
         // compatible, but...seriously, who else is going to be using this?

@@ -241,5 +241,8 @@ include('header.php');
 </article>
 
 <?php
+// We probably don't need to include jQuery, etc, actually...
+//include('js.php');
+
 include('footer.php');
 ?>

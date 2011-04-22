@@ -85,9 +85,7 @@ include('header.php');
                 echo 'value="' . $_POST['mileage'] . '"';
               else if (isset($stats['last']['mileage']) && isset($stats['all']['tripdistance']))
                 echo 'value="' . getMiles($stats['last']['mileage'] + $stats['all']['tripdistance']) . '"';
-            ?> />
-            <script>$(document).trigger('autofocus_ready');</script>
-          </span>
+            ?> /></span>
         </div>
         <div class="desc"><p>The mileage at the time of the fillup. Round to the nearest mile. Do not use puncuation.</p>
         </div>
@@ -145,13 +143,6 @@ include('header.php');
             <option name="plus" id="plus" value="1">Plus</option>
             <option name="sup" id="sup" value="2">Supreme</option>
           </select>
-          
-          <script type="text/javascript">
-            $('#gallons').change(function() {
-              var estCost = $('#pricepergallon').val() * $('#gallons').val();
-              $('#pumpprice').val(getMoney(estCost));
-            });
-          </script>
         </div>
         <div class="desc"><p>The number of gallons added during the fillup. For the most meaningful statistical results, always fill the tank completely.</p>
         </div>
@@ -197,6 +188,11 @@ include('header.php');
   </fieldset>
 </article>
 
+<?php
+// First include jQuery and our helper functions.
+include('js.php');
+?>
+
 <script type="text/javascript">
   // Set focus to the mileage box
   $(document).bind('autofocus_ready', function() {
@@ -206,6 +202,8 @@ include('header.php');
   });
   
   $(document).ready(function() {
+    //TODO: consider making time string continuously update.
+    //TODO: find out format which Chrome will not flag it as an invalid date.
     //$('#datetime').val(getCurrentTimeString());
 
     $('#btnNow').click(function() {
@@ -223,6 +221,37 @@ include('header.php');
     
     //TODO: clear button which works on all forms (get parent form ID, etc)
     
+    // Update price estimate when number of gallons is changed
+    $('#gallons').change(function() {
+      var estCost = $('#pricepergallon').val() * $('#gallons').val();
+      $('#pumpprice').val(getMoney(estCost));
+    });
+    
+    // Geo-location
+    //TODO: 
+    //  1. get position
+    //  2. match to positions in $doc
+    //  3. return friendly name, if match is found
+    //
+    //  If not (or they say that's not where they are):
+    //  1. have them enter the friendly name
+    //  2. save the location to $doc
+    //
+    /*function geoSuccess(loc) {
+      console.log(loc.coords.longitude + ', ' + loc.coords.latitude);
+    }
+    
+    function geoFail(e) {
+      console.log('Error: ' + e.code);
+    }
+    
+    if (navigator.geolocation !== undefined) {
+      navigator.geolocation.getCurrentPosition(geoSuccess, geoFail);
+    }*/
+    
+    // Page is as loaded as it will be...(was originally inserted by the HTML
+    // form element 'mileage'.
+    $(document).trigger('autofocus_ready');
   });
 </script>
 

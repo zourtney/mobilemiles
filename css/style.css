@@ -23,6 +23,32 @@ h2 {
   background: #cccccc;
 }
 
+#footer {
+  background: #dddddd;
+  display: block;
+  padding: 0.5em;
+}
+
+ #copyright {
+  position: absolute;
+  right: 1em;
+}
+
+#copyright a {
+  text-decoration: none;
+  color: #aaaaaa;
+}
+
+#footer #version {
+  text-align: center;
+}
+
+/*#footer #version #version-box {
+}
+
+#footer #version .active {
+}*/
+
 ul {
   padding-left: 2em;
 }
