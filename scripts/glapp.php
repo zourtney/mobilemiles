@@ -9,6 +9,8 @@
  */
 
 class GlApp {
+  const VERSION = APP_VERSION;
+  
   const GET_ID = 'id';
   const GET_ACTION = 'action';
   const GET_ACTION_NEW = 'new';

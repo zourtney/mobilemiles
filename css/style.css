@@ -314,3 +314,16 @@ div.statrow {
 .statrow .percent:after {
   content: "%";
 }
+
+.debug-banner {
+  /* Something obnoxious :-) */
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  padding: 1em;
+  text-align: center;
+  color: white;
+  background: rgba(255, 100, 100, 0.5);
+}

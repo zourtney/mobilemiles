@@ -8,23 +8,15 @@
  */
 
 class GlDoc {
-  protected $app;       /* GlApp */
-  protected $doc;       /* Zend_Gdata_SpreadsheetEntry */
-  protected $id;        /* string */
-  protected $dataSheet; /* GlDataSheet */
-  protected $statSheet; /* GlStatSheet */
+  const VERSION = SPREADSHEET_VERSION;
+  const MASTER_URL = SPREADSHEET_MASTER_URL;
   
-  /*public static function createNew() {
-    //TODO: figure out how to create a document with all of the worksheets we
-    // want. Append GlDataSheet::createNew(), and others. This will be the way 
-    // to create a new "log"
-    $dataSheet = GlDataSheet::createNew();
-    $calcSheet = GlStatSheet::createNew();
-    
-    //TODO: append to new spreadsheet
-    
-    return null;
-  }*/
+  protected $app;          /* GlApp */
+  protected $doc;          /* Zend_Gdata_SpreadsheetEntry */
+  protected $id;           /* string */
+  protected $dataSheet;    /* GlDataSheet */
+  protected $statSheet;    /* GlStatSheet */
+  protected $versionSheet; /* GlVersionSheet */
   
   public function __construct($app, $id, $getSheets = true) {
     if (! $app instanceof GlApp) {
@@ -64,6 +56,9 @@ class GlDoc {
       
       // Get the calculations sheet
       $this->statSheet = new GlStatSheet($this, $this->getSheetByTitle(GlStatSheet::SHEET_TITLE));
+      
+      // Get the version sheet
+      $this->versionSheet = new GlVersionSheet($this, $this->getSheetByTitle(GlVersionSheet::SHEET_TITLE));
     }
   }
   
@@ -106,5 +101,10 @@ class GlDoc {
   public function stats() {
     $stats = $this->statSheet->getStats();
     return $stats;
+  }
+  
+  public function getVersionInfo() {
+    $version = $this->versionSheet->getVersionInfo();
+    return $version;
   }
 }

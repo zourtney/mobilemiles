@@ -111,3 +111,29 @@ class GlStatSheet extends GlSheet {
   //TODO: how do I make it auto-create rows when they're entered in the data 
   // sheet?
 }
+
+class GlVersionSheet extends GlSheet {
+  const SHEET_TITLE = 'Version';
+  
+  public function __construct($d, $s) {
+    parent::__construct($d, $s);
+    
+    if ($this->sheet->title->text !== GlVersionSheet::SHEET_TITLE) {
+      throw new Exception('GlVersionSheet::__construct(): wrong sheet');
+      // "'" . this->sheet->title->text . "'"
+    }
+  }
+  
+  public function getVersionInfo() {
+    //TODO: figure out how to use "range" parameter so we only query for what
+    // we need.
+    $raw = $this->sheet->getContentsAsCells();
+    $ret = array();
+    
+    $ret['app'] = (isset($raw['B2']['value']) && is_numeric($raw['B2']['value'])) ? $raw['B2']['value'] : null;
+    
+    $ret['doc'] = (isset($raw['B3']['value']) && is_numeric($raw['B3']['value'])) ? $raw['B3']['value'] : null;
+    
+    return $ret;
+  }
+}
