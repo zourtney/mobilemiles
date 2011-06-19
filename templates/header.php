@@ -20,6 +20,15 @@
     ?>
       <link rel="stylesheet" href="css/mobile.css" type="text/css" />
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+      
+      <script type="text/javascript">
+        // Hide the address bar in iOS
+        addEventListener('load', function() {
+          setTimeout(function() {
+            window.scrollTo(0, 1);
+          }, 0);
+        }, false);
+      </script>
     <?php 
     }
   ?>

@@ -111,8 +111,7 @@ if (! $auth->isLoggedIn() && ! $auth->hasRequestToken()) {
   $app->saveGetVars();
 }
 else if (! $auth->login()) {
-  // I don't know how you got here.
-  //printAuthFailed($auth);
+  // Probably got here because you denied access from your Google account.
   printUnauthorized($auth);
 }
 else {
