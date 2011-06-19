@@ -34,8 +34,13 @@ else {
   define('FILTER_TEXT', '(rlgaslog)');
 }
 
+// Include interfaces
+require_once 'scripts/interfaces.php';
+
 // Authentication functions
-require_once 'scripts/auth.php';
+//require_once 'scripts/auth.php';
+require_once 'scripts/oauth_secret.php';
+require_once 'scripts/oauth.php';
 
 // Application logic
 require_once 'scripts/utils.php';

@@ -100,9 +100,9 @@ if (isset($_GET['m'])) {
 } 
 
 // Create the authentication object.
-$auth = new GlAuth();
+$auth = new GlOAuth();
 
-if (! $auth->isLoggedIn() && ! $auth->hasGetToken()) {
+if (! $auth->isLoggedIn() && ! $auth->hasRequestToken()) {
   // Display link to login
   printUnauthorized($auth);
   
