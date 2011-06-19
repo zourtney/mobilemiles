@@ -105,8 +105,8 @@ class Gdata_OAuth_Helper extends Zend_Oauth_Consumer {
    * @return Zend_OAuth_Token_Access||null
    */
   public function fetchAccessToken() {
-    if (!isset($_SESSION['ACCESS_TOKEN'])) {
-      if (!empty($_GET) && isset($_SESSION['REQUEST_TOKEN'])) {
+    if (! isset($_SESSION['ACCESS_TOKEN'])) {
+      if (! empty($_GET) && isset($_SESSION['REQUEST_TOKEN'])) {
         return parent::getAccessToken($_GET, unserialize($_SESSION['REQUEST_TOKEN']));
       }
     }
@@ -120,7 +120,6 @@ class Gdata_OAuth_Helper extends Zend_Oauth_Consumer {
  */
 class GlOAuth extends Gdata_OAuth_Helper implements iGlAuth {
   const COOKIE_NAME = 'rl_glapp_access_token';
-  const COOKIE_EXPIRATION = 360;
   const SCOPE = 'http://spreadsheets.google.com/feeds https://spreadsheets.google.com/feeds http://docs.google.com/feeds';
   
   protected $client; /* Zend_Gdata_HttpClient */
@@ -138,25 +137,37 @@ class GlOAuth extends Gdata_OAuth_Helper implements iGlAuth {
   }
   
   public function hasRequestToken() {
-    return isset($_SESSION['REQUEST_TOKEN']);
+    return isset($_GET['action']) && (
+      $_GET['action'] == 'request_token' || $_GET['action'] == 'access_token'
+    );
   }
   
   public function getRequestUrl() {
-    $_SESSION['REQUEST_TOKEN'] = serialize($this->fetchRequestToken(GlOAuth::SCOPE, BASE_URL . '?action=access_token'));
-    return $this->getRedirectUrl(array('hd' => null));
+    return BASE_URL . '?action=request_token';
   }
   
   public function login() {
-    if (! isset($_SESSION['ACCESS_TOKEN'])) {
-      $_SESSION['ACCESS_TOKEN'] = serialize($this->fetchAccessToken());
-      echo "setting cookie...";
-      setcookie(GlOAuth::COOKIE_NAME, $_SESSION['ACCESS_TOKEN'], time()+GlOAuth::COOKIE_EXPIRATION);
+    try {
+      switch (@$_REQUEST['action']) {
+        case 'request_token':
+          $_SESSION['REQUEST_TOKEN'] = serialize($this->fetchRequestToken(GlOAuth::SCOPE, BASE_URL . '?action=access_token'));
+          $this->authorizeRequestToken();
+          break;
+        case 'access_token':
+          $_SESSION['ACCESS_TOKEN'] = serialize($this->fetchAccessToken());
+          header('Location: ' . BASE_URL);
+          break;
+        default:
+          $accessToken = unserialize($_SESSION['ACCESS_TOKEN']);
+          $this->client = $accessToken->getHttpClient($this->getOauthOptions());
+
+          setcookie(GlOAuth::COOKIE_NAME, $_SESSION['ACCESS_TOKEN'], time() + OAUTH_COOKIE_EXPIRATION);
+
+          return true;
+      }
     }
-    
-    if (isset($_SESSION['ACCESS_TOKEN'])) {
-      $accessToken = unserialize($_SESSION['ACCESS_TOKEN']);
-      $this->client = $accessToken->getHttpClient($this->getOauthOptions());
-      return true;
+    catch (Exception $ex) {
+      //TODO: log?
     }
     
     return false;

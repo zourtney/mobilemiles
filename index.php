@@ -112,7 +112,8 @@ if (! $auth->isLoggedIn() && ! $auth->hasRequestToken()) {
 }
 else if (! $auth->login()) {
   // I don't know how you got here.
-  printAuthFailed($auth);
+  //printAuthFailed($auth);
+  printUnauthorized($auth);
 }
 else {
   // Create instance of the app
