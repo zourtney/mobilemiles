@@ -7,7 +7,7 @@
  * Server-side of AJAX call to get the name of a location as stored in a 
  * spreadsheet.
  */
-
+/*
 // Start session
 session_start();
 
@@ -33,6 +33,6 @@ if ($auth->login()) {
     
     // Find match
   }
-}
+}*/
 
-json_encode(array("name"=>"John","time"=>"2pm"));
+echo json_encode(array("name"=>"John","time"=>"2pm"));

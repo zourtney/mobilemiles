@@ -24,9 +24,10 @@
           'id': 0
         },
         function(data) {
-          //$('#matches').append('<li>' + data + '</li>');
-          console.log(data);
-        }
+          $('#matches').append('<li>' + data.name + '</li>');
+          //console.log('got back: ');
+        },
+        "json"
       );
     }
     
