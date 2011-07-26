@@ -1,355 +1,98 @@
-* {
-  padding: 0;
-  margin: 0;
-}
 
-body {
-  padding: 0.5em;
-  background: #aaaaaa;
-  font-family: Calibri, 'Trebuchet MS', Trebuchet, 'Lucida Sans Unicode', helvetica, 'Lucida Grande', 'Lucida Sans', Arial, 'DejaVu Sans', sans-serif;
-}
 
-header#top {
-  background: #dddddd;
-}
-
-h1 {
-  padding: 0.25em;
-}
-
-h2 {
-  padding: 0.1em;
-  padding-left: 1em;
-  background: #cccccc;
-}
-
-#footer {
-  background: #dddddd;
-  display: block;
-  padding: 0.5em;
-}
-
- #copyright {
-  position: absolute;
-  right: 1em;
-}
-
-#copyright a {
-  text-decoration: none;
-  color: #aaaaaa;
-}
-
-#footer #version {
-  text-align: center;
-}
-
-/*#footer #version #version-box {
-}
-
-#footer #version .active {
-}*/
-
-ul {
-  padding-left: 2em;
-}
-
-article {
-  background: white;
-  padding-bottom: 2em;
-}
-
-p {
-  padding: 0.5em;
-}
-
-#top h1 a {
-  text-decoration: none;
-  color: #333333;
-  display: block;
-}
-
-.formrow {
-  border-bottom: 1px dashed #cccccc;
-  margin: 1.5em;
-}
-
-.label {
-  float: left;
-  width: 100px;
-  font-weight: bold;
-  color: #777777;
-  padding: 1em;
-}
-
-.required label {
-  color: #990000;
-}
-
-.required .input:before {
-  color: #990000;
+.required > label:after {
+  color: #aa0000;
   content: "*";
 }
 
 .invalid {
-  background: #ffbbbb;
+  color: #aa0000;
 }
 
-.errornotice {
-  background: #ffbbbb;
-  margin: 1em 4em 1em 4em;
-  padding: 2em;
-  border: 1px dashed #770000;
+label.disabled {
+  color: #aaaaaa;
 }
 
-input, textarea {
-  font-family: Arial;
-}
-
-input:focus:invalid {
-  border: 1px solid red;
-}
-
-input[type="datetime-local"] {
-  background: none;
-  border: 2px dotted #cccccc;
-  width: 12em;
-}
-
-input[type="number"].price {
-  width: 5.5em;
-}
-
-.inputlabel {
-  font-size: 0.8em;
-}
-
-.inputlabel input {
-  font-size: 1em;
-}
-
-.input {
-  float: left;
-  margin-top: 0.8em;
-  display: block;
-}
-
-.desc {
-  clear: both;
+.li-centered {
   padding-left: 4em;
-  padding-right: 2em;
-  padding-bottom: 1.5em;
-  font-size: 0.8em;
-  color: #777777;
-}
-
-.datetimeformat-label {
-  font-size: 0.6em;
-  color: #777777;
-  padding-left: 3em;
-}
-
-.currencyinput:before {
-  color: #007700;
-  content: "$";
-}
-
-.distanceinput:after {
-  content: "mi";
-}
-
-.liquidinput:after {
-  content: "gal";
-}
-
-input[type="number"].mileage {
-  width: 8em;
-}
-
-.location {
-  width: 20em;
-}
-
-.pricepergallon {
-  
-}
-
-.grade {
-  
-}
-
-.gallons {
-  width: 6em;
-}
-
-.pumpprice {
-  
-}
-
-.notes {
-  width: 100%;
-}
-
-.submit {
-  background: #cccccc;
-  padding: 1em;
-  text-align: right;
-}
-
-.link-button {
-  color: blue;
-  text-decoration: underline;
-  font-size: 0.8em;
-  cursor: pointer;
-}
-
-.docname {
-}
-
-.message {
-  background: #fffdcc;
-  margin: 1em 4em 1em 4em;
-  padding: 2em;
-  border: 1px dashed #ffdf01;
-}
-
-fieldset.stats {
-  margin: 1.5em;
-  background: white;
-  border: 1px solid #777777;
-}
-
-fieldset.stats legend {
-  font-size: 1.33em;
-  margin-left: 0.25em;
-  margin-right: 0.25em;
-  padding: 0.25em;
-  border: 1px solid #777777;
-  background: #eeeeee;
-}
-
-fieldset.stats legend .datetime {
-  color: #007700;
-}
-
-.statdesc {
-  padding: 1em;
-}
-
-.statdesc .location {
-  border-bottom: 1px dotted #777777;
-}
-
-.statdesc .datetime {
-  border-bottom: 1px dotted #007700;
-}
-
-div.statrow {
-  margin: 1em;
-  border-bottom: 1px dashed #777777; 
-}
-
-.statrow div.arrow {
-  position: relative;
-}
-
-.statrow span.arrow {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  font-size: 4.5em;
-  opacity: 0.1; /* for Firefox */
-  filter:alpha(opacity=0.1); /* for IE */
-  
-  /* http://css-tricks.com/examples/TextStroke/ */
-  text-shadow: 2px 2px 0 black,
-    -1px -1px 0 black,  
-     1px -1px 0 black,
-    -1px  1px 0 black,
-     1px  1px 0 black;
-}
-
-.statrow .content {
-  margin-left: 2em;
-}
-
-.statrow .value {
-  font-size: 2.5em;
-  /* http://css-tricks.com/examples/TextStroke/ */
-  text-shadow: 2px 2px 0 black,
-    -1px -1px 0 black,  
-     1px -1px 0 black,
-    -1px  1px 0 black,
-     1px  1px 0 black;
-}
-
-.statrow .value:after {
-  padding-left: 0em;
-  font-size: 0.75em;
-  color: #eeeeee;
-  
-  /* http://css-tricks.com/examples/TextStroke/ */
-  text-shadow: 2px 2px 0 black,
-    -1px -1px 0 black,
-     1px -1px 0 black,
-    -1px  1px 0 black,
-     1px  1px 0 black;
-}
-
-.statrow.cost .value:after {
-  content: "to fill up";
-}
-
-.statrow.costperday .value:after {
-  content: "per day";
-}
-
-.statrow .desc {
-  padding: 0;
-}
-
-.statrow .desc .better {
-  color: #007700;
-}
-
-.statrow .desc .worse {
-  color: #770000;
-}
-
-.statrow .desc .mpg, 
-.statrow .desc .distance,
-.statrow .desc .cost,
-.statrow .desc .percent {
-  font-size: 1em;
-  font-weight: bold;
-  text-shadow: none;
-  font-family: Consolas, Lucidatypewriter, monospace, "Courier New";
-}
-
-.statrow .mpg:after {
-  content: "mpg";
-}
-
-.statrow .distance:after {
-  content: "mi";
-}
-
-.statrow .cost:before {
-  content: "$";
-}
-
-.statrow .percent:after {
-  content: "%";
-}
-
-.debug-banner {
-  /* Something obnoxious :-) */
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: block;
-  width: 100%;
-  padding: 1em;
   text-align: center;
+}
+
+.ajax-loading {
+  margin-left: 4em;
+  text-align: center;
+  padding: 1em;
+  background-color: rgba(0, 0, 0, 0.1);
+  -moz-border-radius: 9px;
+	-webkit-border-radius: 9px;
+	border-radius: 9px;
+}
+
+.ajax-loading .loading-img {
+  margin: 0 auto;
+  background-image: url('../images/jqm-ajax-loader.png');
+	width: 35px;
+	height: 35px;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+	background-size: 35px 35px;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+/**
+ * Spinning preloader for text boxes. We need to use `!important` because jQuery
+ * Mobile is dynamically adding all kinds of styles which will override this.
+ */
+.ajax-textbox {
+  background-image: url('../images/ajax-loader-small.gif') !important;
+  background-repeat: no-repeat !important;
+  background-position: center right !important;
+  /*TODO: make right-padding actually work with jQuery Mobile */
+}
+
+.header {
+
+}
+
+.header > .back,
+.header > .settings {
+  /* display: none doesn't work here, but it does work when it's in a style
+     attribute. Wow.
+  */
+  /*display: none !important;*/
+}
+
+/* Red button -- https://gist.github.com/909284 */
+.ui-btn-up-f, .ui-btn-hover-f, .ui-btn-down-f {
   color: white;
-  background: rgba(255, 100, 100, 0.5);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.ui-btn-up-f {
+  border: 1px solid #711414;
+  background: #ab2525;
+  text-shadow: 0 -1px 1px #711414;
+  background-image: -moz-linear-gradient(top, #c44f4f, #ab2525);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #c45e5e), color-stop(1, #9e3939));
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#c44f4f', EndColorStr='#ab2525')";
+}
+
+.ui-btn-hover-f {
+  border: 1px solid #6e0000;
+  background: #b54a4a;
+  text-shadow: 0 -1px 1px #690101;
+  background-image: -moz-linear-gradient(top, #d47272, #b54a4a);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #d47272), color-stop(1, #b54a4a));
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#d47272', EndColorStr='#b54a4a')";
+}
+
+.ui-btn-down-f {
+  border: 1px solid #782323;
+  background: #c44f4f;
+  text-shadow: 0 -1px 1px #782323;
+  background-image: -moz-linear-gradient(top, #9e3939, #c44f4f);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #9e3939), color-stop(1, #c44f4f));
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#9e3939', EndColorStr='#c44f4f')";
 }

@@ -73,7 +73,7 @@ function getThresholdText($value, $slightValue, $significantValue,
  *   - yesterday evening
  *   - 2011-04-14
  */
-function getFriendlyDatetime($datetime, $stats) {
+/*function getFriendlyDatetime($datetime, $stats) {
   $str = '';
   // Do a time-independent day's between calculation (there might be a better
   // way to do this...)
@@ -106,6 +106,31 @@ function getFriendlyDatetime($datetime, $stats) {
   }
   
   return $str;
+}
+*/
+
+function getFriendlyDatetime($datetime) {
+  $time = strtotime($datetime);
+  $daysBetween = (time() - $time) / 86400;
+  
+  if ($daysBetween < 0.5) {
+    $secondsBetween = (time() - $time);
+    
+    if ($secondsBetween < 3600)
+      return round($secondsBetween / 60) . ' minutes ago';
+    if ($secondsBetween < 7200)
+      return 'an hour ago';
+    return round($secondsBetween / 3600) . ' hours ago';
+  }
+  if ($daysBetween < 1)
+    return 'Today';
+  if ($daysBetween < 2)
+    return 'Yesterday';
+  if ($daysBetween < 5)
+    return round($daysBetween) . ' days ago';
+  if ($daysBetween < 8)
+    return strftime('%A', $time);
+  return strftime('%m/%d/%y', $time);
 }
 
 /**
@@ -167,7 +192,7 @@ function getPercent($value) {
 /**
  * Returns an associative array of entry-form input errors.
  */
-function getFormErrors($mode) {
+/*function getFormErrors($mode) {
   $errors = array();
         
   if ($mode != GlApp::MODE_SUBMITNEW) {
@@ -211,7 +236,7 @@ function getFormErrors($mode) {
  * Returns an array of form values (taken from $_POST) and sanitized for input
  * in the spreadsheet.
  */
-function sanitizeFormValues() {
+/*function sanitizeFormValues() {
   //TODO: actually clean the values. Could probably put it in the 
   // case above...
   //
@@ -230,3 +255,31 @@ function sanitizeFormValues() {
   
   return $cleanVals;
 }
+
+/**
+ * 
+ */
+/*function printHeader($h1, $h2 = '', $back = null, $showAbout = true) {
+  $_SESSION['header_h1'] = $h1;
+  
+  if (strlen($h2) > 0) {
+    $_SESSION['header_h2'] = $h2;
+  }
+  
+  if ($back != null && count($back) > 0) {
+    $_SESSION['header_back'] = $back;
+  }
+  
+  //if ($showAbout) {
+    $_SESSION['header_showabout'] = $showAbout;
+  //}
+  
+  include(TEMPLATE_BASE . '/header.php');
+}
+
+/*
+ *
+ */
+/*function printFooter() {
+  include(TEMPLATE_BASE . '/footer.php');
+}*/

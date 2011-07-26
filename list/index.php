@@ -5,11 +5,21 @@
  * @author:    zourtney@randomland.net
  * 
  * This file displays a list of available gas logs.
- *
- * The following variables are available to you:
- *   - $app: the GlApp instance
- *   - $docs: array of GlDoc objects holding valid gas logs
  */
+ 
+/*****************************************************************************
+ * Global constants and includes
+ *****************************************************************************/
+require_once '../scripts/globals.php';
+
+// Display the splash screen, authorization may take a second or so.
+include(TEMPLATE_BASE . '/splash.php');
+include(TEMPLATE_BASE . '/pageopen.php');
+include(TEMPLATE_BASE . '/ui.php');
+
+/*****************************************************************************
+ * Page display logic
+ *****************************************************************************/
 ?>
 
 <script id="doclist-loading" type="text/x-jquery-tmpl">
@@ -27,7 +37,7 @@
 <script id="doclist-show" type="text/x-jquery-tmpl">
   <ul id="ul-doc-list" data-role="listview" data-inset="true">
     <li data-role="list-divider">Select existing</li>
-    {{each(i, doc) docs}}<li><a href="${doc.url}">${doc.title}</a></li>{{/each}}
+    {{each(i, doc) docs}}<li><a href="${doc.url}" rel="external">${doc.title}</a></li>{{/each}}
   </ul>
   
   <a id='ul-doc-list-refresh' data-role="button" data-icon="refresh" data-iconpos="top">Refresh</a>
@@ -61,15 +71,14 @@
        * Loads document list
        */
       function populateDocList() {
-        //TODO: SCRIPT_BASE constant
-        var url = 'scripts/ajax_doclist.php';
+        var url = '<?php echo SCRIPT_URL; ?>ajax_doclist.php';
         
         // Make AJAX call
         $.ajax({
           url: url,
           dataType: 'json',
           data: {
-            callee: '<?php echo BASE_URL; ?>#doclist'
+            callee: '<?php echo BASE_URL; ?>list/'
           },
           beforeSend: function() {
             $('#doclist-container').empty();
@@ -148,3 +157,9 @@
   </div>
   <?php glFooter(); ?>
 </div>
+
+<?php
+/*****************************************************************************
+ * End of page
+ *****************************************************************************/
+include(TEMPLATE_BASE . '/pageclose.php');

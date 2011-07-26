@@ -128,6 +128,7 @@ class GlOAuth extends Gdata_OAuth_Helper implements iGlAuth {
     parent::__construct(OAUTH_CONSUMER_KEY, OAUTH_SECRET);
     
     if (isset($_COOKIE[GlOAuth::COOKIE_NAME])) {
+      //echo 'cookie exists as ' . $_COOKIE[GlOAuth::COOKIE_NAME];
       $_SESSION['ACCESS_TOKEN'] = $_COOKIE[GlOAuth::COOKIE_NAME];
     }
   }
@@ -142,26 +143,58 @@ class GlOAuth extends Gdata_OAuth_Helper implements iGlAuth {
     );
   }
   
-  public function getRequestUrl() {
-    return BASE_URL . '?action=request_token';
+  function hasLogoutToken() {
+    return isset($_GET['action']) && $_GET['action'] == 'logout';
   }
   
-  public function login() {
+  public function getRequestUrl() {
+    return LOGIN_URL . '?action=request_token';
+  }
+  
+  public function getLogoutUrl() {
+    return LOGIN_URL . '?action=logout';
+  }
+  
+  public function getRequestToken() {
+    $_SESSION['REQUEST_TOKEN'] = serialize($this->fetchRequestToken(GlOAuth::SCOPE, LOGIN_URL . '?action=access_token'));
+    $this->authorizeRequestToken();
+  }
+  
+  public function getAccessToken($nextUrl) {
+    $_SESSION['ACCESS_TOKEN'] = serialize($this->fetchAccessToken());
+    header('Location: ' . $nextUrl);
+  }
+  
+  public function getExistingAccessToken() {
+    $accessToken = unserialize($_SESSION['ACCESS_TOKEN']);
+    $this->client = $accessToken->getHttpClient($this->getOauthOptions());
+    
+    if (! isset($_COOKIE[GlOAuth::COOKIE_NAME])) {
+      setcookie(GlOAuth::COOKIE_NAME, $_SESSION['ACCESS_TOKEN'], time() + OAUTH_COOKIE_EXPIRATION);
+    }
+  }
+  
+  public function logIn($nextUrl) {
     try {
       switch (@$_REQUEST['action']) {
         case 'request_token':
-          $_SESSION['REQUEST_TOKEN'] = serialize($this->fetchRequestToken(GlOAuth::SCOPE, BASE_URL . '?action=access_token'));
-          $this->authorizeRequestToken();
+          $this->getRequestToken();
+          //$_SESSION['REQUEST_TOKEN'] = serialize($this->fetchRequestToken(GlOAuth::SCOPE, LOGIN_URL . '?action=access_token'));
+          //$this->authorizeRequestToken();
+          //NOTE: redirects, so no return value
           break;
         case 'access_token':
-          $_SESSION['ACCESS_TOKEN'] = serialize($this->fetchAccessToken());
-          header('Location: ' . BASE_URL);
-          break;
+          $this->getAccessToken($nextUrl);
+          //$_SESSION['ACCESS_TOKEN'] = serialize($this->fetchAccessToken());
+          //header('Location: ' . $nextUrl);
+          //break;
+          //return true;
         default:
-          $accessToken = unserialize($_SESSION['ACCESS_TOKEN']);
-          $this->client = $accessToken->getHttpClient($this->getOauthOptions());
+          //$accessToken = unserialize($_SESSION['ACCESS_TOKEN']);
+          //$this->client = $accessToken->getHttpClient($this->getOauthOptions());
 
-          setcookie(GlOAuth::COOKIE_NAME, $_SESSION['ACCESS_TOKEN'], time() + OAUTH_COOKIE_EXPIRATION);
+          //setcookie(GlOAuth::COOKIE_NAME, $_SESSION['ACCESS_TOKEN'], time() + OAUTH_COOKIE_EXPIRATION);
+          $this->getExistingAccessToken();
 
           return true;
       }
@@ -171,6 +204,28 @@ class GlOAuth extends Gdata_OAuth_Helper implements iGlAuth {
     }
     
     return false;
+  }
+  
+  public function logOut() {
+    //TODO: fix! This does not work at all!
+    /*$_SESSION = array();
+    
+    if (isset($_COOKIE[session_name()])) {
+      setcookie(session_name(), '', time()-42000, '/');
+      unset($_COOKIE[session_name()]);
+    }
+    
+    setcookie(GlOAuth::COOKIE_NAME, time() - 3600);
+    unset($_COOKIE[GlOAuth::COOKIE_NAME]);
+    
+    session_destroy();
+    */
+    //session_start(); // initialize session
+    session_destroy(); // destroy session
+    
+    $past = time() - 3600;
+    setcookie(GlOAuth::COOKIE_NAME, null, $past);
+    setcookie('PHPSESSID', '', $past, '/'); // delete session cookie 
   }
   
   public function createService() {

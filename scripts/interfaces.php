@@ -13,7 +13,10 @@
 interface iGlAuth {
   public function isLoggedIn();
   public function hasRequestToken();
+  public function hasLogoutToken();
   public function getRequestUrl();
-  public function login();
+  public function getLogoutUrl();
+  public function logIn($nextUrl);
+  public function logOut();
   public function createService();
 }

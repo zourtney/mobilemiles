@@ -15,6 +15,7 @@ class GlDoc {
   protected $doc;          /* Zend_Gdata_SpreadsheetEntry */
   protected $id;           /* string */
   protected $dataSheet;    /* GlDataSheet */
+  protected $calcSheet;    /* GlCalcSheet */
   protected $statSheet;    /* GlStatSheet */
   protected $versionSheet; /* GlVersionSheet */
   
@@ -57,6 +58,9 @@ class GlDoc {
       $this->dataSheet = new GlDataSheet($this, $this->getSheetByTitle(GlDataSheet::SHEET_TITLE));
       
       // Get the calculations sheet
+      $this->calcSheet = new GlCalcSheet($this, $this->getSheetByTitle(GlCalcSheet::SHEET_TITLE));
+      
+      // Get the stats sheet
       $this->statSheet = new GlStatSheet($this, $this->getSheetByTitle(GlStatSheet::SHEET_TITLE));
       
       // Get the version sheet
@@ -84,7 +88,7 @@ class GlDoc {
     return $this->id;
   }
   
-  public function url() {
+  /*public function url() {
     return BASE_URL . '?id=' . $this->id;
   }
   
@@ -94,7 +98,7 @@ class GlDoc {
   
   public function newUrl() {
     return BASE_URL . '?id=' . $this->id . '&action=new';
-  }
+  }*/
   
   public function title() {
     return trim(str_replace(FILTER_TEXT, '', $this->doc->title->text));
@@ -103,6 +107,36 @@ class GlDoc {
   public function stats() {
     $stats = $this->statSheet->getStats();
     return $stats;
+  }
+  
+  public function mostRecentEntries($offset = 0, $num = -1) {
+    //TODO: merge calcs.MPG column with location, etc on FormData sheet.
+    // (or create yet another worksheet)
+    $dataRows = $this->dataSheet->mostRecentEntries($offset, $num);
+    $calcRows = $this->calcSheet->mostRecentEntries($offset, $num);
+    $stats = $this->statSheet->getStats();
+    
+    $ret = array();
+    
+    for ($i = 0; $i < count($dataRows); $i++) {
+      $dr = $dataRows[$i];
+      $cr = $calcRows[$i];
+      
+      array_push($ret, array(
+        'datetime' => $dr[0],
+        'friendlydatetime' => getFriendlyDatetime($dr[0]),
+        'mileage' => getMiles($dr[1]),
+        'location' => $dr[2],
+        'gallons' => $dr[5],
+        'distance' => getMiles($cr[1]),
+        'mpg' => getMpg($cr[2]),
+        'mpgdelta' => getMpg($cr[2] - $stats['all']['mpg']),
+        'pumpprice' => getMoney($dr[6]),
+        'pricepergallon' => getGasMoney($dr[3])
+      ));
+    }
+    
+    return $ret;
   }
   
   public function getVersionInfo() {

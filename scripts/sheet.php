@@ -32,6 +32,34 @@ class GlSheet {
   protected function service() {
     return $this->doc->getApp()->getService();
   }
+  
+  public function mostRecentEntries($offset = 0, $num = -1) {
+    //TODO: filter so we're only fetching the rows we want!
+    
+    //echo $this->sheet->getRowCount();
+    //$lastRow = max(1, (int)$this->sheet->getRowCount() - $offset);
+    $query = new Zend_Gdata_Spreadsheets_ListQuery();
+    $query->setSpreadsheetKey($this->doc->id());
+    $query->setWorksheetId($this->id);
+    //$query->setSpreadsheetQuery('');
+    //$query->setMinRow(min(1, $lastRow - $num));
+    //$query->setMaxRow($lastRow);
+    $feed = $this->service()->getListFeed($query);
+    $ret = array();
+    
+    foreach ($feed->entries as $entry) {
+      $row = $entry->getCustom();
+      
+      $cellData = array();
+      foreach($row as $cell) {
+        array_push($cellData, $cell->getText());
+      }
+      
+      array_push($ret, $cellData);
+    }
+    
+    return array_splice(array_reverse($ret), $offset, $num);
+  }
 }
 
 /**
@@ -60,7 +88,23 @@ class GlDataSheet extends GlSheet {
 }
 
 /**
- * GlCalcSheet is an instance of a calculation worksheet used by GlDoc
+ * GlCalcSheet is an instance of a calculations worksheet used by GlDoc
+ */
+class GlCalcSheet extends GlSheet {
+  const SHEET_TITLE = 'Calculations';
+  
+  public function __construct($d, $s) {
+    parent::__construct($d, $s);
+    
+    if ($this->sheet->title->text !== GlCalcSheet::SHEET_TITLE) {
+      throw new Exception('GlStatSheet::__construct(): wrong sheet');
+      // "'" . this->sheet->title->text . "'"
+    }
+  }
+}
+
+/**
+ * GlCalcSheet is an instance of a statistical worksheet used by GlDoc
  */
 class GlStatSheet extends GlSheet {
   const SHEET_TITLE = 'Stats';
