@@ -68,6 +68,7 @@ include(TEMPLATE_BASE . '/ui.php');
 </script>
 
 <script id="tmpl-entrylist-details" type="text/x-jquery-tmpl">
+  <p>Details for fill-up, <strong>${friendlydatetime.toLowerCase()}</strong> at <strong>${location}</strong>.</p>
   <div data-role="collapsible-set">
     <div data-role="collapsible">
       <h3>Fuel Ecomony</h3>
@@ -75,17 +76,25 @@ include(TEMPLATE_BASE . '/ui.php');
       </p>
     </div>
     <div data-role="collapsible" data-collapsed="true">
-      <h3>Distance</h3>
-      <p>You traveled <strong>${distance} miles</strong> on approximately <strong>${gallons}</strong> of gasoline during this trip. <!--This is up 14 miles from your average trip distance.--></p>
+      <h3>Distance and Consumption</h3>
+      <p>You traveled <strong>${distance} miles</strong> on <strong>${gallons}</strong> of gasoline during this trip. <!--This is up 14 miles from your average trip distance.--></p>
     </div>
     <div data-role="collapsible" data-collapsed="true">
-      <h3>Location</h3>
-      <p>You filled up at <strong>${location}</strong>.</p>
+      <h3>Time and Location</h3>
+      <p>You filled up at <strong>${location}</strong> on <strong>${datetime}</strong>.</p>
     </div>
     <div data-role="collapsible" data-collapsed="true">
       <h3>Cost</h3>
       <p>You spent $<strong>${pumpprice}</strong> at $<strong>${pricepergallon}</strong>/gallon. <!--This is more than your previous fill-up, but down 5% from 6 months ago.-->
       </p>
+    </div>
+    <div data-role="collapsible" data-collapsed="true">
+      <h3>Notes</h3>
+      {{if notes}}
+        <p>${notes}</p>
+      {{else}}
+        <p class="disabled">No notes for this fill-up</p>
+      {{/if}}
     </div>
   </div>
 </script>
@@ -278,9 +287,13 @@ include(TEMPLATE_BASE . '/ui.php');
     <script type="text/javascript">
       $('#details').live('pageshow', function() {
         if (detailEntry != null && detailEntry !== undefined) {
-          console.log('showing details with ' + detailEntry);
+          // Display the template
           $('#tmpl-entrylist-details')
-            .tmpl(detailEntry)
+            .tmpl(detailEntry, {
+              toLower: function(str) {
+                return str.toLowerCase();
+              }
+            })
             .appendTo($('#details [data-role="content"]').empty())
           ;
           

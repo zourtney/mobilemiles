@@ -132,7 +132,8 @@ class GlDoc {
         'mpg' => getMpg($cr[2]),
         'mpgdelta' => getMpg($cr[2] - $stats['all']['mpg']),
         'pumpprice' => getMoney($dr[6]),
-        'pricepergallon' => getGasMoney($dr[3])
+        'pricepergallon' => getGasMoney($dr[3]),
+        'notes' => $dr[7]
       ));
     }
     

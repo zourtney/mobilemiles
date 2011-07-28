@@ -4,8 +4,7 @@
  * @license:   Apache 2.0; see `license.txt`
  * @author:    zourtney@randomland.net
  * 
- * This file creates the page for the mobile version. Commonly used 'pages' are
- * stored in this file as to reduce in-app loading time.
+ * Home page for the MobileMiles webapp.
  */
 
 /*****************************************************************************
@@ -24,15 +23,14 @@ include(TEMPLATE_BASE . '/ui.php');
 ?>
 <script id="tmpl-home" type="text/x-jquery-tmpl">
   <div data-role="content">
-    <p id="debugmessage"></p>
-    <p id="message">You're home.</p>
-    <p>Click to see the  <a href="<?php echo BASE_URL; ?>list/" rel="external">document list</a>.</p>
+    <p id="message">Welcome to <strong>MobileMiles</strong>, the webapp for tracking your gas station fill-up stats from your mobile device.</p>
+    <p>If you're just getting started, save a copy of the <a href="<?php echo SPREADSHEET_MASTER_URL; ?>" rel="external" target="_blank">master spreadsheet</a> to your Google Docs account with <code><?php echo FILTER_TEXT; ?></code> in the filename. Once you're ready, view your  <a href="<?php echo BASE_URL; ?>list/" rel="external">document list</a> and start entering and viewing data. </p>
   </div>
 </script>
 
 <script id="tmpl-home-unauthorized" type="text/x-jquery-tmpl">
-  <p>Not authorized</p>
-  <p>Click <a href="#login">Here to log in.</p>
+  <p><strong>Not authorized.</strong></p>
+  <p>You must first  <a href="<?php echo BASE_URL; ?>settings/" rel="external">grant</a> access to your Google Docs account.</p>
 </script>
 
 <div id="home" data-role="page">

@@ -64,6 +64,17 @@ function glHeader($v) {
       echo 'style="display: none;"';
     } ?> data-icon="gear" class="ui-btn-right" data-iconpos="right" data-inline="true" href="<?php echo BASE_URL; ?>settings/" rel="external">Settings</a>
   </div>
+  <?php
+    if (DEBUG) {
+    ?>
+      <div id="debug-banner">
+        <div class="content">
+          Development version
+        </div>
+      </div>
+    <?php
+    }
+  ?>
   <!-- End of header -->
 <?php
 }
@@ -71,9 +82,11 @@ function glHeader($v) {
 function glFooter() {
 ?>
   <!-- Start of footer -->
-  <div data-role="footer">
-    <div id="footer">
-      <a href="http://twitter.com/randomnets" class="rl-link">@randomnets</a>
+  <div id="footer">
+    <div data-role="footer">
+      <div class="content">
+      <a href="http://github.com/zourtney/mobilemiles" rel="external" target="_blank">mobilemiles</a> by zourtney
+      </div>
     </div>
   </div>
   <!-- End of footer -->

@@ -276,7 +276,7 @@ include(TEMPLATE_BASE . '/ui.php');
                 console.log('parent: ' + $p.length);
                 if ($p.length) {
                   pos = $p.offset().top;
-                  console.log('set position as ' + pos);
+                  //console.log('set position as ' + pos);
                 }
               }
               

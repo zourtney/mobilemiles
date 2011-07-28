@@ -35,8 +35,8 @@ defndef('SPREADSHEET_VERSION', 1.0);
 defndef('SPREADSHEET_MASTER_URL', 'https://spreadsheets.google.com/ccc?key=0AnRif0EzefXxdEViXzFGdjlJLXNXYlBhdXFmUERqTnc&hl=en');
 
 if (DEBUG) {
-  defndef('BASE', $_SERVER['DOCUMENT_ROOT'] . '/gaslog/trunk/');
-  defndef('BASE_URL', 'http://localhost/gaslog/trunk/');
+  defndef('BASE', $_SERVER['DOCUMENT_ROOT'] . '/mobilemiles/');
+  defndef('BASE_URL', 'http://localhost/mobilemiles/');
   defndef('FILTER_TEXT', '(occlness)');
 }
 else {

@@ -1,4 +1,49 @@
+div[data-role="content"] {
+  padding-bottom: 2.5em;
+}
 
+div[data-role="footer"] {
+  min-height: 2.5em;
+}
+
+#debug-banner {
+  position: fixed;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 0.25em;
+  height: 100%;
+  background: rgba(200, 0, 0, 0.2);
+  z-index: 10;
+  pointer-events: none;
+  padding: 3em 0.5em 0.5em 0.5em;
+}
+
+#debug-banner .content {
+  /* Stupid adjustments to align the rotated text... */
+  position: absolute;
+  left: -242px;
+  width: 500px;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+#footer .content {
+  float: right;
+  margin: 1em 0.5em 1em 0;
+  font-size: 0.75em;
+  color: #777777;
+}
+
+#footer .content a {
+  text-decoration: none;
+}
 
 .required > label:after {
   color: #aa0000;
@@ -9,7 +54,7 @@
   color: #aa0000;
 }
 
-label.disabled {
+p.disabled, label.disabled {
   color: #aaaaaa;
 }
 
