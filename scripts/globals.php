@@ -56,6 +56,9 @@ defndef('TEMPLATE_URL', BASE_URL . 'templates/');
 defndef('JS_BASE', BASE . 'js/');
 defndef('JS_URL', BASE_URL . 'js/');
 
+defndef('PAGE_BASE', BASE . 'pages/');
+defndef('PAGE_URL', BASE_URL . 'pages/');
+
 // Include interfaces
 require_once SCRIPT_BASE . 'interfaces.php';
 

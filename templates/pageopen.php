@@ -17,11 +17,9 @@
       
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     
-    <!--
-      TEMPORARILY REMOVED: see issue #2, comment #1 (merge into monolithic app)
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    -->
+    
     <script src="http://code.jquery.com/jquery.min.js"></script>
     
     <script type="text/javascript" src="<?php echo JS_URL . 'utils.js'; ?>"></script>
