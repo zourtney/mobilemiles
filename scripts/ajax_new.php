@@ -88,6 +88,8 @@ function getSanitizedValues() {
   //TODO: actually clean the values. Could probably put it in the 
   // case above...
   //
+  //TDOD: consider using $_POST instead of $_GET!
+  //
   // Also, this is probably overkill when we could just copy the
   // entirety of $_POST...not that we can guarantee people won't
   // jam malicious data into it.
@@ -114,15 +116,15 @@ if (! session_id()) {
 }
 
 // Set the document ID (or return error if it's missing)
-if (! isset($_GET['id']) || strlen($_GET['id']) < 1) {
+if (! isset($_GET['doc']) || strlen($_GET['doc']) < 1) {
   echo json_encode(array(
-    'response' => 'new_no_id',
+    'response' => 'new_no_doc',
     'values' => getInputValues()
   ));
   exit;
 }
 // else:
-$docId = $_GET['id'];
+$docId = $_GET['doc'];
 
 // Create or get handle to the authentication object.
 if (! isset($_SESSION['GlApp_GlOAuth'])) {

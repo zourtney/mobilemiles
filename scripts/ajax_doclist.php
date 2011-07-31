@@ -45,7 +45,7 @@ else {
   
   foreach ($docs as $doc) {
     array_push($retVal, array(
-      'url' => BASE_URL . 'view/?id=' . $doc->id(),
+      'id' => $doc->id(),
       'title' => $doc->title()
     ));
   }

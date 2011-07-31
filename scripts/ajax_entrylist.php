@@ -18,7 +18,7 @@ if (! session_id()) {
 // Set the document ID (or return error if it's missing)
 if (! isset($_GET['id']) || strlen($_GET['id']) < 1) {
   echo json_encode(array(
-    'response' => 'entrylist_no_id'
+    'response' => 'entrylist_no_doc'
   ));
   exit;
 }

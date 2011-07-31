@@ -55,8 +55,26 @@ function getMoney(val) {
 var $_GET = {};
 document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
   function decode(s) {
-      return decodeURIComponent(s.split("+").join(" "));
+      return decodeURIComponent(s.split('+').join(' '));
   }
 
   $_GET[decode(arguments[1])] = decode(arguments[2]);
 });
+
+
+function MobileMilesApp() {
+  // Initialize 'doc' through GET params (if existing)
+  if ($_GET.hasOwnProperty('doc') && $_GET['doc'].length > 0) {
+    this.doc = $_GET['doc'];
+  }
+  
+  // Returns whether or a document has been set
+  this.isDocValid = function() {
+    return (this.doc !== undefined && this.doc.length > 0);
+  };
+  
+  this.refreshDocList = true;
+  this.refreshEntryList = true;
+};
+
+var mobileMiles = new MobileMilesApp();

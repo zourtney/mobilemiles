@@ -31,6 +31,7 @@ function defndef($name, $val) {
 // Constants
 defndef('DEBUG', (strstr($_SERVER['SERVER_NAME'], 'localhost') !== false));
 defndef('APP_VERSION', 1.0);
+defndef('SYSTEM_ADMIN_URI', 'mailto:zourtney@randomland.net');
 defndef('SPREADSHEET_VERSION', 1.0);
 defndef('SPREADSHEET_MASTER_URL', 'https://spreadsheets.google.com/ccc?key=0AnRif0EzefXxdEViXzFGdjlJLXNXYlBhdXFmUERqTnc&hl=en');
 

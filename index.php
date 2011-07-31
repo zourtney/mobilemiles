@@ -21,18 +21,26 @@ include(TEMPLATE_BASE . '/ui.php');
  * Page display logic
  *****************************************************************************/
 ?>
+
+<!-- *********************************************************************** -->
+<!-- Templates                                                               -->
+<!-- *********************************************************************** -->
 <script id="tmpl-home" type="text/x-jquery-tmpl">
   <div data-role="content">
     <p id="message">Welcome to <strong>MobileMiles</strong>, the webapp for tracking your gas station fill-up stats from your mobile device.</p>
-    <p>If you're just getting started, save a copy of the <a href="<?php echo SPREADSHEET_MASTER_URL; ?>" rel="external" target="_blank">master spreadsheet</a> to your Google Docs account with <code><?php echo FILTER_TEXT; ?></code> in the filename. Once you're ready, view your  <a href="<?php echo BASE_URL; ?>list/" rel="external">document list</a> and start entering and viewing data. </p>
+    <p>If you're just getting started, save a copy of the <a href="<?php echo SPREADSHEET_MASTER_URL; ?>" rel="external" target="_blank">master spreadsheet</a> to your Google Docs account with <code><?php echo FILTER_TEXT; ?></code> in the filename. Once you're ready, view your  <a href="#list">document list</a> and start entering and viewing data. </p>
   </div>
 </script>
 
 <script id="tmpl-home-unauthorized" type="text/x-jquery-tmpl">
   <p><strong>Not authorized.</strong></p>
-  <p>You must first  <a href="<?php echo BASE_URL; ?>settings/" rel="external">grant</a> access to your Google Docs account.</p>
+  <p>You must first  <a href="<?php echo BASE_URL; ?>#settings">grant</a> access to your Google Docs account.</p>
 </script>
 
+
+<!-- *********************************************************************** -->
+<!-- Primary page: home screen                                               -->
+<!-- *********************************************************************** -->
 <div id="home" data-role="page">
   <?php glHeader(array(
     'title' => 'Home',
@@ -84,6 +92,11 @@ include(TEMPLATE_BASE . '/ui.php');
 </script>
 
 <?php
+include(BASE . '/settings.php');
+include(BASE . '/list.php');
+include(BASE . '//view.php');
+include(BASE . '/new.php');
+
 /*****************************************************************************
  * End of page
  *****************************************************************************/

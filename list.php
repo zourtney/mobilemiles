@@ -6,24 +6,17 @@
  * 
  * This file displays a list of available gas logs.
  */
- 
-/*****************************************************************************
- * Global constants and includes
- *****************************************************************************/
-require_once '../scripts/globals.php';
-
-// Display the splash screen, authorization may take a second or so.
-include(TEMPLATE_BASE . '/splash.php');
-include(TEMPLATE_BASE . '/pageopen.php');
-include(TEMPLATE_BASE . '/ui.php');
 
 /*****************************************************************************
  * Page display logic
  *****************************************************************************/
 ?>
 
-<script id="doclist-loading" type="text/x-jquery-tmpl">
-  <ul id="ul-doc-list" data-role="listview" data-inset="true">
+<!-- *********************************************************************** -->
+<!-- Templates                                                               -->
+<!-- *********************************************************************** -->
+<script id="list-loading" type="text/x-jquery-tmpl">
+  <ul id="ul-list" data-role="listview" data-inset="true">
     <li data-role="list-divider">&nbsp;</li>
     <li>
       <div class="ajax-loading">
@@ -34,24 +27,26 @@ include(TEMPLATE_BASE . '/ui.php');
   </ul>
 </script>
 
-<script id="doclist-show" type="text/x-jquery-tmpl">
-  <ul id="ul-doc-list" data-role="listview" data-inset="true">
+<script id="list-show" type="text/x-jquery-tmpl">
+  <ul id="ul-list" data-role="listview" data-inset="true">
     <li data-role="list-divider">Select existing</li>
-    {{each(i, doc) docs}}<li><a href="${doc.url}" rel="external">${doc.title}</a></li>{{/each}}
+    {{each(i, doc) docs}}<li><a class="view-link" data-id="${doc.id}" href="#view">${doc.title}</a></li>{{/each}}
   </ul>
   
-  <a id='ul-doc-list-refresh' data-role="button" data-icon="refresh" data-iconpos="top">Refresh</a>
+  <a id='ul-list-refresh' data-role="button" data-icon="refresh" data-iconpos="top">Refresh</a>
 </script>
 
-<script id="doclist-error" type="text/x-jquery-tmpl">
-  <ul id="ul-doc-list" data-role="listview" data-inset="true">
+<script id="list-error" type="text/x-jquery-tmpl">
+  <ul id="ul-list" data-role="listview" data-inset="true">
     <li data-role="list-divider">Login</li>
     <li>You need to log in.</li>
   </ul>
 </script>
 
-<!-- Primary page: shows a list of available documents -->
-<div id="doclist" data-role="page">
+<!-- *********************************************************************** -->
+<!-- Primary page: shows a list of available documents                       -->
+<!-- *********************************************************************** -->
+<div id="list" data-role="page">
   <?php glHeader(array(
     'title' => 'Document List'
   )); ?>
@@ -59,7 +54,7 @@ include(TEMPLATE_BASE . '/ui.php');
   <div data-role="content">
     <p>Select a gas log from the document list below. Or you can <a href="#create_instructions">create</a> a new one.</p>
         
-    <div id="doclist-container">
+    <div id="list-container">
     </div>
   
     <div>
@@ -78,48 +73,48 @@ include(TEMPLATE_BASE . '/ui.php');
           url: url,
           dataType: 'json',
           data: {
-            callee: '<?php echo BASE_URL; ?>list/'
+            callee: '<?php echo BASE_URL; ?>#list'
           },
           beforeSend: function() {
-            $('#doclist-container').empty();
+            $('#list-container').empty();
             
-            $('#doclist-loading')
+            $('#list-loading')
               .tmpl()
-              .appendTo('#doclist-container')
+              .appendTo('#list-container')
             ;
             
-            $('#ul-doc-list').listview();
+            $('#ul-list').listview();
           }, // end of 'beforeSend'
           error: function(xhr, status, error) {
             console.log('error: ' + status + ', ' + error);
-            $('#doclist-container').empty();
+            $('#list-container').empty();
             
-            $('#doclist-error')
+            $('#list-error')
               .tmpl()
-              .appendTo('#doclist-container')
+              .appendTo('#list-container')
             ;
             
             //$.mobile.changePage('#login');
           }, // end of 'error'
           success: function(data) {
-            console.log('doclist.success(): ' + data.response);
-            $('#doclist-container').empty();
+            //console.log('list.success(): ' + data.response);
+            $('#list-container').empty();
             
             if (data.response != 'doclist_success') {
-              $('#doclist-error')
+              $('#list-error')
                 .tmpl()
-                .appendTo('#doclist-container')
+                .appendTo('#list-container')
               ;
             }
             else {
-              $('#doclist-show')
+              $('#list-show')
                 .tmpl({
                   docs: data.doclist
                 })
-                .appendTo('#doclist-container')
+                .appendTo('#list-container')
               ;
               
-              $('#ul-doc-list-refresh')
+              $('#ul-list-refresh')
                 .click(function() {
                   populateDocList();
                 })
@@ -128,25 +123,36 @@ include(TEMPLATE_BASE . '/ui.php');
             }
           }, // end of 'success'
           complete: function() {
-            $('#ul-doc-list').listview();
+            $('#ul-list').listview();
           } // end of 'complete'
         });
       }
 
-      var doclistFirst = true;
-      $('#doclist').live('pageshow', function() {
+      //var doclistFirst = true;
+      $('#list').live('pageshow', function() {
+        //console.log('showing ');
         // Load when the page is ready
-        if (doclistFirst) {
+        if (mobileMiles.refreshDocList) {
           populateDocList();
-          doclistFirst = false;
+          mobileMiles.refreshDocList = false;
         }
       });
+      
+      $('.view-link').live('click', function() {
+        var id = $(this).data('id');
+        if (id !== undefined && id.length > 0) {
+          mobileMiles.doc = id;
+          mobileMiles.refreshEntryList = true;
+        }
+      })
     </script>
   </div>
   <?php glFooter(); ?>
 </div>
 
-<!-- Secondary page: shows instructions on how to create a new document -->
+<!-- *********************************************************************** -->
+<!-- Secondary page: shows instructions on how to create a new document      -->
+<!-- *********************************************************************** -->
 <div id="create_instructions" data-role="page">
   <?php glHeader(array(
     'title' => 'Create New'
@@ -157,9 +163,3 @@ include(TEMPLATE_BASE . '/ui.php');
   </div>
   <?php glFooter(); ?>
 </div>
-
-<?php
-/*****************************************************************************
- * End of page
- *****************************************************************************/
-include(TEMPLATE_BASE . '/pageclose.php');

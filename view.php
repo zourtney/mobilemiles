@@ -6,40 +6,52 @@
  * 
  * Displays information about a single document.
  */
- 
-/*****************************************************************************
- * Global constants and includes
- *****************************************************************************/
-require_once '../scripts/globals.php';
-
-// Display the splash screen, authorization may take a second or so.
-include(TEMPLATE_BASE . '/splash.php');
-include(TEMPLATE_BASE . '/pageopen.php');
-include(TEMPLATE_BASE . '/ui.php');
-
 ?>
 
-<script id="tmpl-entrylist-loading" type="text/x-jquery-tmpl">
-  <li data-role="list-divider">Loading...</li>
-  <li>
-    <div class="ajax-loading">
-      <div class="ui-icon ui-icon-loading spin loading-img"></div>
-      <div class="loading-desc">Fetching entries...</div>
-    </div>
-  </li>
+<!-- *********************************************************************** -->
+<!-- Templates                                                               -->
+<!-- *********************************************************************** -->
+<script id="tmpl-entrylist" type="text/x-jquery-tmpl">
+  <div>
+    <a class="add-link" href="#new" data-role="button">Add Entry</a>
+  </div>
+  <ul id="entrylist" data-role="listview" data-inset="true">
+    {{html $item.html()}}
+  </ul>
 </script>
 
-<script id="tmpl-entrylist-noid" type="tex/x-jquery-tmpl">
-  <li data-role="list-divider">Error</li>
-  <li>No document given.</li>
+<script id="tmpl-entrylist-loading" type="text/x-jquery-tmpl">
+  {{wrap "#tmpl-entrylist"}}
+    <li data-role="list-divider">Loading...</li>
+    <li>
+      <div class="ajax-loading">
+        <div class="ui-icon ui-icon-loading spin loading-img"></div>
+        <div class="loading-desc">Fetching entries...</div>
+      </div>
+    </li>
+  {{/wrap}}
+</script>
+
+<script id="tmpl-entrylist-no-doc" type="tex/x-jquery-tmpl">
+  <p><strong>No document</strong> specified. Please select a document from the 
+  <a href="#list">document list</a>.</p>
+</script>
+
+<script id="tmpl-entrylist-error" type="text/x-jquery-tmpl">
+  {{wrap "#tmpl-entrylist"}}
+    <li data-role="list-divider">Login</li>
+    <li>Error fetching entries. Please try again later.</li>
+  {{/wrap}}
 </script>
 
 <script id="tmpl-entrylist-show" type="text/x-jquery-tmpl">
-  <li data-role="list-divider">History</li>
-  {{tmpl(entries) "#tmpl-entrylist-item"}}
-  <li id="entrylist-loadmore">
-    {{tmpl "#tmpl-entrylist-loadmore"}}
-  </li>
+  {{wrap "#tmpl-entrylist"}}
+    <li data-role="list-divider">History</li>
+    {{tmpl(entries) "#tmpl-entrylist-item"}}
+    <li id="entrylist-loadmore">
+      {{tmpl "#tmpl-entrylist-loadmore"}}
+    </li>
+  {{/wrap}}
 </script>
 
 <script id="tmpl-entrylist-item" type="text/x-jquery-tmpl">
@@ -62,22 +74,17 @@ include(TEMPLATE_BASE . '/ui.php');
   </div>
 </script>
 
-<script id="tmpl-entrylist-error" type="text/x-jquery-tmpl">
-  <li data-role="list-divider">Login</li>
-  <li>You need to log in.</li>
-</script>
-
 <script id="tmpl-entrylist-details" type="text/x-jquery-tmpl">
   <p>Details for fill-up, <strong>${friendlydatetime.toLowerCase()}</strong> at <strong>${location}</strong>.</p>
   <div data-role="collapsible-set">
     <div data-role="collapsible">
       <h3>Fuel Ecomony</h3>
-      <p>You got <strong>${mpg} mpg</strong> during this trip.<!-- This is down 1% from your all-time average of 31.49 mpg.-->
+      <p>You got <strong>${mpg} mpg</strong> during this trip.
       </p>
     </div>
     <div data-role="collapsible" data-collapsed="true">
       <h3>Distance and Consumption</h3>
-      <p>You traveled <strong>${distance} miles</strong> on <strong>${gallons}</strong> of gasoline during this trip. <!--This is up 14 miles from your average trip distance.--></p>
+      <p>You traveled <strong>${distance} miles</strong> on <strong>${gallons}</strong> gallons of gasoline during this trip.</p>
     </div>
     <div data-role="collapsible" data-collapsed="true">
       <h3>Time and Location</h3>
@@ -85,7 +92,7 @@ include(TEMPLATE_BASE . '/ui.php');
     </div>
     <div data-role="collapsible" data-collapsed="true">
       <h3>Cost</h3>
-      <p>You spent $<strong>${pumpprice}</strong> at $<strong>${pricepergallon}</strong>/gallon. <!--This is more than your previous fill-up, but down 5% from 6 months ago.-->
+      <p>You spent $<strong>${pumpprice}</strong> at $<strong>${pricepergallon}</strong>/gallon.
       </p>
     </div>
     <div data-role="collapsible" data-collapsed="true">
@@ -99,6 +106,9 @@ include(TEMPLATE_BASE . '/ui.php');
   </div>
 </script>
 
+<!-- *********************************************************************** -->
+<!-- Primary page: view gas log entries                                      -->
+<!-- *********************************************************************** -->
 <div id="view" data-role="page">
   <?php glHeader(array(
     'title' => 'Overview',
@@ -107,23 +117,9 @@ include(TEMPLATE_BASE . '/ui.php');
   )); ?>
   
   <div data-role="content">
-    <div>
-      <a href="<?php echo BASE_URL; ?>new/?id=<?php echo @$_GET['id']; ?>" rel="external" data-role="button">Add Entry</a>
-    </div>
-    
-    <ul id="entrylist" data-role="listview" data-inset="true">
-      <!-- Entries go here -->
-    </ul>
   </div>
   
   <script type="text/javascript">
-    $('#doc-view-more').click(function() {
-      $('#doc-view-more > h1').text('Loading...');
-    });
-    
-    var entries = [];
-    var detailEntry;
-    
     function populateEntryList(offset, num, callbacks) {
       var url = '<?php echo SCRIPT_URL; ?>ajax_entrylist.php';
       
@@ -132,8 +128,8 @@ include(TEMPLATE_BASE . '/ui.php');
         url: url,
         dataType: 'json',
         data: {
-          callee: '<?php echo BASE_URL; ?>view/',
-          id: '<?php echo @$_GET['id']; ?>',
+          callee: '<?php echo BASE_URL; ?>#view',
+          id: mobileMiles.doc,
           offset: offset,
           num: num
         },
@@ -150,63 +146,68 @@ include(TEMPLATE_BASE . '/ui.php');
       });
     }
     
-    function firstPopulateEntryList() {
+    function repopulateEntryList() {
       populateEntryList(0, 5, {
         beforeSend: function() {
           $('#tmpl-entrylist-loading')
             .tmpl()
-            .appendTo($('#entrylist').empty())
+            .appendTo($('#view div[data-role="content"]').empty())
           ;
           
-          $('#entrylist').listview('refresh');
+          $('.add-link').button();
+          $('#entrylist').listview();
         }, // end of 'beforeSend'
         error: function(xhr, status, error) {
           console.log('error: ' + status + ', ' + error);
           
           $('#tmpl-entrylist-error')
             .tmpl()
-            .appendTo($('#entrylist').empty())
+            .appendTo($('#view div[data-role="content"]').empty())
           ;
+          
+          $('.add-link').button();
+          $('#entrylist').listview();
         }, // end of 'error'
         success: function(data) {
-          //console.log('entrylist.success(): ' + data.response);
-          
-          if (data.response == 'entrylist_no_id') {
-            console.log('no id given...');
-            $('#tmpl-entrylist-noid')
+          if (data.response == 'entrylist_no_doc') {
+            $('#tmpl-entrylist-no-doc')
               .tmpl()
-              .appendTo($('#entrylist').empty())
+              .appendTo($('#view div[data-role="content"]').empty())
             ;
           }
           else if (data.response != 'entrylist_success') {
-            console.log('error, response was ' + data.response);
+            console.log('Invalid response ' + data.response);
             $('#tmpl-entrylist-error')
               .tmpl()
-              .appendTo($('#entrylist').empty())
+              .appendTo($('#view div[data-role="content"]').empty())
             ;
+            
+            $('.add-link').button();
+            $('#entrylist').listview();
           }
           else {
-            entries = data.entrylist;
+            mobileMiles.entries = data.entrylist;
             
             $('#tmpl-entrylist-show')
               .tmpl({
-                entries: entries
+                entries: mobileMiles.entries
               })
-              .appendTo($('#entrylist').empty())
+              .appendTo($('#view div[data-role="content"]').empty())
             ;
             
             $('#entrylist-loadmore').click(function() {
-              loadMoreIntoEntryList();
+              appendToEntryList();
             });
+            
+            $('.add-link').button();
+            $('#entrylist').listview();
           }
         }, // end of 'success'
       });
     }
     
-    function loadMoreIntoEntryList() {
-      //console.log('loading 10 more...(' + entries.length + '->' + (entries.length + 10) + ')');
-      
-      populateEntryList(entries.length, 10, {
+    function appendToEntryList() {
+      populateEntryList(mobileMiles.entries.length, 10, {
         beforeSend: function() {
           //console.log('prepping...');
           $('#tmpl-entrylist-loadmore-in-progress')
@@ -220,8 +221,7 @@ include(TEMPLATE_BASE . '/ui.php');
           console.log('bad: ' + error);
         },
         success: function(data) {
-          console.log('entrylist(more).success(): ' + data.range);
-          
+          //console.log('entrylist(more).success(): ' + data.range);
           if (data.response != 'entrylist_success') {
             $('#tmpl-entrylist-error')
               .tmpl()
@@ -230,7 +230,7 @@ include(TEMPLATE_BASE . '/ui.php');
             ;
           }
           else {
-            entries = entries.concat(data.entrylist);
+            mobileMiles.entries = mobileMiles.entries.concat(data.entrylist);
             
             $('#tmpl-entrylist-item')
               .tmpl(data.entrylist)
@@ -249,21 +249,20 @@ include(TEMPLATE_BASE . '/ui.php');
       });
     }
 
-    var entrylistFirst = true;
     $('#view').live('pageshow', function() {
       // Load when the page is ready
-      if (entrylistFirst) {
-        entries = [];
-        firstPopulateEntryList();
-        entrylistFirst = false;
+      if (mobileMiles.refreshEntryList) {
+        mobileMiles.entries = [];
+        repopulateEntryList();
+        mobileMiles.refreshEntryList = false;
       }
     });
     
     $('#entrylist li').live('click', function(e) {
       var i = $(this).index() - 1;
       
-      if (! isNaN(i) && i > -1 && i < entries.length) {
-        detailEntry = entries[i];
+      if (! isNaN(i) && i > -1 && i < mobileMiles.entries.length) {
+        mobileMiles.curEntry = mobileMiles.entries[i];
       }
       else /*TODO: if not the 'load more' button...*/ {
         e.preventDefault();
@@ -271,11 +270,18 @@ include(TEMPLATE_BASE . '/ui.php');
         //alert('No entry found');
       }
     });
+    
+    /*$('.add-link').live('click', function() {
+      
+    });*/
   </script>
   
   <?php glFooter(); ?>
 </div>
 
+<!-- *********************************************************************** -->
+<!-- Secondary page: detail view for a gas log entry                         -->
+<!-- *********************************************************************** -->
 <div id="details" data-role="page">
   <?php glHeader(array(
     'title' => 'Details',
@@ -286,10 +292,10 @@ include(TEMPLATE_BASE . '/ui.php');
   <div data-role="content">
     <script type="text/javascript">
       $('#details').live('pageshow', function() {
-        if (detailEntry != null && detailEntry !== undefined) {
+        if (mobileMiles.curEntry != null && mobileMiles.curEntry !== undefined) {
           // Display the template
           $('#tmpl-entrylist-details')
-            .tmpl(detailEntry, {
+            .tmpl(mobileMiles.curEntry, {
               toLower: function(str) {
                 return str.toLowerCase();
               }
@@ -305,9 +311,3 @@ include(TEMPLATE_BASE . '/ui.php');
   
   <?php glFooter(); ?>
 </div>
-
-<?php
-/*****************************************************************************
- * End of page
- *****************************************************************************/
-include(TEMPLATE_BASE . '/pageclose.php');
