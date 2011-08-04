@@ -24,7 +24,13 @@
 
 <script id="tmpl-home-unauthorized" type="text/x-jquery-tmpl">
   <p><strong>Not authorized.</strong></p>
-  <p>You must first  <a href="<?php echo BASE_URL; ?>#settings">grant</a> access to your Google Docs account.</p>
+  <p>You must first  <a href="#settings">grant</a> access to your Google Docs account.</p>
+</script>
+
+<script id="tmpl-home-error" type="text/x-jquery-tmpl">
+  <p><strong>Unknown error.</strong></p>
+  <p>MobileMiles was unable to connect to the server. Please try again later or
+  <a href="<?php echo SYSTEM_ADMIN_URI; ?>" rel="external">contact</a> the system admininstrator.</p>
 </script>
 
 
@@ -41,42 +47,3 @@
   </div>
   <?php glFooter(); ?>
 </div>
-
-<script type="text/javascript">
-  $('#home').live('pageshow', function() {
-    //console.log('page shown...');
-    $.ajax({
-      url: 'scripts/ajax_login.php',
-      dataType: 'json',
-      success: function(data) {
-        switch (data.response) {
-          case 'login_unauthorized':
-          case 'login_failed':
-            $('#tmpl-home-unauthorized')
-              .tmpl()
-              .appendTo($('#home [data-role="content"]').empty())
-            ;
-            break;
-          case 'login_succeeded':
-            //$('#message').html('You are now logged in. You may <a href="' + data.url + '">log out</a> at any time.');
-            //window.close();
-            $('#tmpl-home')
-              .tmpl()
-              .appendTo($('#home [data-role="content"]').empty())
-            ;
-            
-            $('#pageTitle').text('Home');
-            $('#btnBack').hide();
-            $('#btnSettings').show();
-            break;
-          default:
-            console.log('what? ' + data.response);
-            break;
-        }
-      },
-      error: function() {
-        console.log('error!');
-      }
-    });
-  });
-</script>
