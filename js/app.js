@@ -130,9 +130,26 @@ var PageWithContainer = Page.extend({
   
   jqmRender : function() {
     // Explicitly create jQuery Mobile objects for newly created HTML elements.
-    //TODO: add more as needed
-    this.$container.find('ul').listview();
-    this.$container.find('[data-role="button"]').button();
+    try {
+      //BUG: sometimes this will fail. To reliably reproduce:
+      //  1. start at #view
+      //  2. ("no document") -> go to doc list, select document
+      //  3. fails with `parentPage[0] undefined'
+      //
+      // Known issue on jQuery Forum:
+      //   http://forum.jquery.com/topic/parentpage-0-is-undefined
+      //
+      // MobileMiles issue #21:
+      //   https://github.com/zourtney/mobilemiles/issues/21
+      this.$container.find('ul').listview();
+      
+      this.$container.find('[data-role="button"]').button();
+      
+      //TODO: add more as needed
+    }
+    catch (ex) {
+      console.log(ex);
+    }
   },
   
   showLoading : function() {
