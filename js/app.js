@@ -4,6 +4,8 @@
  * @author:    zourtney@randomland.net
  * 
  * Application driver class.
+ *
+ * TODO: merge everything into a single namespace.
  */
 
 
@@ -102,6 +104,15 @@ var Page = Class.extend({
     $('#tmpl-' + this.id + '-error')
       .tmpl()
       .appendTo(this.$content.empty())
+    ;
+  },
+  
+  setSubtitle : function(value) {
+    $('#tmpl-' + this.id + '-subtitle')
+      .tmpl({
+        subtitle: value
+      })
+      .appendTo($('#' + this.id + '-subtitle').empty())
     ;
   }
 });
@@ -210,7 +221,7 @@ var SettingsPage = Page.extend({
       .appendTo(this.$content.empty())
     ;
     
-    // Suckiness: have to explicitly reconstruct compontents. I tried
+    // Suckiness: have to explicitly reconstruct components. I tried
     // using $(#settings [data-role="button"]).page()...and it work the
     // first time, but kills the styling when revisiting a cached page.
     // Hopefully this gets fixed in future versions of jQuery Mobile...
@@ -311,6 +322,7 @@ var ListPage = PageWithContainer.extend({
       var id = $(this).data('id');
       if (id !== undefined && id.length > 0) {
         self.app.doc = id;
+        self.app.docTitle = $(this).data('doc-title');
         self.app.view.needsRefresh = true;
       }
     });
@@ -385,6 +397,8 @@ var ViewPage = PageWithContainer.extend({
       .tmpl()
       .appendTo(this.$content.empty())
     ;
+    
+    this.setSubtitle('No document');
   },
   
   showLoadMore : function() {
@@ -440,6 +454,9 @@ var ViewPage = PageWithContainer.extend({
   
   populate : function() {
     var self = this;
+    
+    self.setSubtitle(self.app.docTitle);
+    
     self.populateRange(0, 5, {
       beforeSend: function() {
         self.showLoading();
@@ -536,6 +553,10 @@ var ViewDetailsPage = Page.extend({
   },
   
   showNoDoc : function() {
+    // Set subtitle
+    this.setSubtitle('No document');
+    
+    // Display error message
     $('#tmpl-details-no-doc')
       .tmpl()
       .appendTo(this.$content.empty())
@@ -543,12 +564,16 @@ var ViewDetailsPage = Page.extend({
   },
   
   showDetails : function(entry) {
+    // Set subtitle to document name
+    this.setSubtitle(this.app.docTitle);
+    
     // Display the template
     $('#tmpl-details')
       .tmpl(entry)
       .appendTo(this.$content.empty())
     ;
     
+    // Rebuild collapsible
     $('div [data-role="collapsible"]').collapsible();
   },
   
@@ -588,6 +613,8 @@ var AddNewPage = Page.extend({
   },
   
   showNoDoc : function() {
+    this.setSubtitle('No document');
+    
     $('#tmpl-new-no-doc')
       .tmpl()
       .appendTo(this.$content.empty())
@@ -816,6 +843,9 @@ var AddNewPage = Page.extend({
       return;
     }
     
+    // Set document title
+    self.setSubtitle(self.app.docTitle);
+    
     // Display the form
     self.renderForm();
     
@@ -855,10 +885,6 @@ var AddNewPage = Page.extend({
       }
     });
   },
-  
-  
-  
-  
 });
 
 

@@ -43,7 +43,7 @@ if (DEBUG) {
 else {
   defndef('BASE', $_SERVER['DOCUMENT_ROOT'] . '/');
   defndef('BASE_URL', 'http://gas.randomland.net/');
-  defndef('FILTER_TEXT', '(rlgaslog)');
+  defndef('FILTER_TEXT', '(mobilemiles)');
 }
 
 defndef('SCRIPT_BASE', BASE . 'scripts/');

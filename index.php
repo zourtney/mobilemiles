@@ -11,7 +11,6 @@
  * Global constants and includes
  *****************************************************************************/
 require_once 'scripts/globals.php';
-
 require_once TEMPLATE_BASE . 'ui.php';
 
 /*****************************************************************************
@@ -36,7 +35,8 @@ require_once TEMPLATE_BASE . 'ui.php';
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <link rel="apple-touch-icon-precomposed" href="<?php echo BASE_URL; ?>images/pump.png" />
-  <link rel="apple-touch-startup-image" href="<?php echo BASE_URL; ?>images/splash.png">
+  <link rel="apple-touch-startup-image" href="<?php echo BASE_URL; ?>images/splash.png" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <!-- JavaScript dependencies -->
   <script src="http://code.jquery.com/jquery.min.js"></script>

@@ -9,8 +9,12 @@
 ?>
 
 <!-- *********************************************************************** -->
-<!-- Templates                                                               -->
+<!-- View page templates                                                     -->
 <!-- *********************************************************************** -->
+<script id="tmpl-view-subtitle" type="text/x-jquery-tmpl">
+  <span>${subtitle}</span>
+</script>
+
 <script id="tmpl-view-unauthorized" type="text/x-jquery-tmpl">
   <p><strong>Not authorized.</strong></p>
   <p>You must first  <a href="#settings">grant</a> access to your Google Docs account.</p>
@@ -79,7 +83,7 @@
 </script>
 
 <!-- *********************************************************************** -->
-<!-- Primary page: view gas log entries                                      -->
+<!-- View page content                                                       -->
 <!-- *********************************************************************** -->
 <div id="view" data-role="page">
   <?php glHeader(array(
@@ -88,10 +92,12 @@
     'settings' => true
   )); ?>
   
+  <div id="view-subtitle" data-role="header" class="subtitle" data-theme="d">
+  </div>
+  
   <div data-role="content">
     <div id="view-container"></div>
   </div>
   
   <?php glFooter(); ?>
 </div>
-

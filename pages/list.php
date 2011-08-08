@@ -41,7 +41,7 @@
 <script id="tmpl-list-show" type="text/x-jquery-tmpl">
   <ul id="ul-list" data-role="listview" data-inset="true">
     <li data-role="list-divider">Select existing</li>
-    {{each(i, doc) docs}}<li><a class="view-link" data-id="${doc.id}" href="#view">${doc.title}</a></li>{{/each}}
+    {{each(i, doc) docs}}<li><a class="view-link" data-id="${doc.id}" data-doc-title="${doc.title}" href="#view">${doc.title}</a></li>{{/each}}
   </ul>
   
   <a id='ul-list-refresh' data-role="button" data-icon="refresh" data-iconpos="top">Refresh</a>
