@@ -6,18 +6,10 @@
  * 
  * This file displays the login/settings page.
  */
-
-/*****************************************************************************
- * Document entry detail page
- *****************************************************************************/
 ?>
 <!-- *********************************************************************** -->
 <!-- Details page templates                                                  -->
 <!-- *********************************************************************** -->
-<script id="tmpl-details-subtitle" type="text/x-jquery-tmpl">
-  <span>${subtitle}</span>
-</script>
-
 <script id="tmpl-details-error" type="text/x-jquery-tmpl">
   <p><strong>Unknown error.</strong></p>
   <p>MobileMiles was unable to connect to the server. Please try again later or
@@ -61,7 +53,7 @@
 </script>
 
 <!-- *********************************************************************** -->
-<!-- Primary page: detail view for a gas log entry                         -->
+<!-- Details page content                                                    -->
 <!-- *********************************************************************** -->
 <div id="details" data-role="page">
   <?php glHeader(array(
@@ -69,10 +61,6 @@
     'back' => 'history',
     'settings' => true
   )); ?>
-  
-  <div id="details-subtitle" data-role="header" class="subtitle" data-theme="d">
-  </div>
-  
   
   <div data-role="content">
   </div>

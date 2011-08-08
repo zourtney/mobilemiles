@@ -7,7 +7,9 @@
  * This file displays the login/settings page.
  */
 ?>
-
+<!-- *********************************************************************** -->
+<!-- Settings page templates                                                 -->
+<!-- *********************************************************************** -->
 <script id="tmpl-settings-request" type="text/x-jquery-tmpl">
   <p>Before continuing, you must <a href="${url}" rel="external">grant</a> access to your Google Docs account.</p>
   <a id="create_instructions_btn" href="${url}" data-role="button" rel="external">Grant Access</a>
@@ -25,7 +27,10 @@
   <a href="<?php echo SYSTEM_ADMIN_URI; ?>" rel="external">contact</a> the system admininstrator.</p>
 </script>
 
-<!-- Primary page -->
+
+<!-- *********************************************************************** -->
+<!-- Settings pages content                                                  -->
+<!-- *********************************************************************** -->
 <div id="settings" data-role="page">
   <?php glHeader(array(
     'title' => 'Settings',

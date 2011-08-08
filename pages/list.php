@@ -6,14 +6,9 @@
  * 
  * This file displays a list of available gas logs.
  */
-
-/*****************************************************************************
- * Page display logic
- *****************************************************************************/
 ?>
-
 <!-- *********************************************************************** -->
-<!-- Templates                                                               -->
+<!-- List page templates                                                     -->
 <!-- *********************************************************************** -->
 <script id="tmpl-list-unauthorized" type="text/x-jquery-tmpl">
   <p><strong>Not authorized.</strong></p>
@@ -48,7 +43,7 @@
 </script>
 
 <!-- *********************************************************************** -->
-<!-- Primary page: shows a list of available documents                       -->
+<!-- List page contents                                                      -->
 <!-- *********************************************************************** -->
 <div id="list" data-role="page">
   <?php glHeader(array(

@@ -6,14 +6,9 @@
  * 
  * This is the home page. It's not very useful at the moment.
  */
-
-/*****************************************************************************
- * Page display logic
- *****************************************************************************/
 ?>
-
 <!-- *********************************************************************** -->
-<!-- Templates                                                               -->
+<!-- Home page templates                                                     -->
 <!-- *********************************************************************** -->
 <script id="tmpl-home" type="text/x-jquery-tmpl">
   <div data-role="content">
@@ -38,9 +33,8 @@
   <a href="<?php echo SYSTEM_ADMIN_URI; ?>" rel="external">contact</a> the system admininstrator.</p>
 </script>
 
-
 <!-- *********************************************************************** -->
-<!-- Primary page: home screen                                               -->
+<!-- Home page content                                                       -->
 <!-- *********************************************************************** -->
 <div id="home" data-role="page">
   <?php glHeader(array(

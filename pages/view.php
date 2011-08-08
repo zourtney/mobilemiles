@@ -7,14 +7,9 @@
  * Displays information about a single document.
  */
 ?>
-
 <!-- *********************************************************************** -->
 <!-- View page templates                                                     -->
 <!-- *********************************************************************** -->
-<script id="tmpl-view-subtitle" type="text/x-jquery-tmpl">
-  <span>${subtitle}</span>
-</script>
-
 <script id="tmpl-view-unauthorized" type="text/x-jquery-tmpl">
   <p><strong>Not authorized.</strong></p>
   <p>You must first  <a href="#settings">grant</a> access to your Google Docs account.</p>
@@ -83,7 +78,7 @@
 </script>
 
 <!-- *********************************************************************** -->
-<!-- View page content                                                       -->
+<!-- View page contents                                                      -->
 <!-- *********************************************************************** -->
 <div id="view" data-role="page">
   <?php glHeader(array(
@@ -91,9 +86,6 @@
     'back' => 'history',
     'settings' => true
   )); ?>
-  
-  <div id="view-subtitle" data-role="header" class="subtitle" data-theme="d">
-  </div>
   
   <div data-role="content">
     <div id="view-container"></div>

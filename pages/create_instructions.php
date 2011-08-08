@@ -7,6 +7,9 @@
  * This file instructions on how to create a new gas log spreadsheet.
  */
 ?>
+<!-- *********************************************************************** -->
+<!-- Create instructions page content                                        -->
+<!-- *********************************************************************** -->
 <div id="create_instructions" data-role="page">
   <?php glHeader(array(
     'title' => 'Create New'

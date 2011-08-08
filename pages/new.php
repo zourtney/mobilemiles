@@ -7,14 +7,12 @@
  * This page lets you add a new entry
  */
 ?>
-
+<!-- *********************************************************************** -->
+<!-- New page templates                                                      -->
+<!-- *********************************************************************** -->
 <!--<script id="tmpl-new-help-link" type="text/x-jquery-tmpl">
   <a href="${url}" data-rel="dialog" data-transition="pop" data-role="button" data-icon="info" data-iconpos="notext">Help</a>
 </script>-->
-
-<script id="tmpl-new-subtitle" type="text/x-jquery-tmpl">
-  <span>${subtitle}</span>
-</script>
 
 <script id="tmpl-new-no-doc" type="text/x-jquery-tmpl">
   <p><strong>No document</strong> specified. Please select a document from the 
@@ -110,14 +108,13 @@
   </div>
 </script>
 
-<!-- Primary page -->
+<!-- *********************************************************************** -->
+<!-- New page contents                                                       -->
+<!-- *********************************************************************** -->
 <div id="new" data-role="page">
   <?php glHeader(array(
     'title' => 'New Entry'
   )); ?>
-  
-  <div id="new-subtitle" data-role="header" class="subtitle" data-theme="d">
-  </div>
   
   <div data-role="content">
   </div>

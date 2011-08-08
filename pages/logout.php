@@ -7,6 +7,9 @@
  * This file displays the logout page.
  */
 ?>
+<!-- *********************************************************************** -->
+<!-- Logout page templates                                                   -->
+<!-- *********************************************************************** -->
 
 <script id="tmpl-logout-error" type="text/x-jquery-tmpl">
   <p><strong>Unknown error.</strong></p>
@@ -14,6 +17,9 @@
   <a href="<?php echo SYSTEM_ADMIN_URI; ?>" rel="external">contact</a> the system admininstrator.</p>
 </script>
 
+<!-- *********************************************************************** -->
+<!-- Logout page contents                                                    -->
+<!-- *********************************************************************** -->
 <div id="logout" data-role="page">
   <?php glHeader(array(
     'title' => 'Logout',

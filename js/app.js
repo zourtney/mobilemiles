@@ -108,12 +108,7 @@ var Page = Class.extend({
   },
   
   setSubtitle : function(value) {
-    $('#tmpl-' + this.id + '-subtitle')
-      .tmpl({
-        subtitle: value
-      })
-      .appendTo($('#' + this.id + '-subtitle').empty())
-    ;
+    $('.subtitle').text(value);
   }
 });
 
@@ -196,6 +191,8 @@ var HomePage = Page.extend({
   
   onPageShow : function() {
     var self = this;
+    self.setSubtitle('');
+    
     $.ajax({
       url: MobileMilesConst.SCRIPT_URL + 'ajax_login.php',
       dataType: 'json',
@@ -259,6 +256,8 @@ var SettingsPage = Page.extend({
   
   onPageShow : function() {
     var self = this;
+    self.setSubtitle('');
+    
     $.ajax({
       url: MobileMilesConst.SCRIPT_URL + 'ajax_login.php',
       dataType: 'json',
@@ -298,6 +297,8 @@ var LogOutPage = Page.extend({
   
   onPageShow : function() {
     var self = this;
+    self.setSubtitle('');
+    
     $.ajax({
       url: MobileMilesConst.SCRIPT_URL + 'ajax_login.php?action=logout',
       dataType: 'json',
@@ -348,6 +349,8 @@ var ListPage = PageWithContainer.extend({
   populate : function() {
     // Make AJAX call
     var self = this;
+    self.setSubtitle('');
+    
     $.ajax({
       url: MobileMilesConst.SCRIPT_URL + 'ajax_doclist.php',
       dataType: 'json',
@@ -471,7 +474,6 @@ var ViewPage = PageWithContainer.extend({
   
   populate : function() {
     var self = this;
-    
     self.setSubtitle(self.app.docTitle);
     
     self.populateRange(0, 5, {

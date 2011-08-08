@@ -8,7 +8,7 @@
 .subtitle {
   padding: 0.2em;
   text-align: center;
-  font-weight: bold;
+  font-weight: normal;
 }
 
 div[data-role="content"] {
