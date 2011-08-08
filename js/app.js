@@ -397,14 +397,14 @@ var ViewPage = PageWithContainer.extend({
       if (! isNaN(i) && i > -1 && i < self.entries.length) {
         self.curEntry = self.entries[i];
       }
-      else /*TODO: if not the 'load more' button... */
-      {
-        //TODO: handle better
+      else {
         e.preventDefault();
       }
     });
     
-    $('#entrylist-loadmore').live('click', function() {
+    //TODO: touch interface is not perfect...it will fire even if you try to
+    // scroll past. But it's better than not working at all!
+    $('#entrylist-loadmore').live('click touchend', function() {
       self.populateWithMore();
     });
   },
