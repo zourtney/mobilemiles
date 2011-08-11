@@ -46,6 +46,8 @@ else {
   defndef('FILTER_TEXT', '(mobilemiles)');
 }
 
+defndef('SHOW_CHANGES_MESSAGE', true);
+
 defndef('SCRIPT_BASE', BASE . 'scripts/');
 defndef('SCRIPT_URL', BASE_URL . 'scripts/');
 defndef('LOGIN_URL', SCRIPT_URL . 'ajax_login.php');

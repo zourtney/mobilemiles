@@ -17,7 +17,6 @@ require_once TEMPLATE_BASE . 'ui.php';
  * Start of page
  *****************************************************************************/
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,12 +37,22 @@ require_once TEMPLATE_BASE . 'ui.php';
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <!-- JavaScript dependencies -->
-  <script src="http://code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+  <!--<script type="text/javascript" src="<?php echo JS_URL; ?>jquery.timeago.js"></script>
+  <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.livequery.min.js"></script>-->
   <script type="text/javascript" src="<?php echo JS_URL; ?>const.php"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>utils.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>app.js"></script>
-  <script src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script>
   <script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+  <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.livequery/jquery.livequery.js"></script>
+  <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.timeago/jquery.timeago.js"></script>  
+  
+  <script type="text/javascript">
+    $('abbr.timeago').livequery(function() {
+      $(this).timeago($.timeago.settingsRelativeDay);
+    });
+  </script>
 </head>
 <body>
 <?php
@@ -54,6 +63,7 @@ require_once TEMPLATE_BASE . 'ui.php';
  * occuring `<div data-role="page">` the application's default page.
  *****************************************************************************/
 include(PAGE_BASE . 'home.php');
+include(PAGE_BASE . 'changes.php');
 include(PAGE_BASE . 'settings.php');
 include(PAGE_BASE . 'logout.php');
 include(PAGE_BASE . 'list.php');

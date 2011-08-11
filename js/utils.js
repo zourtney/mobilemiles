@@ -1,24 +1,4 @@
 /**
- * jQuery plugin to set cursor position or select a range in a text box.
- *   http://stackoverflow.com/questions/499126/841121#841121
- */
-$.fn.selectRange = function(start, end) {
-  return this.each(function() {
-    if (this.setSelectionRange) {
-      this.focus();
-      this.setSelectionRange(start, end);
-    } else if (this.createTextRange) {
-      var range = this.createTextRange();
-      range.collapse(true);
-      range.moveEnd('character', end);
-      range.moveStart('character', start);
-      range.select();
-    }
-  });
-};
-
-
-/**
  * Returns a 2-character string of the number passed in. This should be used to
  * prepend 0's on dates less than 10.
  */

@@ -21,7 +21,7 @@
 </script>
 
 <script id="tmpl-details" type="text/x-jquery-tmpl">
-  <p>Details for fill-up, <strong>${friendlydatetime.toLowerCase()}</strong> at <strong>${location}</strong>.</p>
+  <p>Details for fill-up, <abbr class="timeago" title="${datetime}">${datetime}</abbr> at <strong>${location}</strong>.</p>
   <div data-role="collapsible-set">
     <div data-role="collapsible">
       <h3>Fuel Ecomony</h3>

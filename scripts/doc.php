@@ -124,7 +124,7 @@ class GlDoc {
       
       array_push($ret, array(
         'datetime' => $dr[0],
-        'friendlydatetime' => getFriendlyDatetime($dr[0]),
+        /*'friendlydatetime' => getFriendlyDatetime($dr[0]),*/
         'mileage' => getMiles($dr[1]),
         'location' => $dr[2],
         'gallons' => $dr[5],

@@ -62,7 +62,6 @@ else {
   
   echo json_encode(array(
     'response' => 'entrylist_success',
-    'range' => "$offset to $num",
     'entrylist' => $retVal
   ));
 }

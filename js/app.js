@@ -187,6 +187,8 @@ var HomePage = Page.extend({
       .tmpl()
       .appendTo(this.$content.empty())
     ;
+    
+    this.$content.find('ul').listview();
   },
   
   onPageShow : function() {
@@ -334,6 +336,7 @@ var ListPage = PageWithContainer.extend({
     var self = this;
     $('#ul-list-refresh').live('click', function() {
       self.populate();
+      self.app.view.needsRefresh = true;
     });
     
     $('.view-link').live('click', function() {
@@ -496,21 +499,13 @@ var ViewPage = PageWithContainer.extend({
             });
             break;
           default:
-            //BUG: when this occurs (for whatever reason), showError() is not
-            // getting called!
             console.log('what is ' + data.response + '?');
-            console.log('going to show error...');
-            console.log(self.showError + '...');
             self.showError();
             break;
         }
       }, // end of 'success'
       error: function(xhr, status, error) {
-        //BUG: when this occurs (for whatever reason), showError() is not
-        // getting called!
         console.log('error: ' + status + ', ' + error);
-        console.log('going to show error...');
-        console.log(self.showError + '...');
         self.showError();
       } // end of 'error'
     });
@@ -538,21 +533,13 @@ var ViewPage = PageWithContainer.extend({
             self.showListAndAppend(data.entrylist);
             break;
           default:
-            //BUG: when this occurs (for whatever reason), showError() is not
-            // getting called!
             console.log('what is ' + data.response + '?');
-            console.log('going to show error...');
-            console.log(self.showError + '...');
             self.showError();
             break;
         }
       },
       error: function(xhr, status, error) {
-        //BUG: when this occurs (for whatever reason), showError() is not
-        // getting called!
         console.log('error: ' + status + ', ' + error);
-        console.log('going to show error...');
-        console.log(self.showError + '...');
         self.showError();
       },
       complete: function() {

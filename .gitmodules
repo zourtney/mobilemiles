@@ -1,0 +1,6 @@
+[submodule "js/jquery.livejquery"]
+	path = js/jquery.livejquery
+	url = git://github.com/brandonaaron/livequery.git
+[submodule "js/jquery.timeago"]
+	path = js/jquery.timeago
+	url = git://github.com/zourtney/jquery-timeago.git
