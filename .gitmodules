@@ -4,3 +4,6 @@
 [submodule "js/jquery.timeago"]
 	path = js/jquery.timeago
 	url = git://github.com/zourtney/jquery-timeago.git
+[submodule "js/jquery.livequery"]
+	path = js/jquery.livequery
+	url = git://github.com/brandonaaron/livequery.git
