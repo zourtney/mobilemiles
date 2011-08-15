@@ -36,11 +36,21 @@ defndef('SPREADSHEET_VERSION', 1.0);
 defndef('SPREADSHEET_MASTER_URL', 'https://spreadsheets.google.com/ccc?key=0AnRif0EzefXxdEViXzFGdjlJLXNXYlBhdXFmUERqTnc&hl=en');
 
 if (DEBUG) {
+  // Verbose error reporting
+  error_reporting(E_ALL);
+  ini_set('display_errors', '1');
+
+  // Define base paths, doc filter text, etc
   defndef('BASE', $_SERVER['DOCUMENT_ROOT'] . '/mobilemiles/');
-  defndef('BASE_URL', 'http://localhost/mobilemiles/');
+  defndef('BASE_URL', 'http://' . $_SERVER['HTTP_HOST'] . '/mobilemiles/');
   defndef('FILTER_TEXT', '(occlness)');
 }
 else {
+  // No visible errors
+  error_reporting(0);
+  ini_set('display_errors', '0');
+  
+  // Define base paths, doc filter text, etc
   defndef('BASE', $_SERVER['DOCUMENT_ROOT'] . '/');
   defndef('BASE_URL', 'http://gas.randomland.net/');
   defndef('FILTER_TEXT', '(mobilemiles)');
