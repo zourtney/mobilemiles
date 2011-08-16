@@ -12,7 +12,7 @@
 <!-- *********************************************************************** -->
 <script id="tmpl-view-unauthorized" type="text/x-jquery-tmpl">
   <p><strong>Not authorized.</strong></p>
-  <p>You must first  <a href="#settings">grant</a> access to your Google Docs account.</p>
+  <p>You must first <a href="#settings">grant</a> access to your Google Docs account.</p>
 </script>
 
 <script id="tmpl-view-error" type="text/x-jquery-tmpl">
@@ -62,7 +62,7 @@
     <h3>${location}</h3>
     <p><strong>${mpg} mpg (${mpgdelta})</strong></p>
     <p><!--style="white-space: normal;"-->Traveled ${distance} mi on ${gallons} gallons. Total cost was $<span>${pumpprice}</span>.</p>
-    <p class="ui-li-aside" style="width: inherit;"><abbr class="timeago" title="${datetime}">${datetime}</span></p>
+    <p class="ui-li-aside" style="width: inherit;"><abbr class="timeago" title="${datetime}" onclick="">${datetime}</span></p>
   </a>
 </script>
 
