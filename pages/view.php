@@ -62,7 +62,7 @@
     <h3>${location}</h3>
     <p><strong>${mpg} mpg (${mpgdelta})</strong></p>
     <p><!--style="white-space: normal;"-->Traveled ${distance} mi on ${gallons} gallons. Total cost was $<span>${pumpprice}</span>.</p>
-    <p class="ui-li-aside" style="width: inherit;"><abbr class="timeago" title="${datetime}" onclick="">${datetime}</span></p>
+    <p class="ui-li-aside" style="width: inherit;"><abbr class="timeago" title="${datetime}">${datetime}</span></p>
   </a>
 </script>
 
