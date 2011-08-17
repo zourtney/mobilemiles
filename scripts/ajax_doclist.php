@@ -35,25 +35,14 @@ else {
   $app = new GlApp($auth);
   
   // Merge in pre-login vars (if any)
-  $app->mergeSavedGetVars();
+  //TODO: remove?
+  //$app->mergeSavedGetVars();
   
-  // Get the application mode (show, new, etc)
+  // Get a list of document objects
   $docs = $app->getAvailable();
-  
-  //TODO: return JSON
-  $retVal = array();
-  
-  foreach ($docs as $doc) {
-    array_push($retVal, array(
-      'id' => $doc->id(),
-      'title' => $doc->title()
-    ));
-  }
-  
-  //array_push($retVal, array('url' => '#', 'title' => 'Just for good measure'));
   
   echo json_encode(array(
     'response' => 'doclist_success',
-    'doclist' => $retVal
+    'doclist' => $docs
   ));
 }

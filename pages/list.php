@@ -36,7 +36,13 @@
 <script id="tmpl-list-show" type="text/x-jquery-tmpl">
   <ul id="ul-list" data-role="listview" data-inset="true">
     <li data-role="list-divider">Select existing</li>
-    {{each(i, doc) docs}}<li><a class="view-link" data-id="${doc.id}" data-doc-title="${doc.title}" href="#view">${doc.title}</a></li>{{/each}}
+    {{each(i, doc) docs}}
+      {{if doc.version.app < <?php echo APP_VERSION; ?> || doc.version.doc < <?php echo SPREADSHEET_VERSION; ?>}}
+        <li data-icon="alert"><a class="view-link" data-id="${doc.id}" href="#doc_update_instructions">${doc.title}</a></li>
+      {{else}}
+        <li><a class="view-link" data-id="${doc.id}" data-doc-title="${doc.title}" href="#view">${doc.title}</a></li>
+      {{/if}}
+    {{/each}}
   </ul>
   
   <a id='ul-list-refresh' data-role="button" data-icon="refresh" data-iconpos="top">Refresh</a>

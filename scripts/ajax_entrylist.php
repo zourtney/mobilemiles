@@ -42,7 +42,11 @@ if (! $auth->logIn('#')) {
 }
 else {
   $app = new GlApp($auth);
+  
+  //TODO: should probably use GlApp::open($id);
   $doc = new GlDoc($app, $docId, true);
+  
+  //TODO: version check
   
   if (isset($_GET['offset']) && is_numeric($_GET['offset'])) {
     $offset = $_GET['offset'];

@@ -36,14 +36,10 @@ class GlSheet {
   public function mostRecentEntries($offset = 0, $num = -1) {
     //TODO: filter so we're only fetching the rows we want!
     
-    //echo $this->sheet->getRowCount();
-    //$lastRow = max(1, (int)$this->sheet->getRowCount() - $offset);
     $query = new Zend_Gdata_Spreadsheets_ListQuery();
-    $query->setSpreadsheetKey($this->doc->id());
+    $query->setSpreadsheetKey($this->doc->id);
     $query->setWorksheetId($this->id);
-    //$query->setSpreadsheetQuery('');
-    //$query->setMinRow(min(1, $lastRow - $num));
-    //$query->setMaxRow($lastRow);
+    
     $feed = $this->service()->getListFeed($query);
     $ret = array();
     
@@ -68,11 +64,6 @@ class GlSheet {
 class GlDataSheet extends GlSheet {
   const SHEET_TITLE = 'Form Data';
   
-  /*public static function createNew() {
-    //TODO: figure out how to create new worksheet with proper columns, etc.
-    return null;
-  }*/
-  
   public function __construct($d, $s) {
     parent::__construct($d, $s);
     
@@ -82,7 +73,7 @@ class GlDataSheet extends GlSheet {
   }
   
   public function insert($values) {
-    $entry = $this->service()->insertRow($values, $this->doc->id(), $this->id);
+    $entry = $this->service()->insertRow($values, $this->doc->id, $this->id);
     return $values;
   }
 }
@@ -98,7 +89,6 @@ class GlCalcSheet extends GlSheet {
     
     if ($this->sheet->title->text !== GlCalcSheet::SHEET_TITLE) {
       throw new Exception('GlStatSheet::__construct(): wrong sheet');
-      // "'" . this->sheet->title->text . "'"
     }
   }
 }
@@ -108,11 +98,6 @@ class GlCalcSheet extends GlSheet {
  */
 class GlStatSheet extends GlSheet {
   const SHEET_TITLE = 'Stats';
-  
-  /*public static function createNew() {
-    //TODO: figure out how to create columns and set formulas.
-    return null;
-  }*/
   
   public function __construct($d, $s) {
     parent::__construct($d, $s);
@@ -164,7 +149,6 @@ class GlVersionSheet extends GlSheet {
     
     if ($this->sheet->title->text !== GlVersionSheet::SHEET_TITLE) {
       throw new Exception('GlVersionSheet::__construct(): wrong sheet');
-      // "'" . this->sheet->title->text . "'"
     }
   }
   

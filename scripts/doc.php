@@ -13,11 +13,16 @@ class GlDoc {
   
   protected $app;          /* GlApp */
   protected $doc;          /* Zend_Gdata_SpreadsheetEntry */
-  protected $id;           /* string */
   protected $dataSheet;    /* GlDataSheet */
   protected $calcSheet;    /* GlCalcSheet */
   protected $statSheet;    /* GlStatSheet */
   protected $versionSheet; /* GlVersionSheet */
+  
+  // Make these public so they're serializable
+  public $id;
+  public $title;
+  public $version;
+  
   
   public function __construct($app, $id, $getSheets = true) {
     if (! $app instanceof GlApp) {
@@ -47,8 +52,10 @@ class GlDoc {
     
     // Get the document ID string...always the last param(?)
     $parts = explode('/', $this->doc->id->text);
-    //print_r($parts);
     $this->id = $parts[count($parts) - 1];
+    
+    // Get the document title
+    $this->title = trim(str_replace(FILTER_TEXT, '', $this->doc->title->text));
     
     // You may not want to get references to the worksheets
     //TODO: change so you specify the sheets you want, or just get them when you
@@ -65,6 +72,8 @@ class GlDoc {
       
       // Get the version sheet
       $this->versionSheet = new GlVersionSheet($this, $this->getSheetByTitle(GlVersionSheet::SHEET_TITLE));
+      
+      $this->version = $this->versionSheet->getVersionInfo();
     }
   }
   
@@ -84,30 +93,28 @@ class GlDoc {
     $entry = $this->dataSheet->insert($values);
   }
   
-  public function id() {
+  /*public function id() {
     return $this->id;
   }
   
-  /*public function url() {
-    return BASE_URL . '?id=' . $this->id;
-  }
-  
-  public function formUrl() {
-    return BASE_URL . '?id=' . $this->id . '&action=submitnew';
-  }
-  
-  public function newUrl() {
-    return BASE_URL . '?id=' . $this->id . '&action=new';
+  /*public function title() {
+    return trim(str_replace(FILTER_TEXT, '', $this->doc->title->text));
   }*/
   
-  public function title() {
-    return trim(str_replace(FILTER_TEXT, '', $this->doc->title->text));
+  public function version() {
+    $version = $this->versionSheet->getVersionInfo();
+    return $version;
   }
   
   public function stats() {
     $stats = $this->statSheet->getStats();
     return $stats;
   }
+  
+  /*public function getJSONEncode() {
+    return json_encode(get_object_vars($this));
+    ));
+  }*/
   
   public function mostRecentEntries($offset = 0, $num = -1) {
     //TODO: merge calcs.MPG column with location, etc on FormData sheet.
@@ -138,10 +145,5 @@ class GlDoc {
     }
     
     return $ret;
-  }
-  
-  public function getVersionInfo() {
-    $version = $this->versionSheet->getVersionInfo();
-    return $version;
   }
 }

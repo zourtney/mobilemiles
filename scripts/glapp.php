@@ -11,21 +11,8 @@
 class GlApp {
   const VERSION = APP_VERSION;
   
-  const GET_ID = 'id';
-  const GET_ACTION = 'action';
-  const GET_ACTION_NEW = 'new';
-  const GET_ACTION_SUBMITNEW = 'submitnew';
-  const SESSION_STORED_GET = 'preloginget';
-  
-  const MODE_NONE = 0;
-  const MODE_DOCONLY = 1;
-  const MODE_NEW = 2;
-  const MODE_SUBMITNEW = 3;
-  
   const DATE_FORMAT = 'Y-m-d H:i:s';
   const DATE_FORMAT_FULL = 'l, F jS, Y';
-  
-  protected static $lastError; /* any type */
   
   protected $auth;    /* GlAuth */
   protected $service; /* Zend_Gdata_Spreadsheets */
@@ -36,36 +23,12 @@ class GlApp {
     $this->service = $this->auth->createService();
   }
   
-  /**
-   * Returns the current application state. Based mostly of GET and POST
-   * parameters.
-   */
-  public function getMode() {
-    // Document identifier present
-    if (isset($_GET[GlApp::GET_ID])) {
-      // "Action" parameter
-      if (isset($_GET[GlApp::GET_ACTION])) {
-        if ($_GET[GlApp::GET_ACTION] == GlApp::GET_ACTION_NEW)
-          return GlApp::MODE_NEW;
-        if ($_GET[GlApp::GET_ACTION] == GlApp::GET_ACTION_SUBMITNEW)
-          return GlApp::MODE_SUBMITNEW;
-        return GlApp::MODE_NONE;
-      }
-      
-      // No action, but we do have an ID
-      return GlApp::MODE_DOCONLY;
-    }
-    
-    // No ID, no discernible mode
-    return GlApp::MODE_NONE;
+  public function getService() {
+    return $this->service;
   }
   
   public function getDoc() {
     return $this->doc;
-  }
-  
-  public function getService() {
-    return $this->service;
   }
   
   public function open($id = null) {
@@ -85,14 +48,14 @@ class GlApp {
     
     foreach ($docs as $doc) {
       if (stripos($doc->title->text, FILTER_TEXT) !== FALSE) {
-        array_push($available, new GlDoc($this, $doc, false));
+        array_push($available, new GlDoc($this, $doc, true));
       }
     }
     
     return $available;
   }
   
-  public function saveGetVars() {
+  /*public function saveGetVars() {
     $_SESSION[GlApp::SESSION_STORED_GET] = serialize($_GET);
   }
   
@@ -104,17 +67,5 @@ class GlApp {
       $_GET = array_merge($storedGet, $_GET);
       unset($_SESSION[GlApp::SESSION_STORED_GET]);
     }
-  }
-  
-  public static function setLastError($e) {
-    GlApp::$lastError = $e;
-  }
-  
-  public static function getLastError() {
-    return GlApp::$lastError;
-  }
-  
-  public static function clearLastError() {
-    unset(GlApp::$lastError);
-  }
+  }*/
 }

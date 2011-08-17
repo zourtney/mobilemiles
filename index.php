@@ -63,11 +63,10 @@ require_once TEMPLATE_BASE . 'ui.php';
  * occuring `<div data-role="page">` the application's default page.
  *****************************************************************************/
 include(PAGE_BASE . 'home.php');
-include(PAGE_BASE . 'changes.php');
+include(PAGE_BASE . 'help.php');
 include(PAGE_BASE . 'settings.php');
 include(PAGE_BASE . 'logout.php');
 include(PAGE_BASE . 'list.php');
-include(PAGE_BASE . 'create_instructions.php');
 include(PAGE_BASE . 'view.php');
 include(PAGE_BASE . 'details.php');
 include(PAGE_BASE . 'new.php');
