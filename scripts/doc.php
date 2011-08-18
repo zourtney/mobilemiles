@@ -93,14 +93,6 @@ class GlDoc {
     $entry = $this->dataSheet->insert($values);
   }
   
-  /*public function id() {
-    return $this->id;
-  }
-  
-  /*public function title() {
-    return trim(str_replace(FILTER_TEXT, '', $this->doc->title->text));
-  }*/
-  
   public function version() {
     $version = $this->versionSheet->getVersionInfo();
     return $version;
@@ -110,11 +102,6 @@ class GlDoc {
     $stats = $this->statSheet->getStats();
     return $stats;
   }
-  
-  /*public function getJSONEncode() {
-    return json_encode(get_object_vars($this));
-    ));
-  }*/
   
   public function mostRecentEntries($offset = 0, $num = -1) {
     //TODO: merge calcs.MPG column with location, etc on FormData sheet.
