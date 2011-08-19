@@ -38,8 +38,6 @@ require_once TEMPLATE_BASE . 'ui.php';
   
   <!-- JavaScript dependencies -->
   <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-  <!--<script type="text/javascript" src="<?php echo JS_URL; ?>jquery.timeago.js"></script>
-  <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.livequery.min.js"></script>-->
   <script type="text/javascript" src="<?php echo JS_URL; ?>const.php"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>utils.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>app.js"></script>
@@ -50,7 +48,17 @@ require_once TEMPLATE_BASE . 'ui.php';
   
   <script type="text/javascript">
     $('abbr.timeago').livequery(function() {
-      $(this).timeago($.timeago.settingsRelativeDay);
+    	var $this = $(this);
+    	
+    	// Add friendly date/time formatting to this element
+    	$this.timeago($.timeago.settingsRelativeDay);
+      
+      // Toggle friendly name and actual value on click/tap
+      $this.bind('click', function(event) {
+      	var title = $this.attr('title');
+      	$this.attr('title', $this.text());
+      	$this.text(title);
+      });
     });
   </script>
 </head>
