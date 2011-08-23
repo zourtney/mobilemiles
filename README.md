@@ -12,16 +12,20 @@
 This webapp uses the [Google Data API](http://code.google.com/apis/gdata/) to communicate with a simple speadsheet stored in _your_ Google Docs account. This means you'll never have to worry about _your_ data being stored on _our_ servers. The hosting server is used solely to serve the PHP interface and act as an intermediary to Google Docs via the [Zend Gdata](http://framework.zend.com/download/gdata) library. Future version may attempt to cut the cord entirely.
 
 ##Ok, what does it do for me?
-The spreadsheet does most of the work for you. Currently, it will calculate the following values:
+The application get its data from a Google spreadsheet, which does most of the heavy lifting for you. The following stats are displayed from within the application:
 
-* trip distance
 * fuel mileage
+* trip distance
+* fill-up location
+* fill-up date and time
+* fill-up notes
+
+The "stats" sheet gives you a historical look, calculating these at 30- and 60-day intervals as well as an "all-time" column. These advanced stats are stored, but not currently displayed from within the application:
+
 * pump-price accuracy
 * days between fill-ups
 * cost per day
 * cost per mile
-
-The "stats" sheet gives you a historical look, calculating these at 30- and 60-day intervals as well as an "all-time" column.
 
 The entry form will autofill most of the form for you with "guesses", saving you time at the pump. The autofilled fields are:
 
