@@ -9,10 +9,10 @@
 [MobileMiles](http://github.com/zourtney/mobilemiles) is simple web app for tracking fuel mileage and other statistics straight from your mobile device. Every time you fill up, simply enter the number of gallons pumped and the unit price, tap submit and you're set! Visit the official live version at [gas.randomland.net](http://gas.randomland.net).
 
 ##Privacy
-This webapp uses the [Google Data API](http://code.google.com/apis/gdata/) to communicate with a simple speadsheet stored in _your_ Google Docs account. This means you'll never have to worry about _your_ data being stored on _our_ servers. The hosting server is used solely to serve the PHP interface and act as an intermediary to Google Docs via the [Zend Gdata](http://framework.zend.com/download/gdata) library. Future version may attempt to cut the cord entirely.
+This web app uses the [Google Data API](http://code.google.com/apis/gdata/) to communicate with a relatively simple speadsheet stored in _your_ Google Docs account. This means you'll never have to worry about _your_ data being stored on _our_ servers. The hosting server is used solely to serve the PHP interface and act as an intermediary to Google Docs via the [Zend Gdata](http://framework.zend.com/download/gdata) library. Future version may attempt to cut the cord entirely.
 
 ##Ok, what does it do for me?
-The application get its data from a Google spreadsheet, which does most of the heavy lifting for you. The following stats are displayed from within the application:
+MobileMiles provides a simple HTML interface to the fill-up spreadsheet stored in your Google Docs account. All calculations are performed here. Thus, the spreadsheet can be viewed and altered independently of the MobileMiles web app. The following stats are viewable from the web interface:
 
 * fuel mileage
 * trip distance
@@ -20,7 +20,7 @@ The application get its data from a Google spreadsheet, which does most of the h
 * fill-up date and time
 * fill-up notes
 
-The "stats" sheet gives you a historical look, calculating these at 30- and 60-day intervals as well as an "all-time" column. These advanced stats are stored, but not currently displayed from within the application:
+The "stats" sheet gives you a historical look, calculating these at 30- and 60-day intervals as well as an "all-time" column. These advanced stats are calculated, but not currently displayed:
 
 * pump-price accuracy
 * days between fill-ups
