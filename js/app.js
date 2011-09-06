@@ -80,31 +80,43 @@
  ****************************************************************************/
 var Page = Class.extend({
   init : function(app, id) {
+  	var self = this;
+		
     this.app = app;
     this.id = id;
     this.$page = $('#' + id);
-    this.$content = $('#' + id + ' div[data-role="content"]');
     
-    var self = this;
     this.$page.live('pageshow', function() {
       self.onPageShow();
     });
   },
   
+  getContent : function() {
+  	return $('#' + this.id + ' div[data-role="content"]');
+  },
+  
+  showTmpl : function(tmplName, data) {
+  	var $c = this.getContent();
+  	var tmplId = '#tmpl-' + this.id;
+  	
+  	if (tmplName !== undefined && tmplName != null && tmplName.length) {
+  		tmplId += '-' + tmplName;
+  	}
+  	
+  	$(tmplId)
+  		.tmpl(data)
+  		.appendTo($c.empty())
+  	;
+  	
+  	$c.trigger('create');
+  },
+  
   showUnauthorized : function(data) {
-    $('#tmpl-' + this.id + '-unauthorized')
-      .tmpl({
-        url: data.url
-      })
-      .appendTo(this.$content.empty())
-    ;
+  	this.tmplRender('unauthorized', data);
   },
   
   showError : function() {
-    $('#tmpl-' + this.id + '-error')
-      .tmpl()
-      .appendTo(this.$content.empty())
-    ;
+  	this.tmplRender('error');
   },
   
   setSubtitle : function(value) {
@@ -115,54 +127,46 @@ var Page = Class.extend({
 
 /****************************************************************************
  * Generic page with a list-holding container
+ *
+ * BUG: sometimes list rendering will fail. To reliably reproduce:
+ *   1. start at #view
+ *   2. ("no document") -> go to doc list, select document
+ *   3. fails with `parentPage[0] undefined'
+ *
+ * Known issue on jQuery Forum:
+ *   http://forum.jquery.com/topic/parentpage-0-is-undefined
+ *
+ * MobileMiles issue #21:
+ *   https://github.com/zourtney/mobilemiles/issues/21
  ****************************************************************************/
 var PageWithContainer = Page.extend({
   init : function(app, id) {
     this._super(app, id);
-    this.$container = $('#' + id + '-container');
     this.needsRefresh = true;
   },
   
-  jqmRender : function() {
-    // Explicitly create jQuery Mobile objects for newly created HTML elements.
-    try {
-      //BUG: sometimes this will fail. To reliably reproduce:
-      //  1. start at #view
-      //  2. ("no document") -> go to doc list, select document
-      //  3. fails with `parentPage[0] undefined'
-      //
-      // Known issue on jQuery Forum:
-      //   http://forum.jquery.com/topic/parentpage-0-is-undefined
-      //
-      // MobileMiles issue #21:
-      //   https://github.com/zourtney/mobilemiles/issues/21
-      this.$container.find('ul').listview();
-      
-      this.$container.find('[data-role="button"]').button();
-      
-      //TODO: add more as needed
-    }
-    catch (ex) {
-      console.log(ex);
-    }
+  getContainerContent : function() {
+  	return $('#' + this.id + '-container');
+  },
+  
+  showContainerTmpl : function(tmplName, data) {
+  	var $c = this.getContainerContent();
+  	var tmplId = '#tmpl-' + this.id + '-' + tmplName;
+  	
+  	$(tmplId)
+  		.tmpl(data)
+  		.appendTo($c.empty())
+  	;
+  	
+  	$c.trigger('create');
   },
   
   showLoading : function() {
-    $('#tmpl-' + this.id + '-loading')
-      .tmpl()
-      .appendTo(this.$container.empty())
-    ;
-    
-    this.jqmRender();
+    this.showContainerTmpl('loading');
   },
   
   showList : function(data) {
-    $('#tmpl-' + this.id + '-show')
-      .tmpl(data)
-      .appendTo(this.$container.empty())
-    ;
-    
-    this.jqmRender();
+    this.showContainerTmpl('show', data);
   },
   
   onPageShow : function() {
@@ -183,12 +187,7 @@ var HomePage = Page.extend({
   },
   
   showAuthorized : function() {
-    $('#tmpl-home')
-      .tmpl()
-      .appendTo(this.$content.empty())
-    ;
-    
-    this.$content.find('ul').listview();
+    this.showTmpl();
   },
   
   onPageShow : function() {
@@ -216,7 +215,7 @@ var HomePage = Page.extend({
         console.log('error ' + error + ', ' + status);
         self.showError();
       }
-    })
+    });
   }
 });
 
@@ -230,30 +229,11 @@ var SettingsPage = Page.extend({
   },
   
   showUnauthorized : function(data) {
-    $('#tmpl-settings-request')
-      .tmpl({
-        url: data.url
-      })
-      .appendTo(this.$content.empty())
-    ;
-    
-    // Suckiness: have to explicitly reconstruct components. I tried
-    // using $(#settings [data-role="button"]).page()...and it work the
-    // first time, but kills the styling when revisiting a cached page.
-    // Hopefully this gets fixed in future versions of jQuery Mobile...
-    this.$page.find('[data-role="button"]').button();
-    
-    //TODO: fix unintuitive 'Back' functionality after authorization.
+    this.showTmpl('request', data);
   },
 
   showAuthorized : function() {
-    $('#tmpl-settings-success')
-      .tmpl()
-      .appendTo(this.$content.empty())
-    ;
-    
-    // See complaint above.
-    this.$page.find('[data-role="button"]').button();
+    this.showTmpl('success');
   },
   
   onPageShow : function() {
@@ -416,12 +396,8 @@ var ViewPage = PageWithContainer.extend({
   },
   
   showNoDoc : function() {
-    $('#tmpl-view-no-doc')
-      .tmpl()
-      .appendTo(this.$content.empty())
-    ;
-    
     this.setSubtitle('No document');
+    this.showTmpl('no-doc');
   },
   
   showLoadMore : function() {
@@ -445,7 +421,7 @@ var ViewPage = PageWithContainer.extend({
   showListAndAppend : function(data) {
     $('#tmpl-view-item')
       .tmpl(data)
-      .insertBefore(this.$container.find('li:last'))
+      .insertBefore(this.getContainerContent().find('li:last'))
     ;
     
     $('#entrylist').listview('refresh');
@@ -465,13 +441,7 @@ var ViewPage = PageWithContainer.extend({
       beforeSend: callbacks.beforeSend,
       error: callbacks.error,
       success: callbacks.success,
-      complete: function() {
-        self.jqmRender();
-        
-        if (callbacks.complete !== undefined) {
-          callbacks.complete();
-        }
-      }
+      complete: callbacks.complete
     });
   },
   
@@ -543,7 +513,7 @@ var ViewPage = PageWithContainer.extend({
         self.showError();
       },
       complete: function() {
-        self.showLoadMore();
+      	self.showLoadMore();
       }
     });
   }
@@ -559,28 +529,13 @@ var ViewDetailsPage = Page.extend({
   },
   
   showNoDoc : function() {
-    // Set subtitle
-    this.setSubtitle('No document');
-    
-    // Display error message
-    $('#tmpl-details-no-doc')
-      .tmpl()
-      .appendTo(this.$content.empty())
-    ;
+  	this.setSubtitle('No document');
+    this.showTmpl('no-doc');
   },
   
-  showDetails : function(entry) {
-    // Set subtitle to document name
+  showDetails : function(data) {
     this.setSubtitle(this.app.docTitle);
-    
-    // Display the template
-    $('#tmpl-details')
-      .tmpl(entry)
-      .appendTo(this.$content.empty())
-    ;
-    
-    // Rebuild collapsible
-    $('div [data-role="collapsible"]').collapsible();
+    this.showTmpl('', data);
   },
   
   onPageShow : function() {
@@ -620,20 +575,11 @@ var AddNewPage = Page.extend({
   
   showNoDoc : function() {
     this.setSubtitle('No document');
-    
-    $('#tmpl-new-no-doc')
-      .tmpl()
-      .appendTo(this.$content.empty())
-    ;
+    this.showTmpl('no-doc');
   },
   
-  showSuccess : function(stats) {
-    $('#tmpl-new-success')
-      .tmpl(stats)
-      .appendTo($('#new > div[data-role="content"]').empty())
-    ;
-    
-    $('div [data-role="collapsible"]').collapsible();
+  showSuccess : function(data) {
+  	this.showTmpl('success', data);
     
     // Scroll to top of page
     this.scrollToField();
@@ -692,19 +638,7 @@ var AddNewPage = Page.extend({
    * Renders the form elements using jQuery Mobile styles. Ugh.
    */
   renderForm : function() {
-    // Display the form
-    $('#tmpl-new-form')
-      .tmpl()
-      .appendTo(this.$content.empty())
-    ;
-    
-    // Create jQuery Mobile styled objects
-    //TODO: move to jqmRender()
-    $('#new div[data-role="fieldcontain"]').fieldcontain();
-    $('#new input').textinput();
-    $('#new textarea').textinput();
-    $('#new select').selectmenu();
-    $('#new button').button();
+    this.showTmpl('form');
   },
   
   /**
