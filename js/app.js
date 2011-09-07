@@ -112,11 +112,11 @@ var Page = Class.extend({
   },
   
   showUnauthorized : function(data) {
-  	this.tmplRender('unauthorized', data);
+  	this.showTmpl('unauthorized', data);
   },
   
   showError : function() {
-  	this.tmplRender('error');
+  	this.showTmpl('error');
   },
   
   setSubtitle : function(value) {
@@ -677,6 +677,11 @@ var AddNewPage = Page.extend({
       }
     }
     
+    // Set 'grade' dropdown item
+		$('#grade option:selected').removeAttr('selected');
+		$('#grade option[value="' + data.values['grade'] + '"]').attr('selected', 'selected');
+		$('#grade').trigger('change');
+		
     return $firstInvalid;
   },
   

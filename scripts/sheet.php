@@ -122,16 +122,17 @@ class GlStatSheet extends GlSheet {
     );
     
     foreach ($cols as $colName => $colLetter) {
-      $ret[$colName]['datetime']     = (isset($raw[$colLetter . '2']) ? $raw[$colLetter . '2']['value'] : null);
-      $ret[$colName]['mpg']          = $raw[$colLetter . '3']['value'];
-      $ret[$colName]['cost']         = $raw[$colLetter . '4']['value'];
-      $ret[$colName]['tripdistance'] = $raw[$colLetter . '5']['value'];
-      $ret[$colName]['daysbetween']  = $raw[$colLetter . '6']['value'];
-      $ret[$colName]['costperday']   = $raw[$colLetter . '7']['value'];
-      $ret[$colName]['costpermile']  = $raw[$colLetter . '8']['value'];
-      $ret[$colName]['location']     = $raw[$colLetter . '9']['value'];
-      $ret[$colName]['mileage']      = (isset($raw[$colLetter . '10']['value']) ? $raw[$colLetter . '10']['value'] : null);
+      $ret[$colName]['datetime']       = (isset($raw[$colLetter . '2']) ? $raw[$colLetter . '2']['value'] : null);
+      $ret[$colName]['mpg']            = $raw[$colLetter . '3']['value'];
+      $ret[$colName]['cost']           = $raw[$colLetter . '4']['value'];
+      $ret[$colName]['tripdistance']   = $raw[$colLetter . '5']['value'];
+      $ret[$colName]['daysbetween']    = $raw[$colLetter . '6']['value'];
+      $ret[$colName]['costperday']     = $raw[$colLetter . '7']['value'];
+      $ret[$colName]['costpermile']    = $raw[$colLetter . '8']['value'];
+      $ret[$colName]['location']       = $raw[$colLetter . '9']['value'];
+      $ret[$colName]['mileage']        = (isset($raw[$colLetter . '10']['value']) ? $raw[$colLetter . '10']['value'] : null);
       $ret[$colName]['pricepergallon'] = $raw[$colLetter . '11']['value'];
+      $ret[$colName]['grade']          = $raw[$colLetter . '12']['value'];
     }
     
     return $ret;

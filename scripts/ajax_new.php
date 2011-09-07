@@ -21,8 +21,8 @@ function getDefaults($app) {
   return array(
      'mileage' =>  (isset($stats['last']['mileage']) && isset($stats['all']['tripdistance'])) ? getMiles($stats['last']['mileage'] + $stats['all']['tripdistance']) : '',
      'location' => (isset($stats['all']['location']) ? $stats['all']['location'] : ''),
-     'pricepergallon' => (isset($stats['last']['pricepergallon'])) ? getGasMoney($stats['last']['pricepergallon']) : ''
-     //TODO: 'favorite' grade
+     'pricepergallon' => (isset($stats['last']['pricepergallon'])) ? getGasMoney($stats['last']['pricepergallon']) : '',
+     'grade' => (isset($stats['all']['grade'])) ? $stats['all']['grade'] : '0'
   );
 }
 
