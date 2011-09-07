@@ -708,25 +708,9 @@ var AddNewPage = Page.extend({
   },
   
   getFormData : function() {
+  	// Serialize form data
     var formData = $('#frmNew').serializeArray();
-    
-    // HACK ------------------------------------------>
-    // jQuery not serializing datetime-local field (as of 1.6.2)
-    //   https://gist.github.com/1101324
-    //TODO: check for updates periodically
-    var hasDatetime = false;
-    for (var i in formData) {
-      if (i == 'datetime') {
-        hasDatetime = true;
-        break;
-      }
-    }
-    
-    if (! hasDatetime) {
-      formData.push({name: 'datetime', value: $('#datetime').val()});
-    }
-    //END HACK <---------------------------------------
-    
+        
     // Add the ID field (document key)
     formData.push({name: 'doc', value: mobileMiles.doc});
     

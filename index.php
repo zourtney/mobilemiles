@@ -38,13 +38,13 @@ require_once TEMPLATE_BASE . 'ui.php';
   
   <!-- JavaScript dependencies -->
   <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.livequery/jquery.livequery.js"></script>
+  <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.timeago/jquery.timeago.js"></script>  
+  <script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>const.php"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>utils.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>app.js"></script>
   <script type="text/javascript" src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script>
-  <script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
-  <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.livequery/jquery.livequery.js"></script>
-  <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.timeago/jquery.timeago.js"></script>  
   
   <script type="text/javascript">
     $('abbr.timeago').livequery(function() {
