@@ -153,6 +153,8 @@ else {
     ));
   }
   else if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'defaults') {
+  	//TODO: version check?
+  	
     // Return array of priming data (for example, last milage + previous trip
     // length, 'favorite' location, last price per gallon)
     echo json_encode(array(
@@ -160,7 +162,9 @@ else {
       'values' => getDefaults($app)
     ));
   }
-  else {  
+  else {
+  	//TODO: version check?
+  	
     // Check for errors in input
     $errors = getErrors();
     
