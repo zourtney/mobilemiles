@@ -35,7 +35,6 @@ function getApp() {
 	
 	// Check existing against ID param
 	if (! isset($doc) || $doc->id != $docId) {
-		echo "switching docs...";
 		// Open it...
 		try {
 			$app->open($docId, true);
