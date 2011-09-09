@@ -9,6 +9,50 @@
 
 require_once 'globals.php';
 
+function getApp() {
+	// Set the document ID (or return error if it's missing)
+	if (! isset($_GET['id']) || strlen($_GET['id']) < 1) {
+		echo json_encode(array(
+			'response' => 'new_no_doc',
+			'values' => getInputValues()
+		));
+		exit;
+	}
+	// else: set document ID
+	$docId = $_GET['id'];
+	
+	// Create or get handle to the app object
+	if (! isset($_SESSION['GlApp_App'])) {
+		$app = new GlApp($auth);
+		$_SESSION['GlApp_App'] = $app;
+	}
+	else {
+		$app = $_SESSION['GlApp_App'];
+	}
+	
+	// Get doc
+	$doc = $app->getDoc();
+	
+	// Check existing against ID param
+	if (! isset($doc) || $doc->id != $docId) {
+		echo "switching docs...";
+		// Open it...
+		try {
+			$app->open($docId, true);
+			//$doc = $app->getDoc();
+		}
+		catch (Exception $ex) {
+			// Die here with error
+			echo json_encode(array(
+				'response' => 'new_open_failed'
+			));
+			exit;
+		}
+	}
+	
+	return $app;
+}
+
 /**
  * Returns the default values used for convenience of filling out the form 
  * faster.
@@ -106,25 +150,14 @@ function getSanitizedValues() {
   return $cleanVals;
 }
 
-//
-// Entry point
-//
-//HACK: remove this or restructure program so we're not opening the session
-// more than once.
-if (! session_id()) {
-  session_start();
-}
 
-// Set the document ID (or return error if it's missing)
-if (! isset($_GET['doc']) || strlen($_GET['doc']) < 1) {
-  echo json_encode(array(
-    'response' => 'new_no_doc',
-    'values' => getInputValues()
-  ));
-  exit;
-}
-// else:
-$docId = $_GET['doc'];
+// Preload class. Needed for serialization of $_SESSION objects. Must be done
+// before `session_start()`. See:
+//   http://stackoverflow.com/questions/1219861/#1219874
+Zend_Loader::loadClass('Zend_Http_Client_Adapter_Socket');
+
+// Start session
+session_start();
 
 // Create or get handle to the authentication object.
 if (! isset($_SESSION['GlApp_GlOAuth'])) {
@@ -135,61 +168,56 @@ else {
   $auth = $_SESSION['GlApp_GlOAuth'];
 }
 
-// Attempt to log in
-if (! $auth->logIn('#')) {
+if (! $auth->isLoggedIn() && ! $auth->hasRequestToken()) {
+  //TODO: handle
   echo json_encode(array(
     'response' => 'login_unauthorized'
   ));
 }
+else if (! $auth->logIn(@$_GET['callee'])) {
+  //TODO: handle
+  echo json_encode(array(
+    'response' => 'login_failure'
+  ));
+}
+else if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'defaults') {
+	//TODO: version check?
+	
+	// Return array of priming data (for example, last milage + previous trip
+	// length, 'favorite' location, last price per gallon)
+	echo json_encode(array(
+		'response' => 'new_defaults',
+		'values' => getDefaults(getApp())
+	));
+}
 else {
-  // Create app
-  $app = new GlApp($auth);
-  
-  // Get document
-  if (! $app->open($docId)) {
-    echo json_encode(array(
-      'response' => 'new_bad_document',
-      'message' => $docID . ' is not a valid document'
-    ));
-  }
-  else if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'defaults') {
-  	//TODO: version check?
-  	
-    // Return array of priming data (for example, last milage + previous trip
-    // length, 'favorite' location, last price per gallon)
-    echo json_encode(array(
-      'response' => 'new_defaults',
-      'values' => getDefaults($app)
-    ));
-  }
-  else {
-  	//TODO: version check?
-  	
-    // Check for errors in input
-    $errors = getErrors();
-    
-    if (count($errors) > 0) {
-      // Validation errors. Return list of invalid fields along with the
-      // original input.
-      echo json_encode(array(
-        'response' => 'new_validation_error',
-        'errors' => $errors,
-        'values' => getInputValues()
-      ));
-    }
-    else {
-      // Fields are valid. Submit it.
-      $doc = $app->getDoc();
-      $cleanVals = getSanitizedValues();
-      $doc->insert($cleanVals);
-      $entries = $app->getDoc()->mostRecentEntries(0, 1);
-      
-      echo json_encode(array(
-        'response' => 'new_success',
-        'errors' => array(),
-        'values' => $cleanVals,
-        'stats' => $entries[0]
-      ));
-    }
-  }
+	//TODO: version check?
+	
+	// Check for errors in input
+	$errors = getErrors();
+	
+	if (count($errors) > 0) {
+		// Validation errors. Return list of invalid fields along with the
+		// original input.
+		echo json_encode(array(
+			'response' => 'new_validation_error',
+			'errors' => $errors,
+			'values' => getInputValues()
+		));
+	}
+	else {
+		// Fields are valid. Submit it.
+		$app = getApp();
+		$doc = $app->getDoc();
+		$cleanVals = getSanitizedValues();
+		$doc->insert($cleanVals);
+		$entries = $doc->mostRecentEntries(0, 1);
+		
+		echo json_encode(array(
+			'response' => 'new_success',
+			'errors' => array(),
+			'values' => $cleanVals,
+			'stats' => $entries[0]
+		));
+	}
 }

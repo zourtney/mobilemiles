@@ -125,6 +125,13 @@ p.disabled, label.disabled {
   /*display: none !important;*/
 }
 
+list-btn-right span {
+}
+
+list-btn-right a {
+	
+}
+
 /* Red button -- https://gist.github.com/909284 */
 .ui-btn-up-f, .ui-btn-hover-f, .ui-btn-down-f {
   color: white;

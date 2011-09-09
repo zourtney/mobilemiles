@@ -17,6 +17,7 @@ class GlApp {
   protected $auth;    /* GlAuth */
   protected $service; /* Zend_Gdata_Spreadsheets */
   protected $doc;     /* GlDoc */
+  protected $docs;
   
   public function __construct($authInstance) {
     $this->auth = $authInstance;
@@ -31,28 +32,26 @@ class GlApp {
     return $this->doc;
   }
   
-  public function open($id = null) {
-    if ($id == null) {
-      $id = $_GET[GlApp::GET_ID];
-    }
-    
+  public function open($id = null, $getSheets = true) {
     // Open document using passed in parameter.
-    $this->doc = new GlDoc($this, $id);
-    
+    $this->doc = new GlDoc($this, $id, $getSheets);
     return true;
   }
   
-  public function getAvailable() {
-    $docs = $this->service->getSpreadsheetFeed();
-    $available = array();
-    
-    foreach ($docs as $doc) {
-      if (stripos($doc->title->text, FILTER_TEXT) !== FALSE) {
-        array_push($available, new GlDoc($this, $doc, true));
-      }
-    }
-    
-    return $available;
+  public function getAvailable($refresh = false) {
+  	if (count($this->docs) < 1 || $refresh) {
+  		// Get from Google Docs
+	    $feed = $this->service->getSpreadsheetFeed();
+	    $this->docs = array();
+	   	
+	   	foreach ($feed as $doc) {
+				if (stripos($doc->title->text, FILTER_TEXT) !== FALSE) {
+					array_push($this->docs, new GlDoc($this, $doc, true));
+				}
+			}
+		}
+		
+		return $this->docs;
   }
   
   /*public function saveGetVars() {

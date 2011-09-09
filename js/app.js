@@ -143,6 +143,7 @@ var PageWithContainer = Page.extend({
   init : function(app, id) {
     this._super(app, id);
     this.needsRefresh = true;
+    this.needsRequery = false;
   },
   
   getContainerContent : function() {
@@ -315,8 +316,9 @@ var ListPage = PageWithContainer.extend({
   
     var self = this;
     $('#ul-list-refresh').live('click', function() {
+    	self.needsRequery = true;
       self.populate();
-      self.app.view.needsRefresh = true;
+      self.app.view.needsRequery = true;
     });
     
     $('.view-link').live('click', function() {
@@ -338,7 +340,8 @@ var ListPage = PageWithContainer.extend({
       url: MobileMilesConst.SCRIPT_URL + 'ajax_doclist.php',
       dataType: 'json',
       data: {
-        callee: MobileMilesConst.BASE_URL + '#' + self.id
+        callee: MobileMilesConst.BASE_URL + '#' + self.id,
+        refresh: self.needsRequery
       },
       beforeSend: function() {
         self.showLoading();
@@ -349,6 +352,7 @@ var ListPage = PageWithContainer.extend({
             self.showUnauthorized(data);
             break;
           case 'doclist_success':
+            self.needsRequery = false;
             self.showList({
               docs: data.doclist
             });
@@ -377,6 +381,11 @@ var ViewPage = PageWithContainer.extend({
     this.entries = [];
     
     var self = this;
+    $('#ul-entrylist-refresh').live('click', function() {
+    	self.needsRequery = true;
+      self.populate();
+    });
+    
     $('#entrylist li').live('click', function(e) {
       var i = $(this).index() - 1;
       
@@ -436,7 +445,8 @@ var ViewPage = PageWithContainer.extend({
         callee: MobileMilesConst.BASE_URL + '#' + self.id,
         id: self.app.doc,
         offset: offset,
-        num: num
+        num: num,
+        refresh: self.needsRequery
       },
       beforeSend: callbacks.beforeSend,
       error: callbacks.error,
@@ -712,7 +722,7 @@ var AddNewPage = Page.extend({
     var formData = $('#frmNew').serializeArray();
         
     // Add the ID field (document key)
-    formData.push({name: 'doc', value: mobileMiles.doc});
+    formData.push({name: 'id', value: mobileMiles.doc});
     
     return formData;
   },
@@ -746,6 +756,7 @@ var AddNewPage = Page.extend({
             
             // Make sure the entry list refreshes if/when they go #view.
             self.app.view.needsRefresh = true;
+            self.app.view.needsRequery = true;
             break;
           default:
             console.log('what is ' + data.response + '?');
@@ -783,7 +794,7 @@ var AddNewPage = Page.extend({
       url: MobileMilesConst.SCRIPT_URL + 'ajax_new.php',
       dataType: 'json',
       data: {
-        doc: this.app.doc,
+        id: this.app.doc,
         action: 'defaults'
       },
       cache: false,
@@ -821,9 +832,9 @@ var AddNewPage = Page.extend({
  * MobileMilesApp
  ******************************************************************************/
 function MobileMilesApp() {
-  // Initialize 'doc' through GET params (if existing)
-  if ($_GET.hasOwnProperty('doc') && $_GET['doc'].length > 0) {
-    this.doc = $_GET['doc'];
+  // Initialize 'id' through GET params (if existing)
+  if ($_GET.hasOwnProperty('id') && $_GET['id'].length > 0) {
+    this.doc = $_GET['id'];
   }
   
   // Returns whether or a document has been set

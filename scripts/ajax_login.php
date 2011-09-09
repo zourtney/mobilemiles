@@ -9,11 +9,8 @@
 
 require_once 'globals.php';
 
-//HACK: remove this or restructure program so we're not opening the session
-// more than once.
-if (! session_id()) {
-  session_start();
-}
+// Start session
+session_start();
 
 // Create or get handle to the authentication object.
 if (! isset($_SESSION['GlApp_GlOAuth'])) {
@@ -30,10 +27,9 @@ if (! isset($_SESSION['next'])) {
     $_SESSION['next'] = $_GET['next'];
   }
   else {
-    $_SESSION['next'] = BASE_URL;//'http://google.com';
+    $_SESSION['next'] = BASE_URL;
   } 
 }
-
 
 if ($auth->hasLogoutToken()) {
   // Keep copy of this, since the session is going to be destroyed. We don't
@@ -43,6 +39,9 @@ if ($auth->hasLogoutToken()) {
   
   // Log out
   $auth->logOut();
+  
+  // Delete cached list cookie
+  GlCookie::deleteCookie();
   
   // Go to next page.
   //header('Location: ' . urldecode($next));

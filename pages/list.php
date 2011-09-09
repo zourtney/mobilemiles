@@ -21,9 +21,19 @@
   <a href="<?php echo SYSTEM_ADMIN_URI; ?>" rel="external">contact</a> the system admininstrator.</p>
 </script>
 
+<script id="tmpl-list-header" type="text/x-jquery-tmpl">
+	<li data-role="list-divider">
+		<span>${title}</span>
+		<!--TODO: finish
+		<span class="ui-li-count list-btn-right" style="padding: 0;">
+			<a href="#some-refresh-page" data-role="button" data-icon="refresh" data-iconpos="notext" data-theme="d" style="margin: 0;">Refresh</a>
+		</span>-->
+	</li>
+</script>
+
 <script id="tmpl-list-loading" type="text/x-jquery-tmpl">
   <ul id="ul-list" data-role="listview" data-inset="true">
-    <li data-role="list-divider">&nbsp;</li>
+    {{tmpl({title: "&nbsp;"}) "#tmpl-list-header"}}
     <li>
       <div class="ajax-loading">
         <div class="ui-icon ui-icon-loading spin loading-img"></div>
@@ -35,7 +45,7 @@
 
 <script id="tmpl-list-show" type="text/x-jquery-tmpl">
   <ul id="ul-list" data-role="listview" data-inset="true">
-    <li data-role="list-divider">Select existing</li>
+    {{tmpl({title: "Select existing"}) "#tmpl-list-header"}}
     {{each(i, doc) docs}}
       {{if doc.version.app < <?php echo APP_VERSION; ?> || doc.version.doc < <?php echo SPREADSHEET_VERSION; ?>}}
         <li data-icon="alert"><a class="view-link" data-id="${doc.id}" href="#doc_update_instructions">${doc.title}</a></li>
@@ -44,8 +54,6 @@
       {{/if}}
     {{/each}}
   </ul>
-  
-  <a id='ul-list-refresh' data-role="button" data-icon="refresh" data-iconpos="top">Refresh</a>
 </script>
 
 <!-- *********************************************************************** -->
@@ -57,13 +65,9 @@
   )); ?>
   
   <div data-role="content">
-    <p>Select a gas log from the document list below. Or you can <a href="#create_instructions">create</a> a new one.</p>
+    <p>Select a MobileMiles document from the list below. If the list is out of date, you can manually <a id="ul-list-refresh">refresh</a> it. If you are just getting started, or wish to add a second vehicle, check out these <a href="#create_instructions">instructions</a>.</p>
         
     <div id="list-container">
-    </div>
-  
-    <div>
-      <a id="create_instructions_btn" href="#create_instructions" data-role="button" data-transition="slideup">Create new</a>
     </div>
   </div>
   <?php glFooter(); ?>

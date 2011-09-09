@@ -4,19 +4,28 @@
  * @license:   Apache 2.0; see `license.txt`
  * @author:    zourtney@randomland.net
  * 
- * Returns a list of gas logs.
+ * Returns a list of MobileMiles spreadsheets. If possible, it will pull the
+ * list from a cookie for better performance.
  */
 
 require_once 'globals.php';
 
-//HACK: remove this or restructure program so we're not opening the session
-// more than once.
-if (! session_id()) {
-  session_start();
-}
+// Preload class. Needed for serialization of $_SESSION objects. Must be done
+// before `session_start()`. See:
+//   http://stackoverflow.com/questions/1219861/#1219874
+Zend_Loader::loadClass('Zend_Http_Client_Adapter_Socket');
 
-// Create the authentication object.
-$auth = new GlOAuth();
+// Start session
+session_start();
+
+// Create or get handle to the authentication object.
+if (! isset($_SESSION['GlApp_GlOAuth'])) {
+  $auth = new GlOAuth();
+  $_SESSION['GlApp_GlOAuth'] = $auth;
+}
+else {
+  $auth = $_SESSION['GlApp_GlOAuth'];
+}
 
 if (! $auth->isLoggedIn() && ! $auth->hasRequestToken()) {
   //TODO: handle
@@ -24,22 +33,39 @@ if (! $auth->isLoggedIn() && ! $auth->hasRequestToken()) {
     'response' => 'login_unauthorized'
   ));
 }
-else if (! $auth->login($_GET['callee'])) {
+else if (! $auth->logIn(@$_GET['callee'])) {
   //TODO: handle
   echo json_encode(array(
     'response' => 'login_failure'
   ));
 }
 else {
-  // Create instance of the app
-  $app = new GlApp($auth);
+  // Normalize 'refresh' flag
+  $refresh = false;
+  if (isset($_GET['refresh']) && ($_GET['refresh'] == '1' || $_GET['refresh'] == 'true')) {
+  	$refresh = true;
+  }
   
-  // Merge in pre-login vars (if any)
-  //TODO: remove?
-  //$app->mergeSavedGetVars();
+  // Pull doc list from cookie
+  $docs = GlCookie::getDocList();
   
-  // Get a list of document objects
-  $docs = $app->getAvailable();
+  // Query Google Docs for document list
+  if ($refresh || ! isset($docs)) {
+  	// Create or get handle to the app object
+		if (! isset($_SESSION['GlApp_App'])) {
+			$app = new GlApp($auth);
+			$_SESSION['GlApp_App'] = $app;
+		}
+		else {
+			$app = $_SESSION['GlApp_App'];
+		}
+		
+		// Get available documents
+    $docs = $app->getAvailable($refresh);
+	  
+	  // Save list to cookie
+		GlCookie::setDocList($docs);
+  }
   
   echo json_encode(array(
     'response' => 'doclist_success',

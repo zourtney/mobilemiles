@@ -4,7 +4,7 @@
  * @license:   Apache 2.0; see `license.txt`
  * @author:    zourtney@randomland.net
  * 
- * GlOAuth contains the Google Apps authentication needed for GlApp.
+ * Google Apps authentication code
  */
 
 require_once 'Zend/Oauth/Consumer.php';
@@ -119,7 +119,7 @@ class Gdata_OAuth_Helper extends Zend_Oauth_Consumer {
  * OAuth implementation of the login interface.
  */
 class GlOAuth extends Gdata_OAuth_Helper implements iGlAuth {
-  const COOKIE_NAME = 'rl_glapp_access_token';
+  const COOKIE_NAME = 'mobilemiles_access_token';
   const SCOPE = 'http://spreadsheets.google.com/feeds https://spreadsheets.google.com/feeds http://docs.google.com/feeds';
   
   protected $client; /* Zend_Gdata_HttpClient */
@@ -128,7 +128,6 @@ class GlOAuth extends Gdata_OAuth_Helper implements iGlAuth {
     parent::__construct(OAUTH_CONSUMER_KEY, OAUTH_SECRET);
     
     if (isset($_COOKIE[GlOAuth::COOKIE_NAME])) {
-      //echo 'cookie exists as ' . $_COOKIE[GlOAuth::COOKIE_NAME];
       $_SESSION['ACCESS_TOKEN'] = $_COOKIE[GlOAuth::COOKIE_NAME];
     }
   }
@@ -179,24 +178,13 @@ class GlOAuth extends Gdata_OAuth_Helper implements iGlAuth {
       switch (@$_REQUEST['action']) {
         case 'request_token':
           $this->getRequestToken();
-          //$_SESSION['REQUEST_TOKEN'] = serialize($this->fetchRequestToken(GlOAuth::SCOPE, LOGIN_URL . '?action=access_token'));
-          //$this->authorizeRequestToken();
           //NOTE: redirects, so no return value
           break;
         case 'access_token':
           $this->getAccessToken($nextUrl);
-          //$_SESSION['ACCESS_TOKEN'] = serialize($this->fetchAccessToken());
-          //header('Location: ' . $nextUrl);
-          //break;
-          //return true;
         default:
-          //$accessToken = unserialize($_SESSION['ACCESS_TOKEN']);
-          //$this->client = $accessToken->getHttpClient($this->getOauthOptions());
-
-          //setcookie(GlOAuth::COOKIE_NAME, $_SESSION['ACCESS_TOKEN'], time() + OAUTH_COOKIE_EXPIRATION);
           $this->getExistingAccessToken();
-
-          return true;
+				  return true;
       }
     }
     catch (Exception $ex) {
@@ -207,20 +195,6 @@ class GlOAuth extends Gdata_OAuth_Helper implements iGlAuth {
   }
   
   public function logOut() {
-    //TODO: fix! This does not work at all!
-    /*$_SESSION = array();
-    
-    if (isset($_COOKIE[session_name()])) {
-      setcookie(session_name(), '', time()-42000, '/');
-      unset($_COOKIE[session_name()]);
-    }
-    
-    setcookie(GlOAuth::COOKIE_NAME, time() - 3600);
-    unset($_COOKIE[GlOAuth::COOKIE_NAME]);
-    
-    session_destroy();
-    */
-    //session_start(); // initialize session
     session_destroy(); // destroy session
     
     $past = time() - 3600;

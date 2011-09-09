@@ -80,6 +80,9 @@ require_once SCRIPT_BASE . 'interfaces.php';
 require_once SCRIPT_BASE . 'oauth_secret.php';
 require_once SCRIPT_BASE . 'oauth.php';
 
+// Cookie management
+require_once SCRIPT_BASE . 'cookie.php';
+
 // Application logic
 require_once SCRIPT_BASE . 'utils.php';
 require_once SCRIPT_BASE . 'glapp.php';
