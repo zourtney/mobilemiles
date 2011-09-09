@@ -327,6 +327,7 @@ var ListPage = PageWithContainer.extend({
         self.app.doc = id;
         self.app.docTitle = $(this).data('doc-title');
         self.app.view.needsRefresh = true;
+        self.app.view.needsRequery = false;
       }
     });
   },
@@ -473,6 +474,7 @@ var ViewPage = PageWithContainer.extend({
             break;
           case 'entrylist_success':
             self.entries = data.entrylist;
+            self.needsRequery = false;
             
             self.showList({
               entries: self.entries
