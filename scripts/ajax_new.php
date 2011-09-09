@@ -9,7 +9,7 @@
 
 require_once 'globals.php';
 
-function getApp() {
+function getApp($auth) {
 	// Set the document ID (or return error if it's missing)
 	if (! isset($_GET['id']) || strlen($_GET['id']) < 1) {
 		echo json_encode(array(
@@ -181,7 +181,7 @@ else if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'defaults') {
 	// length, 'favorite' location, last price per gallon)
 	echo json_encode(array(
 		'response' => 'new_defaults',
-		'values' => getDefaults(getApp())
+		'values' => getDefaults(getApp($auth))
 	));
 }
 else {
@@ -201,7 +201,7 @@ else {
 	}
 	else {
 		// Fields are valid. Submit it.
-		$app = getApp();
+		$app = getApp($auth);
 		$doc = $app->getDoc();
 		$cleanVals = getSanitizedValues();
 		$doc->insert($cleanVals);
