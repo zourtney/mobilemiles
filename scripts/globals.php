@@ -16,6 +16,11 @@ Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
 Zend_Loader::loadClass('Zend_Gdata_HttpClient');
 Zend_Loader::loadClass('Zend_Gdata_Spreadsheets');
 
+// Preload class. Needed for serialization of $_SESSION objects. Must be done
+// before `session_start()`. See:
+//   http://stackoverflow.com/questions/1219861/#1219874
+Zend_Loader::loadClass('Zend_Http_Client_Adapter_Socket');
+
 // So PHP doesn't complain...
 date_default_timezone_set('America/Los_Angeles');
 
@@ -31,7 +36,7 @@ function defndef($name, $val) {
 // Constants
 defndef('DEBUG', (strstr($_SERVER['SERVER_NAME'], 'localhost') !== false));
 defndef('APP_VERSION', 1.0);
-defndef('BUILD_VERSION', '1.0.20110907');
+defndef('BUILD_VERSION', '1.0.20110908');
 defndef('SYSTEM_ADMIN_URI', 'mailto:zourtney@randomland.net');
 defndef('SPREADSHEET_VERSION', 1.1);
 defndef('SPREADSHEET_MASTER_URL', 'https://spreadsheets.google.com/ccc?key=0AnRif0EzefXxdEViXzFGdjlJLXNXYlBhdXFmUERqTnc&hl=en');

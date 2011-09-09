@@ -9,11 +9,6 @@
 
 require_once 'globals.php';
 
-// Preload class. Needed for serialization of $_SESSION objects. Must be done
-// before `session_start()`. See:
-//   http://stackoverflow.com/questions/1219861/#1219874
-Zend_Loader::loadClass('Zend_Http_Client_Adapter_Socket');
-
 // Start session
 session_start();
 
