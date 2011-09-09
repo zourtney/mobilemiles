@@ -60,6 +60,10 @@ ul.changes {
   color: #2389ce;
 }
 
+div[data-role="content"] > p:first {
+	margin-top: 0 !important;
+}
+
 .required > label:after {
   color: #aa0000;
   content: "*";
