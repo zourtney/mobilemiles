@@ -84,11 +84,16 @@ var Page = Class.extend({
 		
     this.app = app;
     this.id = id;
-    this.$page = $('#' + id);
     
-    this.$page.live('pageshow', function() {
-      self.onPageShow();
-    });
+    // Bind page load functions
+    $('#' + id)
+    	.live('pagebeforeshow', function() {
+    		self.onPageBeforeShow();
+	    })
+    	.live('pageshow', function() {
+				self.onPageShow();
+	    })
+		;
   },
   
   getContent : function() {
@@ -109,6 +114,14 @@ var Page = Class.extend({
   	;
   	
   	$c.trigger('create');
+  },
+  
+  onPageBeforeShow : function() {
+  	this.setSubtitle('');
+  },
+  
+  onPageShow : function() {
+    
   },
   
   showUnauthorized : function(data) {
@@ -191,7 +204,7 @@ var HomePage = Page.extend({
     this.showTmpl();
   },
   
-  onPageShow : function() {
+  onPageBeforeShow : function() {
     var self = this;
     self.setSubtitle('');
     
@@ -237,7 +250,7 @@ var SettingsPage = Page.extend({
     this.showTmpl('success');
   },
   
-  onPageShow : function() {
+  onPageBeforeShow : function() {
     var self = this;
     self.setSubtitle('');
     
@@ -278,7 +291,7 @@ var LogOutPage = Page.extend({
     this._super(app, 'logout');
   },
   
-  onPageShow : function() {
+  onPageBeforeShow : function() {
     var self = this;
     self.setSubtitle('');
     
@@ -463,7 +476,7 @@ var ViewPage = PageWithContainer.extend({
   },
   
   populate : function() {
-    var self = this;
+  	var self = this;
     self.setSubtitle(self.app.docTitle);
     
     self.populateRange(0, 5, {
@@ -683,7 +696,6 @@ var AddNewPage = Page.extend({
       
       // Mark all invalid items
       if (data.errors !== undefined && data.errors.hasOwnProperty(e)) {
-        //console.log('error on ' + e + ': ' + data.values[e] + ' is invalid.');
         $e.parent().addClass('invalid');
         
         if ($firstInvalid == null) {
