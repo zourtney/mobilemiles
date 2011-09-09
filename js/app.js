@@ -398,10 +398,16 @@ var ViewPage = PageWithContainer.extend({
       }
     });
     
-    //TODO: touch interface is not perfect...it will fire even if you try to
-    // scroll past. But it's better than not working at all!
-    $('#entrylist-loadmore').live('click touchend', function() {
+    //NOTE: tap event (handled by jQuery Mobile) is not perfect. It used to be
+    // (when binding to `click`), touching that area would fire the event even
+    // when you moved/panned your finger away from the button. By using the 
+    // `tap` event, this seems to be resolved. BUT now that same thing is 
+    // happening when using a mouse -- `mousedown`ing on the element will fire 
+    // the event even when `mouseup`ing somewhere OFF the element.
+    $('#entrylist-loadmore').live('tap', function(e) {
       self.populateWithMore();
+      e.preventDefault();
+      return false;
     });
   },
   
