@@ -23,7 +23,7 @@
 <script id="tmpl-details" type="text/x-jquery-tmpl">
   <p>Details for fill-up, <abbr class="timeago" title="${datetime}">${datetime}</abbr> at <strong>${location}</strong>.</p>
   <div data-role="collapsible-set">
-    <div data-role="collapsible">
+    <div data-role="collapsible" data-collapsed="false">
       <h3>Fuel Ecomony</h3>
       <p>You got <strong>${mpg} mpg</strong> during this trip.
       </p>

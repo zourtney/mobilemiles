@@ -79,7 +79,7 @@
   <p>Review your latest entry or view <a class="view-link" data-id="${id}" href="#view">all entries</a>.</p>
   
   <div data-role="collapsible-set">
-    <div data-role="collapsible">
+    <div data-role="collapsible" data-collapsed="false">
       <h3>Fuel Ecomony</h3>
       <p>You got <strong>${mpg} mpg</strong> during this trip.
       </p>
