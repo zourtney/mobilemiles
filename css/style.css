@@ -13,6 +13,10 @@ div[data-role="footer"] {
   min-height: 2.5em;
 }
 
+div[data-role="content"] > p:first-child {
+	margin-top: 0 !important;
+}
+
 #debug-banner {
   position: fixed;
   display: block;
@@ -58,10 +62,6 @@ ul.changes {
 
 .timeago {
   color: #2389ce;
-}
-
-div[data-role="content"] > p:first-child {
-	margin-top: 0 !important;
 }
 
 .required > label:after {
@@ -129,11 +129,11 @@ p.disabled, label.disabled {
   /*display: none !important;*/
 }
 
-list-btn-right span {
-}
-
-list-btn-right a {
-	
+.ui-collapsible-content {
+  background: white;
+  margin: -8px !important;
+  border-left: 1px solid #cccccc;
+  border-right: 1px solid #cccccc;
 }
 
 /* Red button -- https://gist.github.com/909284 */
