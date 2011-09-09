@@ -62,7 +62,7 @@ else {
   defndef('FILTER_TEXT', '(mobilemiles)');
 }
 
-defndef('SHOW_CHANGES_MESSAGE', true);
+defndef('SHOW_CHANGES_MESSAGE', false);
 
 defndef('SCRIPT_BASE', BASE . 'scripts/');
 defndef('SCRIPT_URL', BASE_URL . 'scripts/');
