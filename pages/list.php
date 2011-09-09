@@ -65,7 +65,7 @@
   )); ?>
   
   <div data-role="content">
-    <p>Select a MobileMiles document from the list below. If the list is out of date, you can manually <a id="ul-list-refresh">refresh</a> it. If you are just getting started, or wish to add a second vehicle, check out these <a href="#create_instructions">instructions</a>.</p>
+    <p>Select a MobileMiles document from the list below. If the list is out of date, you can manually <a id="ul-list-refresh" href="#">refresh</a> it. If you are just getting started, or wish to add a second vehicle, check out these <a href="#create_instructions">instructions</a>.</p>
         
     <div id="list-container">
     </div>
