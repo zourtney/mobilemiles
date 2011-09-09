@@ -60,7 +60,7 @@ ul.changes {
   color: #2389ce;
 }
 
-div[data-role="content"] > p:first {
+div[data-role="content"] > p:first-child {
 	margin-top: 0 !important;
 }
 
