@@ -62,7 +62,7 @@ function glHeader($v) {
     <a class="settings ui-btn-right" <?php
     if (isset($v['settings']) && ($v['settings'] === false || strlen($v['settings']) < 1)) {
       echo 'style="display: none;"';
-    } ?> data-icon="gear" class="ui-btn-right" data-iconpos="right" data-inline="true" href="<?php echo BASE_URL; ?>#settings">Settings</a>
+    } ?> data-icon="gear" class="ui-btn-right" data-iconpos="notext" data-inline="true" href="<?php echo BASE_URL; ?>#settings"></a>
     
     <!-- Subtitle -->
     <div data-role="navbar" class="subtitle">

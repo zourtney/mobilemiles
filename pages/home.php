@@ -24,7 +24,15 @@
 	
 	<p id="message">Welcome to <strong>MobileMiles</strong>, the webapp for tracking your gas station fill-up stats from your mobile device.</p>
 	
-	<p>If you're just getting started, save a copy of the <a href="<?php echo SPREADSHEET_MASTER_URL; ?>" rel="external" target="_blank">master spreadsheet</a> to your Google Docs account with <code><?php echo FILTER_TEXT; ?></code> in the filename. Once you're ready, view your  <a href="#list">document list</a> and start entering and viewing data.</p>
+	<div id="main-grid" class="ui-grid-a">
+		<div class="ui-block-a"><a class="list" href="#list">Vehicle</a></div>
+		<div class="ui-block-b"><a class="view" href="#view">Entries</a></div>
+		<div class="ui-block-a"><a class="new" href="#new">Add Entry</a></div>
+		<div class="ui-block-b"><a class="settings" href="#settings">Settings</a></div>
+	</div>
+	
+	<p>Just getting started? Check out the <a href="#create_instructions">setup instructions</a>.</p>
+
 </script>
 
 <script id="tmpl-home-unauthorized" type="text/x-jquery-tmpl">

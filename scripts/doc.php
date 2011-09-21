@@ -22,7 +22,7 @@ class GlDoc {
   public $id;
   public $title;
   public $version;
-  
+  public $valid;
   
   public function __construct($app, $id, $getSheets = true) {
     if (! $app instanceof GlApp) {
@@ -74,6 +74,7 @@ class GlDoc {
       $this->versionSheet = new GlVersionSheet($this, $this->getSheetByTitle(GlVersionSheet::SHEET_TITLE));
       
       $this->version = $this->versionSheet->getVersionInfo();
+      $this->valid = ($this->version['app'] >= APP_VERSION && $this->version['doc'] >= SPREADSHEET_VERSION);
     }
   }
   

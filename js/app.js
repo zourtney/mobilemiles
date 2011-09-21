@@ -117,7 +117,7 @@ var Page = Class.extend({
   },
   
   onPageBeforeShow : function() {
-  	this.setSubtitle('');
+  	this.setSubtitle(this.app.docTitle);
   },
   
   onPageShow : function() {
@@ -180,6 +180,7 @@ var PageWithContainer = Page.extend({
   },
   
   showList : function(data) {
+  	console.log('showing list: ' + data);
     this.showContainerTmpl('show', data);
   },
   
@@ -206,7 +207,7 @@ var HomePage = Page.extend({
   
   onPageBeforeShow : function() {
     var self = this;
-    self.setSubtitle('');
+    self.setSubtitle(self.app.docTitle);
     
     $.ajax({
       url: MobileMilesConst.SCRIPT_URL + 'ajax_login.php',
@@ -320,6 +321,7 @@ var LogOutPage = Page.extend({
   }
 });
 
+
 /****************************************************************************
  * List
  ****************************************************************************/
@@ -334,21 +336,23 @@ var ListPage = PageWithContainer.extend({
       self.app.view.needsRequery = true;
     });
     
-    $('.view-link').live('click', function() {
-      var id = $(this).data('id');
-      if (id !== undefined && id.length > 0) {
-        self.app.doc = id;
-        self.app.docTitle = $(this).data('doc-title');
-        self.app.view.needsRefresh = true;
+    $('input[name="list-chk-group"]:radio').live('change', function() {
+    	var id = $(this).val();
+    	if (id !== undefined && id.length > 0) {
+    		// Save
+    		self.app.doc = id;
+    		self.app.docTitle = $(this).data('doc-title');
+    		self.app.view.needsRefresh = true;
         self.app.view.needsRequery = false;
-      }
+        self.setSubtitle(self.app.docTitle);
+    	}
     });
   },
   
   populate : function() {
     // Make AJAX call
     var self = this;
-    self.setSubtitle('');
+    self.setSubtitle(self.app.docTitle);
     
     $.ajax({
       url: MobileMilesConst.SCRIPT_URL + 'ajax_doclist.php',
@@ -367,8 +371,19 @@ var ListPage = PageWithContainer.extend({
             break;
           case 'doclist_success':
             self.needsRequery = false;
+            
+            // jQuery-tmpl can't store variables at run time, so pre-calculate
+            // this flag.
+            var hasInvalid = false;
+            for (var i = 0; i < data.doclist.length; i++) {
+            	if (! data.doclist[i].valid) {
+            		hasInvalid = true;
+            	}
+            }
+            
             self.showList({
-              docs: data.doclist
+              docs: data.doclist,
+              hasInvalid: hasInvalid
             });
             break;
           default:
@@ -484,6 +499,8 @@ var ViewPage = PageWithContainer.extend({
         self.showLoading();
       }, // end of 'beforeSend'
       success: function(data) {
+      	console.log('showing....' + self.app.docTitle);
+      	console.log('response: ' + data.response);
         switch (data.response) {
           case 'login_unauthorized':
             self.showUnauthorized(data);
@@ -492,7 +509,7 @@ var ViewPage = PageWithContainer.extend({
             self.showNoDoc();
             break;
           case 'entrylist_success':
-            self.entries = data.entrylist;
+          	self.entries = data.entrylist;
             self.needsRequery = false;
             
             self.showList({

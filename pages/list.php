@@ -21,39 +21,35 @@
   <a href="<?php echo SYSTEM_ADMIN_URI; ?>" rel="external">contact</a> the system admininstrator.</p>
 </script>
 
-<script id="tmpl-list-header" type="text/x-jquery-tmpl">
-	<li data-role="list-divider">
-		<span>${title}</span>
-		<!--TODO: finish
-		<span class="ui-li-count list-btn-right" style="padding: 0;">
-			<a href="#some-refresh-page" data-role="button" data-icon="refresh" data-iconpos="notext" data-theme="d" style="margin: 0;">Refresh</a>
-		</span>-->
-	</li>
-</script>
-
-<script id="tmpl-list-loading" type="text/x-jquery-tmpl">
-  <ul id="ul-list" data-role="listview" data-inset="true">
-    {{tmpl({title: "&nbsp;"}) "#tmpl-list-header"}}
-    <li>
-      <div class="ajax-loading">
-        <div class="ui-icon ui-icon-loading spin loading-img"></div>
-        <div class="loading-desc">Fetching documents...</div>
-      </div>
-    </li>
-  </ul>
+<script id="tmpl-list-loading" type="text/x-jquery-tmpl">  
+	<div class="ajax-loading">
+		<div class="ui-icon ui-icon-loading spin loading-img"></div>
+		<div class="loading-desc">Fetching documents...</div>
+	</div>  
 </script>
 
 <script id="tmpl-list-show" type="text/x-jquery-tmpl">
-  <ul id="ul-list" data-role="listview" data-inset="true">
-    {{tmpl({title: "Select existing"}) "#tmpl-list-header"}}
-    {{each(i, doc) docs}}
-      {{if doc.version.app < <?php echo APP_VERSION; ?> || doc.version.doc < <?php echo SPREADSHEET_VERSION; ?>}}
-        <li data-icon="alert"><a class="view-link" data-id="${doc.id}" href="#doc_update_instructions">${doc.title}</a></li>
-      {{else}}
-        <li><a class="view-link" data-id="${doc.id}" data-doc-title="${doc.title}" href="#view">${doc.title}</a></li>
-      {{/if}}
-    {{/each}}
-  </ul>
+	<div data-role="fieldcontain">
+		<fieldset data-role="controlgroup">
+			{{each(i, doc) docs}}
+				{{if ! doc.valid}}
+					<a class="list-chk-disabled" href="#doc_update_instructions"><input type="radio" name="list-chk-group" name="list-chk-${doc.id}" id="list-chk-${doc.id}" class="list-chk" value="${doc.id}" data-doc-title="${doc.title}" disabled="disabled" />
+					<label for="list-chk-${doc.id}" class="list-label" data-icon="alert">${doc.title} <span class="list-chk-incompatible">(incompatible)</span></label></a>
+				{{else}}
+					<input type="radio" name="list-chk-group" name="list-chk-${doc.id}" id="list-chk-${doc.id}" class="list-chk" value="${doc.id}" data-doc-title="${doc.title}" />
+					<label for="list-chk-${doc.id}"
+					class="list-label">${doc.title}</label>
+				{{/if}}
+			{{/each}}
+		</fieldset>
+	</div>
+	
+	{{if hasInvalid}}
+		<div class="warning-explanation">
+			<div class="ui-icon ui-icon-alert"></div>
+			<p>One or more documents are incompatible with this version. Learn how to <a href="#doc_update_instructions">upgrade</a> your document.</p>
+		</div>
+	{{/if}}
 </script>
 
 <!-- *********************************************************************** -->

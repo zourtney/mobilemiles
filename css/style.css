@@ -17,6 +17,10 @@ div[data-role="content"] > p:first-child {
 	margin-top: 0 !important;
 }
 
+div[data-role="fieldcontain"] {
+  padding: 0 !important;
+}
+
 #debug-banner {
   position: fixed;
   display: block;
@@ -54,6 +58,47 @@ div[data-role="content"] > p:first-child {
 
 #footer .content a {
   text-decoration: none;
+}
+
+#main-grid a {
+	text-decoration: none !important;
+	color: inherit;
+}
+
+#main-grid .ui-block-a,
+#main-grid .ui-block-b,
+#main-grid .ui-block-c {
+	margin-top: 80px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+#main-grid a {
+	padding-top: 60px;
+}
+
+#main-grid .list {
+	background: url('../images/delivery.png');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+
+#main-grid .view {
+	background: url('../images/database.png');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+
+#main-grid .new {
+	background: url('../images/plus.png');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+
+#main-grid .settings {
+	background: url('../images/preferences.png');
+	background-repeat: no-repeat;
+	background-position: center top;
 }
 
 ul.changes {
@@ -104,6 +149,34 @@ p.disabled, label.disabled {
 	border-radius: 20px;
 	background-size: 35px 35px;
 	background-color: rgba(0, 0, 0, 0);
+}
+
+a.list-chk-disabled {
+	text-decoration: none;
+}
+
+.list-chk-incompatible {
+	font-weight: normal !important;
+	font-size: 0.8em;
+	float: right;
+	padding-top: 2px;
+	color: #711414;
+}
+
+.warning-explanation {
+	margin: 0 auto;
+}
+
+.warning-explanation .ui-icon {
+	width: 18px;
+	height: 18px;
+	display: inline-block;
+	float: left;
+	margin-top: 2px;
+}
+
+.warning-explanation p {
+	margin-left: 25px;
 }
 
 /**
