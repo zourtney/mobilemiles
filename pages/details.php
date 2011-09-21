@@ -57,9 +57,7 @@
 <!-- *********************************************************************** -->
 <div id="details" data-role="page">
   <?php glHeader(array(
-    'title' => 'Details',
-    'back' => 'history',
-    'settings' => true
+    'title' => 'Details'
   )); ?>
   
   <div data-role="content">

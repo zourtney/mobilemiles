@@ -82,9 +82,7 @@
 <!-- *********************************************************************** -->
 <div id="view" data-role="page">
   <?php glHeader(array(
-    'title' => 'Overview',
-    'back' => 'history',
-    'settings' => true
+    'title' => 'Overview'
   )); ?>
   
   <div data-role="content">
