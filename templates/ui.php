@@ -7,62 +7,55 @@
  * Various JavaScript-defined UI components.
  */
 
+function getDisplayValue($v, $str) {
+	return (isset($v[$str])) && ($v[$str] === true || strlen($v[$str] > 0));
+}
+
 function glHeader($v) {
-  $backHistory = true;
-  $backUrl = '';
-  $backTitle = 'Back';
+  //$backHistory = true;
+  //$backUrl = '';
+  //$backTitle = 'Back';
+  $closeDisplay = false;
   $backDisplay = true;
+  $settingsDisplay = false;
+  $homeDisplay = true;
   
   //TODO: uncomplicate logic!
-  if (isset($v['back'])) {
-    if (is_array($v['back'])) {
-      if (isset($v['back']['url']) && strlen($v['back']['url']) > 0) {
-        if ($v['back']['url'] == 'history') {
-          $backUrl = '';
-          $backHistory = true;
-        }
-        else {
-          $backUrl = $v['back']['url'];
-          $backHistory = false;
-        }
-      }
-      
-      if (isset($v['back']['title'])) {
-        $backTitle = $v['back']['title'];
-      }
-    }
-    else if ($v['back'] === false || strlen($v['back']) === 0) {
-      $backDisplay = false;
-    }
-    else if ($v['back'] == 'history') {
-      $backHistory = true;
-    }
-    else {
-      $backUrl = $v['back'];
-      $backHistory = false;
-    }
+  if (isset($v['close'])&& ($v['close'] === true || strlen($v['close']) > 0)) {
+  	$closeDisplay = true;
+  }
+  
+  if (isset($v['back']) && ($v['back'] === false || strlen($v['back']) < 1)) {
+    $backDisplay = false;
+  }
+  
+  if (isset($v['settings']) && ($v['settings'] === true || strlen($v['settings']) > 0)) {
+  	$settingsDisplay = true;
+  }
+  
+  if (isset($v['home']) && ($v['home'] === false || strlen($v['home']) < 1)) {
+    $homeDisplay = false;
   }
   ?>
   <!-- Start of header -->
   <div data-role="header">
-    <a class="back ui-btn-back" <?php
-      if (! $backDisplay) {
-        echo 'style="display: none;"';
-      }
-      else if ($backHistory) {
-        echo 'data-rel="back"';
-      }
-      else if (strlen($backUrl) > 0) {
-        echo 'href="'. $backUrl . '"';
-      }
-      ?> data-icon="arrow-l"><?php echo $backTitle; ?></a>
+  	<?php if ($closeDisplay) { ?>
+  		<a class="close ui-btn-close" data-rel="back">Close</a>
+  	<?php } ?>
+  	
+  	<?php if ($backDisplay) {	?>
+  		<a class="back ui-btn-back" data-rel="back" data-icon="arrow-l">Back</a>
+  	<?php } ?>
     
     <h1 id="pageTitle"><?php echo $v['title']; ?></h1>
     
-    <a class="settings ui-btn-right" <?php
-    if (isset($v['settings']) && ($v['settings'] === false || strlen($v['settings']) < 1)) {
-      echo 'style="display: none;"';
-    } ?> data-icon="gear" class="ui-btn-right" data-iconpos="notext" data-inline="true" href="<?php echo BASE_URL; ?>#settings"></a>
+    <?php if ($settingsDisplay) { ?>
+	    <a class="settings ui-btn-right" data-icon="gear" data-iconpos="notext" data-inline="true" data-transition="slideup" href="<?php echo BASE_URL; ?>#settings">Settings</a>
+	  <?php } ?>
+	  
+	  <?php if ($homeDisplay) { ?>
+	  	<a class="home ui-btn-right" data-icon="home" data-iconpos="notext" data-inline="true" data-transition="reverse slide" href="<?php echo BASE_URL; ?>">Home</a>
+	  <?php } ?>
     
     <!-- Subtitle -->
     <div data-role="navbar" class="subtitle">

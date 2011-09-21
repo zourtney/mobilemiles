@@ -28,7 +28,7 @@
 		<div class="ui-block-a"><a class="list" href="#list">Vehicle</a></div>
 		<div class="ui-block-b"><a class="view" href="#view">Entries</a></div>
 		<div class="ui-block-a"><a class="new" href="#new">Add Entry</a></div>
-		<div class="ui-block-b"><a class="settings" href="#settings">Settings</a></div>
+		<div class="ui-block-b"><a class="settings" href="#settings" data-transition="slideup">Settings</a></div>
 	</div>
 	
 	<p>Just getting started? Check out the <a href="#create_instructions">setup instructions</a>.</p>
@@ -52,7 +52,9 @@
 <div id="home" data-role="page">
   <?php glHeader(array(
     'title' => 'Home',
-    'back' => false
+    'back' => false,
+    'settings'=> true,
+    'home' => false
   )); ?>
   <div data-role="content">
     <p>Loading...</p>
