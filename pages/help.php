@@ -39,7 +39,7 @@
 <!-- *********************************************************************** -->
 <div id="doc_update_instructions" data-role="page">
   <?php glHeader(array(
-    'title' => 'Document Upgrade'
+    'title' => 'Upgrade'
   )); ?>
   <div data-role="content">
     <p>The requested document is <strong>out of date</strong>. This happens when there is a significant change to the spreadsheet and/or MobileMiles application. Minimum application version is <strong><?php echo APP_VERSION; ?></strong>; minimum spreadsheet version is <strong><?php echo SPREADSHEET_VERSION; ?></strong>.</p>
