@@ -18,7 +18,7 @@ div[data-role="footer"] {
   min-height: 2.5em;
 }
 
-div[data-role="content"] > p:first-child {
+div[data-role="content"] p:first-child {
 	margin-top: 0 !important;
 }
 
