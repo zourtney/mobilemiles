@@ -12,7 +12,8 @@
 <!-- *********************************************************************** -->
 <div id="changes" data-role="page">
   <?php glHeader(array(
-    'title' => 'Changes'
+    'title' => 'Changes',
+    'subtitle' => false
   )); ?>
   <div data-role="content">
     <p>From <abbr class="timeago" title="2011-08-08 00:00:00">2011-08-08</abbr> onward, the document filter text shall be <code><?php echo FILTER_TEXT; ?></code>. Spreadsheets containing the old filter text <code>(rlgaslog)</code> will <em>not</em> show up in your MobileMiles Document List. To edit the document title(s), visit your <a href="http://docs.google.com">Google Docs</a> page.</p>
@@ -25,7 +26,8 @@
 <!-- *********************************************************************** -->
 <div id="create_instructions" data-role="page">
   <?php glHeader(array(
-    'title' => 'Create New'
+    'title' => 'Create New',
+    'subtitle' => false
   )); ?>
   <div data-role="content">
     <p>To create a new gas log, make a copy of the <a href="<?php echo GlDoc::MASTER_URL; ?>" title="Master document" target="_blank">master document</a> via <code>File -> Make a copy..</code>. Save it with the extension <code><?php echo FILTER_TEXT; ?></code> so it shows up in your gas log list.
@@ -39,7 +41,8 @@
 <!-- *********************************************************************** -->
 <div id="doc_update_instructions" data-role="page">
   <?php glHeader(array(
-    'title' => 'Upgrade'
+    'title' => 'Upgrade',
+    'subtitle' => false
   )); ?>
   <div data-role="content">
     <p>The requested document is <strong>out of date</strong>. This happens when there is a significant change to the spreadsheet and/or MobileMiles application. Minimum application version is <strong><?php echo APP_VERSION; ?></strong>; minimum spreadsheet version is <strong><?php echo SPREADSHEET_VERSION; ?></strong>.</p>

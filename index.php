@@ -47,6 +47,8 @@ require_once TEMPLATE_BASE . 'ui.php';
   <script type="text/javascript" src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script>
   
   <script type="text/javascript">
+  	// Make all timestamps dynamically update via $.timeago. Also make it so
+  	// click/tapping them toggles the full date and the friendly date.
     $('abbr.timeago').livequery(function() {
     	var $this = $(this);
     	
@@ -59,6 +61,12 @@ require_once TEMPLATE_BASE . 'ui.php';
       	$this.attr('title', $this.text());
       	$this.text(title);
       });
+    });
+    
+    // Make the subtitle document name clickable, sending you to the document
+    // list page.
+    $('div[data-role="navbar"].subtitle').live('click', function() {
+    	$.mobile.changePage('#list');
     });
   </script>
 </head>

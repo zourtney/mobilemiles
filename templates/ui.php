@@ -19,6 +19,7 @@ function glHeader($v) {
   $backDisplay = true;
   $settingsDisplay = false;
   $homeDisplay = true;
+  $subtitleDisplay = true;
   
   //TODO: uncomplicate logic!
   if (isset($v['close'])&& ($v['close'] === true || strlen($v['close']) > 0)) {
@@ -35,6 +36,10 @@ function glHeader($v) {
   
   if (isset($v['home']) && ($v['home'] === false || strlen($v['home']) < 1)) {
     $homeDisplay = false;
+  }
+  
+  if (isset($v['subtitle']) && ($v['subtitle'] === false || strlen($v['substitle']) < 1)) {
+  	$subtitleDisplay = false;
   }
   ?>
   <!-- Start of header -->
@@ -58,11 +63,13 @@ function glHeader($v) {
 	  <?php } ?>
     
     <!-- Subtitle -->
-    <div data-role="navbar" class="subtitle">
-      <ul>
-        <li class="subtitle"></li>
-      </ul>
-    </div>
+    <?php if ($subtitleDisplay) { ?>
+			<div data-role="navbar" class="subtitle">
+				<ul>
+					<li class="subtitle"></li>
+				</ul>
+			</div>
+		<?php } ?>
   </div>
   <?php
     if (DEBUG) {

@@ -117,7 +117,7 @@ var Page = Class.extend({
   },
   
   onPageBeforeShow : function() {
-  	this.setSubtitle(this.app.docTitle);
+  	this.setSubtitle();
   },
   
   onPageShow : function() {
@@ -132,8 +132,14 @@ var Page = Class.extend({
   	this.showTmpl('error');
   },
   
-  setSubtitle : function(value) {
-    $('.subtitle').text(value);
+  setSubtitle : function(str) {
+  	if (str !== undefined) {
+  		$('.subtitle').text(str);
+  	}
+  	else {
+  		var txt = this.app.docTitle || 'No document';
+  		$('.subtitle').text(txt);
+  	}
   }
 });
 
@@ -200,7 +206,6 @@ var PageWithContainer = Page.extend({
   		.appendTo($c.empty())
   	;
   	
-  	console.log('showing ' + $c.attr('id'));
   	$c.trigger('create').show();
   },
   
@@ -238,7 +243,7 @@ var PageWithContainer = Page.extend({
   
   //TODO: fix! See above complaints about re-defining base class functionality.
   onPageBeforeShow : function() {
-  	this.setSubtitle(this.app.docTitle);
+		this.setSubtitle();
   },
   
   showUnauthorized : function(data) {
@@ -265,7 +270,7 @@ var HomePage = Page.extend({
   
   onPageBeforeShow : function() {
     var self = this;
-    self.setSubtitle(self.app.docTitle);
+    self.setSubtitle();
     
     $.ajax({
       url: MobileMilesConst.SCRIPT_URL + 'ajax_login.php',
@@ -311,7 +316,7 @@ var SettingsPage = Page.extend({
   
   onPageBeforeShow : function() {
     var self = this;
-    self.setSubtitle('');
+    //self.setSubtitle('');
     
     $.ajax({
       url: MobileMilesConst.SCRIPT_URL + 'ajax_login.php',
@@ -352,7 +357,7 @@ var LogOutPage = Page.extend({
   
   onPageBeforeShow : function() {
     var self = this;
-    self.setSubtitle('');
+    //self.setSubtitle('');
     
     $.ajax({
       url: MobileMilesConst.SCRIPT_URL + 'ajax_login.php?action=logout',
@@ -402,7 +407,7 @@ var ListPage = PageWithContainer.extend({
     		self.app.docTitle = $(this).data('doc-title');
     		self.app.view.needsRefresh = true;
         self.app.view.needsRequery = false;
-        self.setSubtitle(self.app.docTitle);
+        self.setSubtitle();
     	}
     });
   },
@@ -410,7 +415,7 @@ var ListPage = PageWithContainer.extend({
   populate : function() {
     // Make AJAX call
     var self = this;
-    self.setSubtitle(self.app.docTitle);
+    //self.setSubtitle(self.app.docTitle, '#list');
     
     $.ajax({
       url: MobileMilesConst.SCRIPT_URL + 'ajax_doclist.php',
@@ -498,7 +503,6 @@ var ViewPage = PageWithContainer.extend({
   },
   
   showNoDoc : function() {
-    this.setSubtitle('No document');
     this.showTmpl('no-doc');
   },
   
@@ -550,16 +554,14 @@ var ViewPage = PageWithContainer.extend({
   
   populate : function() {
   	var self = this;
-    self.setSubtitle(self.app.docTitle);
+    //self.setSubtitle(self.app.docTitle, '#list');
     
     self.populateRange(0, 5, {
       beforeSend: function() {
         self.showLoading();
       }, // end of 'beforeSend'
       success: function(data) {
-      	console.log('showing....' + self.app.docTitle);
-      	console.log('response: ' + data.response);
-        switch (data.response) {
+      	switch (data.response) {
           case 'login_unauthorized':
             self.showUnauthorized(data);
             break;
@@ -635,12 +637,12 @@ var ViewDetailsPage = Page.extend({
   },
   
   showNoDoc : function() {
-  	this.setSubtitle('No document');
+  	//this.setSubtitle('No document', '#list');
     this.showTmpl('no-doc');
   },
   
   showDetails : function(data) {
-    this.setSubtitle(this.app.docTitle);
+    //this.setSubtitle(this.app.docTitle, '#list');
     this.showTmpl('', data);
   },
   
@@ -680,7 +682,7 @@ var AddNewPage = Page.extend({
   },
   
   showNoDoc : function() {
-    this.setSubtitle('No document');
+    //this.setSubtitle('No document', '#list');
     this.showTmpl('no-doc');
   },
   
@@ -879,7 +881,7 @@ var AddNewPage = Page.extend({
     }
     
     // Set document title
-    self.setSubtitle(self.app.docTitle);
+    //self.setSubtitle(self.app.docTitle, '#list');
     
     // Display the form
     self.renderForm();

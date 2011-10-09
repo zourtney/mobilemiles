@@ -37,7 +37,7 @@
 
 <script id="tmpl-home-unauthorized" type="text/x-jquery-tmpl">
   <p><strong>Not authorized.</strong></p>
-  <p>You must first  <a href="#settings">grant</a> access to your Google Docs account.</p>
+  <p>You must first <a href="#settings">grant</a> access to your Google Docs account.</p>
 </script>
 
 <script id="tmpl-home-error" type="text/x-jquery-tmpl">

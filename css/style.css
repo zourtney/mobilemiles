@@ -5,6 +5,11 @@
   font-size: 0.9em;
 }
 
+.subtitle a {
+	color: white;
+	text-decoration: none;
+}
+
 div[data-role="content"] {
   padding-bottom: 2.5em;
 }

@@ -23,6 +23,7 @@
 <div id="logout" data-role="page">
   <?php glHeader(array(
     'title' => 'Logout',
+    'subtitle' => false,
     'back' => false,
     'settings' => false
   )); ?>

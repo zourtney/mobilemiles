@@ -34,10 +34,11 @@
 <div id="settings" data-role="page">
   <?php glHeader(array(
     'title' => 'Settings',
+    'subtitle' => false,
     'back' => false,
     'close' => true,
     'settings' => false,
-    'home' => false,
+    'home' => false
   )); ?>
   
   <div data-role="content">
