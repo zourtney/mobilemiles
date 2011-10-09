@@ -22,9 +22,9 @@
 </script>
 
 <script id="tmpl-view" type="text/x-jquery-tmpl">
-  <div>
+  <!--<div>
     <a class="add-link" href="#new" data-role="button">Add Entry</a>
-  </div>
+  </div>-->
   <ul id="entrylist" data-role="listview" data-inset="true">
     {{html $item.html()}}
   </ul>
