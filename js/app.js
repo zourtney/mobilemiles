@@ -151,6 +151,13 @@ var Page = Class.extend({
  *
  * MobileMiles issue #21:
  *   https://github.com/zourtney/mobilemiles/issues/21
+ *
+ * ...actually, this error seems due to the fact that I was erasing my 
+ * container object. But I have a new complaint: these pseudo-class objects
+ * have no virtual function calls, so anything in the base class which uses
+ * something redefined here must also be redefined. For example, all those 
+ * 'shortcut' functions like `showUnauthorized`. Fix this somehow, because it
+ * is a pain to work with :-/
  ****************************************************************************/
 var PageWithContainer = Page.extend({
   init : function(app, id) {
@@ -159,20 +166,59 @@ var PageWithContainer = Page.extend({
     this.needsRequery = false;
   },
   
-  getContainerContent : function() {
+  getContent : function() {
+  	return $('#' + this.id + '-content');
+  },
+  
+  getContainer : function() {
   	return $('#' + this.id + '-container');
   },
   
-  showContainerTmpl : function(tmplName, data) {
-  	var $c = this.getContainerContent();
-  	var tmplId = '#tmpl-' + this.id + '-' + tmplName;
+  getContainerContent : function() {
+  	return $('#' + this.id + '-container-content');
+  },
+  
+  showTmpl : function(tmplName, data) {
+  	// Hide div with container
+  	this.getContainer().hide();
+  	
+  	//TODO: fix. This is a full re-implementation of Page.showTmpl because our
+  	// psuedo-class can not call "super" functions. The only difference here is
+  	// the `$c.show()` at the end.
+  	
+  	// Show div without container
+  	var $c = this.getContent();
+  	
+  	var tmplId = '#tmpl-' + this.id;
+  	
+  	if (tmplName !== undefined && tmplName != null && tmplName.length) {
+  		tmplId += '-' + tmplName;
+  	}
   	
   	$(tmplId)
   		.tmpl(data)
   		.appendTo($c.empty())
   	;
   	
+  	console.log('showing ' + $c.attr('id'));
+  	$c.trigger('create').show();
+  },
+  
+  showContainerTmpl : function(tmplName, data) {
+  	// Hide div without container
+  	this.getContent().hide();
+  	
+  	// Show div with container
+  	var $c = this.getContainerContent();
+  	var tmplId = '#tmpl-' + this.id + '-' + tmplName;
+  	
+		$(tmplId)
+			.tmpl(data)
+			.appendTo($c.empty())
+		;
+		
   	$c.trigger('create');
+  	this.getContainer().show();
   },
   
   showLoading : function() {
@@ -180,8 +226,7 @@ var PageWithContainer = Page.extend({
   },
   
   showList : function(data) {
-  	console.log('showing list: ' + data);
-    this.showContainerTmpl('show', data);
+  	this.showContainerTmpl('show', data);
   },
   
   onPageShow : function() {
@@ -189,6 +234,19 @@ var PageWithContainer = Page.extend({
       this.populate();
       this.needsRefresh = false;
     }
+  },
+  
+  //TODO: fix! See above complaints about re-defining base class functionality.
+  onPageBeforeShow : function() {
+  	this.setSubtitle(this.app.docTitle);
+  },
+  
+  showUnauthorized : function(data) {
+  	this.showTmpl('unauthorized', data);
+  },
+  
+  showError : function() {
+  	this.showTmpl('error');
   }
 });
 

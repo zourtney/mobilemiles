@@ -86,9 +86,13 @@
   )); ?>
   
   <div data-role="content">
-  	<p>Below are the most recent entries for this vehicle. Select an entry to view its details. If the list is out of date, you can manually <a id="ul-entrylist-refresh" href="#">refresh</a> it.</p>
-  	
-  	<div id="view-container"></div>
+  	<div id="view-content">
+  	</div>
+  	<div id="view-container">
+			<p>Below are the most recent entries for this vehicle. Select an entry to view its details. If the list is out of date, you can manually <a id="ul-entrylist-refresh" href="#">refresh</a> it.</p>
+			
+			<div id="view-container-content"></div>
+		</div>
   </div>
   
   <?php glFooter(); ?>
