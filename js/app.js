@@ -412,7 +412,7 @@ var ListPage = PageWithContainer.extend({
     });
   },
   
-  populate : function() {l
+  populate : function() {
     var self = this;
     
     $.ajax({
