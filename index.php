@@ -40,7 +40,8 @@ require_once TEMPLATE_BASE . 'ui.php';
   <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.livequery/jquery.livequery.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.timeago/jquery.timeago.js"></script>
-  <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.store.js"></script>
+  <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.store/json.js"></script>
+  <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.store/jquery.store.js"></script>
   <script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>const.php"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>utils.js"></script>
