@@ -137,7 +137,7 @@ var Page = Class.extend({
   		$('.subtitle').text(str);
   	}
   	else {
-  		var txt = this.app.docTitle || 'No document';
+  		var txt = this.app.docTitle || 'No vehicle';
   		$('.subtitle').text(txt);
   	}
   }
@@ -149,7 +149,7 @@ var Page = Class.extend({
  *
  * BUG: sometimes list rendering will fail. To reliably reproduce:
  *   1. start at #view
- *   2. ("no document") -> go to doc list, select document
+ *   2. ("no vehicle") -> go to doc list, select document
  *   3. fails with `parentPage[0] undefined'
  *
  * Known issue on jQuery Forum:
@@ -637,12 +637,10 @@ var ViewDetailsPage = Page.extend({
   },
   
   showNoDoc : function() {
-  	//this.setSubtitle('No document', '#list');
     this.showTmpl('no-doc');
   },
   
   showDetails : function(data) {
-    //this.setSubtitle(this.app.docTitle, '#list');
     this.showTmpl('', data);
   },
   
@@ -682,7 +680,6 @@ var AddNewPage = Page.extend({
   },
   
   showNoDoc : function() {
-    //this.setSubtitle('No document', '#list');
     this.showTmpl('no-doc');
   },
   
@@ -879,9 +876,6 @@ var AddNewPage = Page.extend({
       self.showNoDoc();
       return;
     }
-    
-    // Set document title
-    //self.setSubtitle(self.app.docTitle, '#list');
     
     // Display the form
     self.renderForm();

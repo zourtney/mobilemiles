@@ -17,7 +17,7 @@
 </script>
 
 <script id="tmpl-details-no-doc" type="text/x-jquery-tmpl">
-  <p><strong>No document</strong> or <strong>no entry</strong> specified. Please select a document from the <a href="#list">document list</a>, then select an entry from the <a href="#view">entry list</a>.</p>
+  <p><strong>No vehicle</strong> or <strong>no entry</strong> specified. Please set your vehicle on the <a href="#list">vehicle list</a> page, then select an entry from the <a href="#view">entry list</a>.</p>
 </script>
 
 <script id="tmpl-details" type="text/x-jquery-tmpl">

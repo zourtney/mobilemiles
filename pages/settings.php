@@ -17,7 +17,7 @@
 
 <script id="tmpl-settings-success" type="text/x-jquery-tmpl">
   <p>You have authorized this application to access your Google Docs account.</p>
-  <p>Go to your <a href="<?php echo BASE_URL; ?>#list">document list</a> to enter or view data.</p>
+  <p>Go to your <a href="<?php echo BASE_URL; ?>#list">vehicle list</a> to enter or view data.</p>
   <a href="#logout" data-role="button" data-theme="f">Revoke</a>
 </script>
 

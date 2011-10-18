@@ -57,14 +57,14 @@
 <!-- *********************************************************************** -->
 <div id="list" data-role="page">
   <?php glHeader(array(
-    'title' => 'Document List'
+    'title' => 'Vehicle List'
   )); ?>
   
   <div data-role="content">
   	<div id="list-content">
   	</div>
   	<div id="list-container">
-			<p>Select a MobileMiles document from the list below. If the list is out of date, you can manually <a id="ul-list-refresh" href="#">refresh</a> it. If you are just getting started, or wish to add a second vehicle, check out these <a href="#create_instructions">instructions</a>.</p>
+			<p>Select your vehicle's document from the list below. If the list is out of date, you can manually <a id="ul-list-refresh" href="#">refresh</a> it. If you are just getting started, or wish to add a second vehicle, check out these <a href="#create_instructions">instructions</a>.</p>
 					
 			<div id="list-container-content">
 			</div>

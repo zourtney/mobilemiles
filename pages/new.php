@@ -15,8 +15,8 @@
 </script>-->
 
 <script id="tmpl-new-no-doc" type="text/x-jquery-tmpl">
-  <p><strong>No document</strong> specified. Please select a document from the 
-  <a href="#list">document list</a>.</p>
+  <p><strong>No vehicle</strong> specified. Please set your vehicle on the 
+  <a href="#list">vehicle list</a> page.</p>
 </script>
 
 <script id="tmpl-new-error" type="text/x-jquery-tmpl">
