@@ -412,10 +412,8 @@ var ListPage = PageWithContainer.extend({
     });
   },
   
-  populate : function() {
-    // Make AJAX call
+  populate : function() {l
     var self = this;
-    //self.setSubtitle(self.app.docTitle, '#list');
     
     $.ajax({
       url: MobileMilesConst.SCRIPT_URL + 'ajax_doclist.php',
@@ -943,8 +941,6 @@ function MobileMilesApp() {
     self.viewDetails = new ViewDetailsPage(self);
     self.addNew = new AddNewPage(self);
   };
-  
-  
 }; // end of MobileMilesApp
 
 /*****************************************************************************

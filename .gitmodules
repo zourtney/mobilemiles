@@ -7,3 +7,6 @@
 [submodule "js/jquery.livequery"]
 	path = js/jquery.livequery
 	url = git://github.com/brandonaaron/livequery.git
+[submodule "js/jquery.store"]
+	path = js/jquery.store
+	url = git://github.com/whitmer/store.js.git
