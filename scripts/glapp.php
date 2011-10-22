@@ -38,33 +38,16 @@ class GlApp {
     return true;
   }
   
-  public function getAvailable($refresh = false) {
-  	if (count($this->docs) < 1 || $refresh) {
-  		// Get from Google Docs
-	    $feed = $this->service->getSpreadsheetFeed();
-	    $this->docs = array();
-	   	
-	   	foreach ($feed as $doc) {
-				if (stripos($doc->title->text, FILTER_TEXT) !== FALSE) {
-					array_push($this->docs, new GlDoc($this, $doc, true));
-				}
+  public function getAvailable() {
+		$feed = $this->service->getSpreadsheetFeed();
+		$this->docs = array();
+		
+		foreach ($feed as $doc) {
+			if (stripos($doc->title->text, FILTER_TEXT) !== FALSE) {
+				array_push($this->docs, new GlDoc($this, $doc, true));
 			}
 		}
-		
+	
 		return $this->docs;
   }
-  
-  /*public function saveGetVars() {
-    $_SESSION[GlApp::SESSION_STORED_GET] = serialize($_GET);
-  }
-  
-  public function mergeSavedGetVars() {
-    // Merge $_GET parameters with stored parameters. If $_GET contains some
-    // parameters stored in $preLoginState, $_GET will take precedence.
-    if (isset($_SESSION[GlApp::SESSION_STORED_GET])) {
-      $storedGet = unserialize($_SESSION[GlApp::SESSION_STORED_GET]);
-      $_GET = array_merge($storedGet, $_GET);
-      unset($_SESSION[GlApp::SESSION_STORED_GET]);
-    }
-  }*/
 }

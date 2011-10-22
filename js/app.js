@@ -85,6 +85,13 @@ var Page = Class.extend({
     this.app = app;
     this.id = id;
     
+    var doc = $.store.get('docid');
+    var title = $.store.get('doctitle');
+    if (doc && title) {
+			this.app.doc = doc;
+			this.app.docTitle = title;
+		}
+    
     // Bind page load functions
     $('#' + id)
     	.live('pagebeforeshow', function() {
@@ -98,6 +105,14 @@ var Page = Class.extend({
   
   getContent : function() {
   	return $('#' + this.id + ' div[data-role="content"]');
+  },
+  
+  setDoc : function(id, title) {
+  	this.app.doc = id;
+		this.app.docTitle = title;
+		
+		$.store.set('docid', id);
+		$.store.set('doctitle', title);
   },
   
   showTmpl : function(tmplName, data) {
@@ -316,7 +331,6 @@ var SettingsPage = Page.extend({
   
   onPageBeforeShow : function() {
     var self = this;
-    //self.setSubtitle('');
     
     $.ajax({
       url: MobileMilesConst.SCRIPT_URL + 'ajax_login.php',
@@ -357,7 +371,6 @@ var LogOutPage = Page.extend({
   
   onPageBeforeShow : function() {
     var self = this;
-    //self.setSubtitle('');
     
     $.ajax({
       url: MobileMilesConst.SCRIPT_URL + 'ajax_login.php?action=logout',
@@ -403,11 +416,12 @@ var ListPage = PageWithContainer.extend({
     	var id = $(this).val();
     	if (id !== undefined && id.length > 0) {
     		// Save
-    		self.app.doc = id;
-    		self.app.docTitle = $(this).data('doc-title');
     		self.app.view.needsRefresh = true;
         self.app.view.needsRequery = false;
         self.setSubtitle();
+        
+        // Save to local storage
+        self.setDoc(id, $(this).data('doc-title'));
     	}
     });
   },
@@ -415,49 +429,71 @@ var ListPage = PageWithContainer.extend({
   populate : function() {
     var self = this;
     
-    $.ajax({
-      url: MobileMilesConst.SCRIPT_URL + 'ajax_doclist.php',
-      dataType: 'json',
-      data: {
-        callee: MobileMilesConst.BASE_URL + '#' + self.id,
-        refresh: self.needsRequery
-      },
-      beforeSend: function() {
-        self.showLoading();
-      }, // end of 'beforeSend'
-      success: function(data) {
-        switch (data.response) {
-          case 'login_unauthorized':
-            self.showUnauthorized(data);
-            break;
-          case 'doclist_success':
-            self.needsRequery = false;
-            
-            // jQuery-tmpl can't store variables at run time, so pre-calculate
-            // this flag.
-            var hasInvalid = false;
-            for (var i = 0; i < data.doclist.length; i++) {
-            	if (! data.doclist[i].valid) {
-            		hasInvalid = true;
-            	}
-            }
-            
-            self.showList({
-              docs: data.doclist,
-              hasInvalid: hasInvalid
-            });
-            break;
-          default:
-            console.log('what is ' + data.response + '?');
-            self.showError();
-            break;
-        }
-      }, // end of 'success'
-      error: function(xhr, status, error) {
-        console.log('error: ' + error + ', ' + status);
-        self.showError();
-      } // end of 'error'
-    });
+    if (! self.needsRequery) {
+			try {
+				var data = $.store.get(self.id);
+				
+				if (data && data.docs && data.hasInvalid !== undefined) {
+					self.showList(data);
+					self.needsRequery = false;
+				}
+				else {
+					self.needsRequery = true;
+				}
+			}
+			catch (ex) {
+				// Problem. Try requerying (via AJAX)
+				self.needsRequery = true;
+			}
+		}
+    
+    if (self.needsRequery) {
+			$.ajax({
+				url: MobileMilesConst.SCRIPT_URL + 'ajax_doclist.php',
+				dataType: 'json',
+				data: {
+					callee: MobileMilesConst.BASE_URL + '#' + self.id
+				},
+				beforeSend: function() {
+					self.showLoading();
+				}, // end of 'beforeSend'
+				success: function(data) {
+					switch (data.response) {
+						case 'login_unauthorized':
+							self.showUnauthorized(data);
+							break;
+						case 'doclist_success':
+							self.needsRequery = false;
+							
+							var listData = {
+								docs: data.doclist,
+								hasInvalid: false
+							};
+							
+							// jQuery-tmpl can't store variables at run time, so pre-calculate
+							// this flag.
+							for (var i = 0; i < data.doclist.length; i++) {
+								if (! data.doclist[i].valid) {
+									listData.hasInvalid = true;
+								}
+							}
+							
+							// Show and save a local copy
+							self.showList(listData);
+							$.store.set(self.id, listData);
+							break;
+						default:
+							console.log('what is ' + data.response + '?');
+							self.showError();
+							break;
+					}
+				}, // end of 'success'
+				error: function(xhr, status, error) {
+					console.log('error: ' + error + ', ' + status);
+					self.showError();
+				} // end of 'error'
+			});
+		}
   }
 });
 
@@ -552,39 +588,62 @@ var ViewPage = PageWithContainer.extend({
   
   populate : function() {
   	var self = this;
-    //self.setSubtitle(self.app.docTitle, '#list');
+  	
+  	if (! self.needsRequery) {
+			try {
+				var data = $.store.get(self.id);
+				
+				if (data && data.entries) {
+					self.showList(data);
+					self.needsRequery = false;
+				}
+				else {
+					self.needsRequery = true;
+				}
+			}
+			catch (ex) {
+				// Problem. Try requerying (via AJAX)
+				self.needsRequery = true;
+			}
+		}
     
-    self.populateRange(0, 5, {
-      beforeSend: function() {
-        self.showLoading();
-      }, // end of 'beforeSend'
-      success: function(data) {
-      	switch (data.response) {
-          case 'login_unauthorized':
-            self.showUnauthorized(data);
-            break;
-          case 'entrylist_no_doc':
-            self.showNoDoc();
-            break;
-          case 'entrylist_success':
-          	self.entries = data.entrylist;
-            self.needsRequery = false;
-            
-            self.showList({
-              entries: self.entries
-            });
-            break;
-          default:
-            console.log('what is ' + data.response + '?');
-            self.showError();
-            break;
-        }
-      }, // end of 'success'
-      error: function(xhr, status, error) {
-        console.log('error: ' + status + ', ' + error);
-        self.showError();
-      } // end of 'error'
-    });
+    if (self.needsRequery) {
+			self.populateRange(0, 5, {
+				beforeSend: function() {
+					self.showLoading();
+				}, // end of 'beforeSend'
+				success: function(data) {
+					switch (data.response) {
+						case 'login_unauthorized':
+							self.showUnauthorized(data);
+							break;
+						case 'entrylist_no_doc':
+							self.showNoDoc();
+							break;
+						case 'entrylist_success':
+							self.entries = data.entrylist;
+							self.needsRequery = false;
+							
+							var listData = {
+								entries: self.entries
+							};
+							
+							// Show and save a local copy
+							self.showList(listData);
+							$.store.set(self.id, listData);
+							break;
+						default:
+							console.log('what is ' + data.response + '?');
+							self.showError();
+							break;
+					}
+				}, // end of 'success'
+				error: function(xhr, status, error) {
+					console.log('error: ' + status + ', ' + error);
+					self.showError();
+				} // end of 'error'
+			});
+		}
   },
   
   populateWithMore : function(num) {

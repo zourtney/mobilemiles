@@ -35,33 +35,18 @@ else if (! $auth->logIn(@$_GET['callee'])) {
   ));
 }
 else {
-  // Normalize 'refresh' flag
-  $refresh = false;
-  if (isset($_GET['refresh']) && ($_GET['refresh'] == '1' || $_GET['refresh'] == 'true')) {
-  	$refresh = true;
-  }
-  
-  // Pull doc list from cookie
-  $docs = GlCookie::getDocList();
-  
-  // Query Google Docs for document list
-  if ($refresh || ! isset($docs)) {
-  	// Create or get handle to the app object
-		if (! isset($_SESSION['GlApp_App'])) {
-			$app = new GlApp($auth);
-			$_SESSION['GlApp_App'] = $app;
-		}
-		else {
-			$app = $_SESSION['GlApp_App'];
-		}
-		
-		// Get available documents
-    $docs = $app->getAvailable($refresh);
-	  
-	  // Save list to cookie
-		GlCookie::setDocList($docs);
-  }
-  
+  // Create or get handle to the app object
+	if (! isset($_SESSION['GlApp_App'])) {
+		$app = new GlApp($auth);
+		$_SESSION['GlApp_App'] = $app;
+	}
+	else {
+		$app = $_SESSION['GlApp_App'];
+	}
+	
+	// Get available documents
+	$docs = $app->getAvailable();
+	
   echo json_encode(array(
     'response' => 'doclist_success',
     'doclist' => $docs
