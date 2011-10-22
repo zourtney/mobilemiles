@@ -36,7 +36,7 @@
 					<a class="list-chk-disabled" href="#doc_update_instructions"><input type="radio" name="list-chk-group" name="list-chk-${doc.id}" id="list-chk-${doc.id}" class="list-chk" value="${doc.id}" data-doc-title="${doc.title}" disabled="disabled" />
 					<label for="list-chk-${doc.id}" class="list-label" data-icon="alert">${doc.title} <span class="list-chk-incompatible">(incompatible)</span></label></a>
 				{{else}}
-					<input type="radio" name="list-chk-group" name="list-chk-${doc.id}" id="list-chk-${doc.id}" class="list-chk" value="${doc.id}" data-doc-title="${doc.title}" />
+					<input type="radio" name="list-chk-group" id="list-chk-${doc.id}" class="list-chk" value="${doc.id}" data-doc-title="${doc.title}" />
 					<label for="list-chk-${doc.id}"
 					class="list-label">${doc.title}</label>
 				{{/if}}

@@ -415,15 +415,26 @@ var ListPage = PageWithContainer.extend({
     $('input[name="list-chk-group"]:radio').live('change', function() {
     	var id = $(this).val();
     	if (id !== undefined && id.length > 0) {
-    		// Save
+    		// Set document and save to local storage
+    		self.setDoc(id, $(this).data('doc-title'));
+    		
+    		// Set the refresh flags
     		self.app.view.needsRefresh = true;
         self.app.view.needsRequery = false;
-        self.setSubtitle();
         
-        // Save to local storage
-        self.setDoc(id, $(this).data('doc-title'));
+        // Set subtitle
+        self.setSubtitle();
     	}
     });
+  },
+  
+  setSelectionRadio : function() {
+  	$('input[name="list-chk-group"]')
+  		.prop('checked', false)
+  	  .filter('[value="' + this.app.doc + '"]')
+  	  	.prop('checked', true)
+  	  	.checkboxradio('refresh')
+  	;
   },
   
   populate : function() {
@@ -436,6 +447,7 @@ var ListPage = PageWithContainer.extend({
 				if (data && data.docs && data.hasInvalid !== undefined) {
 					self.showList(data);
 					self.needsRequery = false;
+					self.setSelectionRadio();
 				}
 				else {
 					self.needsRequery = true;
@@ -481,6 +493,7 @@ var ListPage = PageWithContainer.extend({
 							// Show and save a local copy
 							self.showList(listData);
 							$.store.set(self.id, listData);
+							self.setSelectionRadio();
 							break;
 						default:
 							console.log('what is ' + data.response + '?');
