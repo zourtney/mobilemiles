@@ -528,6 +528,9 @@ var ViewPage = PageWithContainer.extend({
     $('#entrylist li').live('click', function(e) {
       var i = $(this).index() - 1;
       
+      console.log(self.entries);
+      console.log('cur entry ' + i + ' = ' + self.entries[i]);
+      
       if (! isNaN(i) && i > -1 && i < self.entries.length) {
         self.curEntry = self.entries[i];
       }
@@ -589,8 +592,7 @@ var ViewPage = PageWithContainer.extend({
         callee: MobileMilesConst.BASE_URL + '#' + self.id,
         id: self.app.doc,
         offset: offset,
-        num: num,
-        refresh: self.needsRequery
+        num: num
       },
       beforeSend: callbacks.beforeSend,
       error: callbacks.error,
@@ -607,6 +609,7 @@ var ViewPage = PageWithContainer.extend({
 				var data = $.store.get(self.id);
 				
 				if (data && data.entries) {
+					self.entries = data.entries;
 					self.showList(data);
 					self.needsRequery = false;
 				}
@@ -715,6 +718,7 @@ var ViewDetailsPage = Page.extend({
   },
   
   onPageShow : function() {
+  	console.log('view.curEntry: ' + this.app.view.curEntry);
     if (this.app.view.curEntry != null && this.app.view.curEntry !== undefined) {
       this.showDetails(this.app.view.curEntry);
     }
