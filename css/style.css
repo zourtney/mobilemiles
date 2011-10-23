@@ -83,25 +83,25 @@ div[data-role="fieldcontain"] {
 }
 
 #main-grid .list {
-	background: url('../images/delivery.png');
+	background: url('../images/taxi.png');
 	background-repeat: no-repeat;
 	background-position: center top;
 }
 
 #main-grid .view {
-	background: url('../images/database.png');
+	background: url('../images/document_48.png');
 	background-repeat: no-repeat;
 	background-position: center top;
 }
 
 #main-grid .new {
-	background: url('../images/plus.png');
+	background: url('../images/pencil_48.png');
 	background-repeat: no-repeat;
 	background-position: center top;
 }
 
 #main-grid .settings {
-	background: url('../images/preferences.png');
+	background: url('../images/gear_48.png');
 	background-repeat: no-repeat;
 	background-position: center top;
 }
