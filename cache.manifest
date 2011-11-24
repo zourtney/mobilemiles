@@ -1,0 +1,18 @@
+CACHE MANIFEST
+# Last modified: 2011-11-01 12:33
+
+index.php
+favicon.ico
+css/mobilemines.min.css
+images/ajax-loader-small.gif
+images/ajax-loader.gif
+images/document_48.png
+images/gear_48.png
+images/jqm-ajax-loader.png
+images/pencil_48.png
+images/pump.png
+images/splash.png
+images/taxi.png
+js/mobilemiles.min.js
+js/utils.js
+templates/ui.php

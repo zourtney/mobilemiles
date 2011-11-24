@@ -10,3 +10,15 @@
 [submodule "js/jquery.store"]
 	path = js/jquery.store
 	url = git://github.com/whitmer/store.js.git
+[submodule "js/jquery"]
+	path = js/jquery
+	url = git://github.com/jquery/jquery.git
+[submodule "js/jquery-mobile"]
+	path = js/jquery-mobile
+	url = git://github.com/jquery/jquery-mobile.git
+[submodule "js/jquery-tmpl"]
+	path = js/jquery-tmpl
+	url = git://github.com/jquery/jquery-tmpl.git
+[submodule "livequery"]
+	path = livequery
+	url = https://github.com/brandonaaron/livequery.git

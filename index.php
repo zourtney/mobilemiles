@@ -18,14 +18,14 @@ require_once TEMPLATE_BASE . 'ui.php';
  *****************************************************************************/
 ?>
 <!DOCTYPE html>
-<html>
+<html<?php if (! DEBUG) echo ' manifest="cache.manifest"'; ?>>
 <head>
   <title>MobileMiles</title>
   
   <!-- Styles -->
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/style.css" type="text/css" />
-  <link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" />
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css"" type="text/css" />
   
   <!-- Fix at native screen resolution -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
@@ -37,16 +37,19 @@ require_once TEMPLATE_BASE . 'ui.php';
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <!-- JavaScript dependencies -->
-  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+  <!--<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.livequery/jquery.livequery.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.timeago/jquery.timeago.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.store/json.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.store/jquery.store.js"></script>
-  <script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+  <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>const.php"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>utils.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>app.js"></script>
-  <script type="text/javascript" src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+  -->
+  <script type="text/javascript" src="<?php echo JS_URL; ?>const.php"></script>
+  <script type="text/javascript" src="<?php echo JS_URL; ?>mobilemiles.min.js"></script>
   
   <script type="text/javascript">
   	// Make all timestamps dynamically update via $.timeago. Also make it so

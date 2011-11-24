@@ -40,6 +40,8 @@ The source code is licensed under the Apache 2.0 license. You are free to use th
 ##Setup
 If you want to use the [live version](http://gas.randomland.net), no setup is required. However, if you wish to run your own instance, you will need the following:
 
+* git
+* NodeJS (for compiling/minifying jQuery)
 * Web server with PHP (LAMP stack is my preferred method)
 * [Zend Framework](http://framework.zend.com/download/current/) ([Gdata API](http://framework.zend.com/download/webservices) is sufficient for everything *except* OAuth integration)
 * Create `scripts/oauth_secret.php` with the following `define`s, filling in the secret information in `[]` brackets:
