@@ -37,7 +37,7 @@ require_once TEMPLATE_BASE . 'ui.php';
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <!-- JavaScript dependencies -->
-  <!--<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.livequery/jquery.livequery.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.timeago/jquery.timeago.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.store/json.js"></script>
@@ -47,10 +47,10 @@ require_once TEMPLATE_BASE . 'ui.php';
   <script type="text/javascript" src="<?php echo JS_URL; ?>utils.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>app.js"></script>
   <script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
-  -->
-  <script type="text/javascript" src="<?php echo JS_URL; ?>const.php"></script>
-  <script type="text/javascript" src="<?php echo JS_URL; ?>mobilemiles.min.js"></script>
   
+  <!--<script type="text/javascript" src="<?php echo JS_URL; ?>const.php"></script>
+  <script type="text/javascript" src="<?php echo JS_URL; ?>mobilemiles.min.js"></script>
+  -->
   <script type="text/javascript">
   	// Make all timestamps dynamically update via $.timeago. Also make it so
   	// click/tapping them toggles the full date and the friendly date.
