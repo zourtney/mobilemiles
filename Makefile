@@ -85,7 +85,7 @@ jquerytmpl:
 minifyjs:
 	cat ${JS_FILES} > ${JS_FILES_MONOLITH} ;
 	${MINIFY} ${JS_FILES_MONOLITH_MIN} ${JS_FILES_MONOLITH} ;
-	rm ${JS_FILES} ${JS_FILES_MONOLITH}
+	ls * | grep -v ${JS_FILES_MONOLITH} | xargs rm
 
 # 
 # Copy static resources over
