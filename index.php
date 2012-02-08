@@ -37,6 +37,9 @@ require_once TEMPLATE_BASE . 'ui.php';
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <!-- JavaScript dependencies -->
+  <?php if (MIN_RELEASE) { ?>
+  <script type="text/javascript" src="<?php echo JS_URL; ?>mobilemiles.min.js"></script>
+  <?php } else { ?>
   <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.livequery/jquery.livequery.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.timeago/jquery.timeago.js"></script>
@@ -47,6 +50,7 @@ require_once TEMPLATE_BASE . 'ui.php';
   <script type="text/javascript" src="<?php echo JS_URL; ?>utils.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>app.js"></script>
   <script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+  <?php } ?>
   
   <!--<script type="text/javascript" src="<?php echo JS_URL; ?>const.php"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>mobilemiles.min.js"></script>

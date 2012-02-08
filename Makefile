@@ -23,21 +23,22 @@ DEST = release
 CSS_DEST = ${DEST}/css
 IMAGES_DEST = ${DEST}/images
 JS_DEST = ${DEST}/js
+JS_TMP = ${DEST}/js/tmp
 PAGES_DEST = ${DEST}/pages
 SCRIPTS_DEST = ${DEST}/scripts
 TMPL_DEST = ${DEST}/templates
 
 # Output files to copy straight over
 STATIC_FILES = cache.manifest favicon.ico index.php license.txt
-JS_FILES = ${JS_DEST}/jquery-latest.min.js \
+JS_FILES = ${JS_TMP}/jquery-latest.min.js \
            ${JS_SRC}/jquery.livequery/jquery.livequery.js \
            ${JS_SRC}/jquery.timeago/jquery.timeago.js \
            ${JS_SRC}/jquery.store/json.js \
            ${JS_SRC}/jquery.store/jquery.store.js \
-           ${JS_DEST}/jquery.tmpl.min.js \
+           ${JS_TMP}/jquery.tmpl.min.js \
            ${JS_SRC}/utils.js \
            ${JS_SRC}/app.js \
-           ${JS_DEST}/jquery.mobile.min.js
+           ${JS_TMP}/jquery.mobile.min.js
 JS_FILES_MONOLITH = ${JS_DEST}/mobilemiles.js
 JS_FILES_MONOLITH_MIN = ${JS_DEST}/mobilemiles.min.js
 
@@ -60,7 +61,7 @@ clean:
 # Creates the output directory structure
 # 
 structure:
-	mkdir ${DEST} ${CSS_DEST} ${IMAGES_DEST} ${JS_DEST} ${PAGES_DEST} ${SCRIPTS_DEST} ${TMPL_DEST}
+	mkdir ${DEST} ${CSS_DEST} ${IMAGES_DEST} ${JS_DEST} ${PAGES_DEST} ${SCRIPTS_DEST} ${TMPL_DEST} ${JS_TMP}
 
 # 
 # Dependencies, pulls latest production copies from CDNs.
@@ -68,16 +69,16 @@ structure:
 dependencies: jquery jquerymobile jquerymobilecss jquerytmpl
 
 jquery:
-	cd ${JS_DEST};${WGET} http://code.jquery.com/jquery-latest.min.js
+	cd ${JS_TMP};${WGET} http://code.jquery.com/jquery-latest.min.js
 
 jquerymobile:
-	cd ${JS_DEST};${WGET} http://code.jquery.com/mobile/latest/jquery.mobile.min.js
+	cd ${JS_TMP};${WGET} http://code.jquery.com/mobile/latest/jquery.mobile.min.js
 
 jquerymobilecss:
 	cd ${CSS_DEST};${WGET} http://code.jquery.com/mobile/latest/jquery.mobile.min.css
 
 jquerytmpl:
-	cd ${JS_DEST};${WGET} http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js
+	cd ${JS_TMP};${WGET} http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js
 
 # 
 # Minify JavaScript and CSS
@@ -85,7 +86,8 @@ jquerytmpl:
 minifyjs:
 	cat ${JS_FILES} > ${JS_FILES_MONOLITH} ;
 	${MINIFY} ${JS_FILES_MONOLITH_MIN} ${JS_FILES_MONOLITH} ;
-	cd ${JS_DEST};find * -maxdepth 0 -name '${JS_FILES_MONOLITH_MIN}' -prune -o -exec rm -rf '{}' ';'
+	rm -rf ${JS_TMP} ${JS_FILES_MONOLITH}
+# cd ${JS_DEST};find * -maxdepth 0 -name '${JS_FILES_MONOLITH_MIN}' -prune -o -exec rm -rf '{}' ';'
 
 # 
 # Copy static resources over
