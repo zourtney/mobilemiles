@@ -3,8 +3,7 @@
 
 **Author:** zourtney@randomland.net
 
-**Date:** first committed 2011-07-26
-*last updated 2012-02-07*
+**Date:** first committed 2011-07-26 (*last updated 2012-02-07*)
 
 ##Overview
 [MobileMiles](http://github.com/zourtney/mobilemiles) is simple web app for tracking fuel mileage and other statistics straight from your mobile device. Every time you fill up, simply enter the number of gallons pumped and the unit price, tap submit and you're set! Visit the official live version at [gas.randomland.net](http://gas.randomland.net).
