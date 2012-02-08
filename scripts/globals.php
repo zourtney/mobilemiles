@@ -35,12 +35,12 @@ function defndef($name, $val) {
 
 // Constants
 defndef('DEBUG', (strstr($_SERVER['SERVER_NAME'], 'localhost') !== false));
+defndef('MIN_RELEASE', false);
 defndef('APP_VERSION', 1.0);
 defndef('BUILD_VERSION', '1.0.20110908');
 defndef('SYSTEM_ADMIN_URI', 'mailto:zourtney@randomland.net');
 defndef('SPREADSHEET_VERSION', 1.1);
 defndef('SPREADSHEET_MASTER_URL', 'https://spreadsheets.google.com/ccc?key=0AnRif0EzefXxdEViXzFGdjlJLXNXYlBhdXFmUERqTnc&hl=en');
-defndef('MIN_RELEASE', false);
 
 if (DEBUG) {
   // Verbose error reporting

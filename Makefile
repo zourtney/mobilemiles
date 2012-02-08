@@ -30,15 +30,13 @@ TMPL_DEST = ${DEST}/templates
 
 # Output files to copy straight over
 STATIC_FILES = cache.manifest favicon.ico index.php license.txt
-JS_FILES = ${JS_TMP}/jquery-latest.min.js \
-           ${JS_SRC}/jquery.livequery/jquery.livequery.js \
+JS_FILES = ${JS_SRC}/jquery.livequery/jquery.livequery.js \
            ${JS_SRC}/jquery.timeago/jquery.timeago.js \
            ${JS_SRC}/jquery.store/json.js \
            ${JS_SRC}/jquery.store/jquery.store.js \
            ${JS_TMP}/jquery.tmpl.min.js \
            ${JS_SRC}/utils.js \
-           ${JS_SRC}/app.js \
-           ${JS_TMP}/jquery.mobile.min.js
+           ${JS_SRC}/app.js
 JS_FILES_MONOLITH = ${JS_DEST}/mobilemiles.js
 JS_FILES_MONOLITH_MIN = ${JS_DEST}/mobilemiles.min.js
 
@@ -69,10 +67,10 @@ structure:
 dependencies: jquery jquerymobile jquerymobilecss jquerytmpl
 
 jquery:
-	cd ${JS_TMP};${WGET} http://code.jquery.com/jquery-latest.min.js
+	cd ${JS_DEST};${WGET} http://code.jquery.com/jquery-latest.min.js
 
 jquerymobile:
-	cd ${JS_TMP};${WGET} http://code.jquery.com/mobile/latest/jquery.mobile.min.js
+	cd ${JS_DEST};${WGET} http://code.jquery.com/mobile/latest/jquery.mobile.min.js
 
 jquerymobilecss:
 	cd ${CSS_DEST};${WGET} http://code.jquery.com/mobile/latest/jquery.mobile.min.css
