@@ -18,7 +18,8 @@ require_once TEMPLATE_BASE . 'ui.php';
  *****************************************************************************/
 ?>
 <!DOCTYPE html>
-<html<?php if (! DEBUG) echo ' manifest="cache.manifest"'; ?>>
+<html
+  <?php /*if (! DEBUG) echo ' manifest="cache.manifest"';*/ ?>>
 <head>
   <title>MobileMiles</title>
   
