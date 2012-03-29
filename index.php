@@ -49,11 +49,11 @@ require_once TEMPLATE_BASE . 'ui.php';
     };
   </script>
   <?php if (MIN_RELEASE) { ?>
-  <script type="text/javascript" src="<?php echo JS_URL; ?>jquery-latest.min.js"></script>
+  <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.min.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>mobilemiles.min.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.mobile.min.js"></script>
   <?php } else { ?>
-  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.livequery/jquery.livequery.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.timeago/jquery.timeago.js"></script>
   <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.store/json.js"></script>

@@ -3,7 +3,7 @@
 
 **Author:** zourtney@randomland.net
 
-**Date:** first committed 2011-07-26 (*last updated 2012-02-07*)
+**Date:** first committed 2011-07-26 (*last updated 2012-03-28*)
 
 ##Overview
 [MobileMiles](http://github.com/zourtney/mobilemiles) is simple web app for tracking fuel mileage and other statistics straight from your mobile device. Every time you fill up, simply enter the number of gallons pumped and the unit price, tap submit and you're set! Visit the official live version at [gas.randomland.net](http://gas.randomland.net).
@@ -44,10 +44,22 @@ If you want to use the [live version](http://gas.randomland.net), no setup is re
 * NodeJS (for compiling/minifying jQuery)
 * Web server with PHP (LAMP stack is my preferred method)
 * [Zend Framework](http://framework.zend.com/download/current/) ([Gdata API](http://framework.zend.com/download/webservices) is sufficient for everything *except* OAuth integration)
+* Java runtime (to run a min release)
 * Create `scripts/oauth_secret.php` with the following `define`s, filling in the secret information in `[]` brackets:
   * `define('OAUTH_COOKIE_EXPIRATION', 60 * 60 * 24 * 30); /* 30 days */`
   * `define('OAUTH_CONSUMER_KEY', '[your oauth url]');`
   * `define('OAUTH_SECRET', '[your oauth secret]');`
+
+To compile a release version from scratch:
+
+1. `git clone git://github.com/zourtney/mobilemiles.git`
+2. `git submodule init`
+3. `git submodule update`
+4. `make`
+5. Deployable contents are under `release/`
+6. Add your custom `scripts/oauth_secret.php` (see above)
+7. Make any change (such as enabling min-release) in `scripts/globals.php`
+
 
 ##The future (and the present)
 I plan to keep this project active so long as I am buying gasoline (read: indefinitely). There are a number of improvements I would like to explore, including geo-location, native app development, and/or HTML5 app deployment. The code is currently "beta". I am testing it in real life and things will inevitably break. Please submit all suggestions and bug reports on [github](http://github.com/zourtney/mobilemiles/issues) or to me at zourtney@randomland.net. Enjoy!

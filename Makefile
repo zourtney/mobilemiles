@@ -1,5 +1,5 @@
 # Makefile for MobileMiles.
-# Copyright 2011 zourtney@randomland.net
+# Copyright 2012 zourtney@randomland.net
 # 
 # System commands
 WGET ?= $(shell which wget)
@@ -29,7 +29,7 @@ SCRIPTS_DEST = ${DEST}/scripts
 TMPL_DEST = ${DEST}/templates
 
 # Output files to copy straight over
-STATIC_FILES = cache.manifest favicon.ico index.php license.txt
+STATIC_FILES = cache.manifest fcavicon.ico index.php license.txt
 JS_FILES = ${JS_SRC}/jquery.livequery/jquery.livequery.js \
            ${JS_SRC}/jquery.timeago/jquery.timeago.js \
            ${JS_SRC}/jquery.store/json.js \
@@ -45,7 +45,7 @@ JS_FILES_MONOLITH_MIN = ${JS_DEST}/mobilemiles.min.js
 # a `releases` directory.
 # 
 all: clean structure dependencies minifyjs static
-	@@echo MobileMiles, Copyright 2011 zourtney@randomland.net
+	@@echo MobileMiles, Copyright 2012 zourtney@randomland.net
 
 # -----------------------------------------------------------------------------
 
@@ -66,8 +66,10 @@ structure:
 # 
 dependencies: jquery jquerymobile jquerymobilecss jquerytmpl
 
+# Updated 03-28-2012 -- jQuery 1.7.2 breaks jQuery Mobile 1.0.1 with an
+# `nth-child` error. Explicitly loading 1.7.1 until this problem is fixed.
 jquery:
-	cd ${JS_DEST};${WGET} http://code.jquery.com/jquery-latest.min.js
+	cd ${JS_DEST};${WGET} http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
 
 jquerymobile:
 	cd ${JS_DEST};${WGET} http://code.jquery.com/mobile/latest/jquery.mobile.min.js
@@ -91,9 +93,9 @@ minifyjs:
 # Copy static resources over
 # 
 static:
-	cp -r ${CSS_SRC}/ ${CSS_DEST}/ ;
-	cp -r ${IMAGES_SRC}/ ${IMAGES_DEST}/ ;
-	cp -r ${PAGES_SRC}/ ${PAGES_DEST}/ ;
-	cp -r ${SCRIPTS_SRC}/ ${SCRIPTS_DEST}/ ;
-	cp -r ${TMPL_SRC}/ ${TMPL_DEST}/ ;
-	cp -r ${STATIC_FILES} ${DEST}/
+	rsync -av ${CSS_SRC}/ ${CSS_DEST}/ ;
+	rsync -av ${IMAGES_SRC}/ ${IMAGES_DEST}/ ;
+	rsync -av ${PAGES_SRC}/ ${PAGES_DEST}/ ;
+	rsync -av ${SCRIPTS_SRC}/ ${SCRIPTS_DEST}/ ;
+	rsync -av ${TMPL_SRC}/ ${TMPL_DEST}/ ;
+	rsync -av ${STATIC_FILES} ${DEST}/
