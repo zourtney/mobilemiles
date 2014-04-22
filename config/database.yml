@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: mobilemiles_production
-  username: mobilemiles
-  password: <%= ENV['MOBILEMILES_DATABASE_PASSWORD'] %>
+  #username: mobilemiles
+  #password: <%= ENV['MOBILEMILES_DATABASE_PASSWORD'] %>
