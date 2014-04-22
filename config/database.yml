@@ -80,6 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: mobilemiles_production
-  #username: mobilemiles
-  #password: <%= ENV['MOBILEMILES_DATABASE_PASSWORD'] %>
+  database: <%= ENV['DATABASE_URL'] %>
+  username: mobilemiles
+  password: <%= ENV['MOBILEMILES_DATABASE_PASSWORD'] %>
