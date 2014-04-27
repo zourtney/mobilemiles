@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
-  root 'welcome#index'
+  root 'session#index'
 
   resources :vehicles
+  resources :users
+  
+  resources :session
+  delete 'session', to: 'session#destroy'   # override "DELETE /session/:id' with just 'DELETE /session'
+
+
+  #get 'signup', to: 'users#new', as: 'signup'
+  # get 'login', to: 'sessions#new', as: 'login'
+  # get 'logout', to: 'sessions#destroy', as: 'logout'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
