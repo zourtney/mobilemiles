@@ -1,28 +1,21 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  #protect_from_forgery with: :exception
+  protect_from_forgery with: :exception
 
-  # If you get lazy with the AJAXes:
-#   protect_from_forgery
-#   skip_before_action :verify_authenticity_token, if: :json_request?
+  # Send CSRF cookie. Read the following links for the pros and cons:
+  # http://stackoverflow.com/a/15056471/
+  # http://stackoverflow.com/a/15761835/
+  after_filter :set_csrf_cookie_for_ng
 
-# protected
-#   def json_request?
-#     request.format.json?
-#   end
+protected
+  def set_csrf_cookie_for_ng
+    cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
+  end
 
-  # Possible way -- set CSRF cookie. But is this moot for APIs?
-  # http://stackoverflow.com/a/15056471/311207
-  #
-  #
-  # after_filter :set_csrf_cookie
-
-  # def set_csrf_cookie
-  #   if protect_against_forgery?
-  #     cookies['XSRF-TOKEN'] = form_authenticity_token
-  #   end
-  # end
+  def verified_request?
+    super || form_authenticity_token == request.headers['X-XSRF-TOKEN']
+  end
 
 private
   def current_user
