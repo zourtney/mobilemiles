@@ -6,6 +6,7 @@ gem 'rails', '4.1.0'
 
 # For Travis CI
 gem 'rake'
+gem 'sqlite3', :platform => [:ruby, :mswin, :mingw]
 
 # Use postgresql as the database for Active Record
 gem 'pg'
