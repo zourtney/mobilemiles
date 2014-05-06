@@ -5,12 +5,16 @@ source 'https://rubygems.org'
 gem 'rails', '4.1.0'
 
 # For Travis CI
-#TODO: put in 'test' group
-gem 'rake'
-gem 'sqlite3', :platform => [:ruby, :mswin, :mingw]
+group :test do
+  gem 'rake'
+  gem 'sqlite3', :platform => [:ruby, :mswin, :mingw]
+end
 
-# Use postgresql as the database for Active Record
-gem 'pg'
+group :development, :production do
+  # Use postgresql as the database for Active Record
+  gem 'pg'
+end
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
