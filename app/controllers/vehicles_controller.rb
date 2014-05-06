@@ -1,6 +1,5 @@
-class VehiclesController < ApplicationController
-  before_filter :authorize, only: [:edit, :update]
-
+class VehiclesController < AuthorizedController
+  
   def index
     @vehicles = Vehicle.all()
     render :json => @vehicles
@@ -38,4 +37,5 @@ private
   def vehicle_params
     params.require(:vehicle).permit(:name, :make, :model, :year)
   end
+
 end
