@@ -46,7 +46,7 @@ gem 'rack-cors', :require => 'rack/cors'
 # https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/
 # http://www.intridea.com/blog/2013/11/7/json-web-token-the-useful-little-standard-you-haven-t-heard-about
 # http://blog.yanted.com/2014/02/13/jwt-based-authentication-with-ember-js-and-rails/
-gem 'jwt', '~> 0.1.12'
+gem 'jwt' #, '~> 0.1.12'
 
 
 # Use unicorn as the app server

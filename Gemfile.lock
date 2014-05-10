@@ -121,7 +121,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   jbuilder (~> 2.0)
   jquery-rails
-  jwt (~> 0.1.12)
+  jwt
   pg
   rack-cors
   rails (= 4.1.0)
