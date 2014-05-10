@@ -10,7 +10,7 @@ class SessionController < ApplicationController
       render :json => {
         user: user,
         session: session,
-        token: JWT.encode(user.id, 'plaidshirtdays')
+        token: JWT.encode({ user_id: user.id, email: user.email }, 'plaidshirtdays')
       }, status: :created
     else
       render :json => { error: "Invalid email or password" }, status: :unauthorized

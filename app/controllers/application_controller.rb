@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   # http://stackoverflow.com/a/15056471/
   # http://stackoverflow.com/a/15761835/
   # https://github.com/nazar/parlmnt/blob/master/app/controllers/application_controller.rb
-  protect_from_forgery
+  # protect_from_forgery
   # after_filter  :set_csrf_cookie_for_ng   #AngularJS protect_from_forgery
 
 protected
@@ -31,13 +31,15 @@ protected
   # end
 
 private
-  def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
-  end
-  helper_method :current_user
+  # def current_user
+  #   puts "NOt totally irerlvelent!!!!!!!!"
+  #   @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  # end
+  # helper_method :current_user
 
-  def authorize
-    redirect_to login_url, alert: "Not authorized" if current_user.nil?
-  end
+  # def authorize
+  #   puts "asontihayrchoesnt whateverman"
+  #   redirect_to login_url, alert: "Not authorized" if current_user.nil?
+  # end
 
 end
