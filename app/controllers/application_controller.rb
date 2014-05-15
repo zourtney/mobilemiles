@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
 
-
   # https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/
   # http://www.intridea.com/blog/2013/11/7/json-web-token-the-useful-little-standard-you-haven-t-heard-about
 
