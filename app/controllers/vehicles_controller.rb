@@ -12,20 +12,21 @@ class VehiclesController < AuthorizedController
   
   def create
     vehicle = Vehicle.new(vehicle_params)
+    vehicle.user_id = @user.id
     vehicle.save
     render :json => vehicle
   end
   
   def update
-    vehicle = Vehicle.find(params[:id])
+    vehicle = Vehicle.find_by(user_id: @user.id, id: params[:id])
     if vehicle.update(vehicle_params)
       render :json => vehicle
-    #TODO: handle else...if it could ever happen
+    #TODO: handle else -- attempts to modify an unauthorized resource
     end
   end
   
   def destroy
-    vehicle = Vehicle.find(params[:id])
+    vehicle = Vehicle.find_by(user_id: @user.id, id: params[:id])
     if vehicle.destroy
       render :json => {}, :status => 200
     else
