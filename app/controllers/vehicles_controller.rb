@@ -7,7 +7,11 @@ class VehiclesController < AuthorizedController
   
   def show
     vehicle = Vehicle.find_by(user_id: @user.id, id: params[:id])
-    render :json => vehicle
+    if vehicle
+      render :json => vehicle
+    else
+      render :json => { error: 'Vehicle not found' }, :status => :not_found
+    end
   end
   
   def create
