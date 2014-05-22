@@ -166,3 +166,315 @@ UsersControllerTest: test_should_get_new
   [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140422233720')[0m
   [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140426203628')
   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36m (0.5ms)[0m  [1mCREATE TABLE "maintenance_records" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "type" varchar(255), "name" varchar(255), "vehicle_id" integer, "user_id" integer, "mileage" integer, "completed_at" datetime, "comment" text, "gallons" float, "price_per_gallon" float, "grade" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.6ms)[0m  select sqlite_version(*)
+  [1m[36m (0.2ms)[0m  [1mCREATE  INDEX "index_maintenance_records_on_user_id" ON "maintenance_records" ("user_id")[0m
+  [1m[35m (0.2ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_maintenance_records_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_maintenance_records_on_user_id' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1mCREATE  INDEX "index_maintenance_records_on_vehicle_id" ON "maintenance_records" ("vehicle_id")[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "password_digest" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.2ms)[0m  [1mCREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "make" varchar(255), "model" varchar(255), "year" integer, "created_at" datetime, "updated_at" datetime, "user_id" integer) [0m
+  [1m[35m (0.2ms)[0m  CREATE  INDEX "index_vehicles_on_user_id" ON "vehicles" ("user_id")
+  [1m[36m (0.2ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.2ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.1ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140522034601')
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140422233720')[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140426203628')
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140507032111')[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140522024357')
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Unable to load fillup_record, underlying cause No such file to load -- fillup_record 
+
+ /Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `block in require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:232:in `load_dependency'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:348:in `require_or_load'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:307:in `depend_on'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:225:in `require_dependency'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.0/lib/active_record/fixtures.rb:862:in `try_to_load_dependency'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.0/lib/active_record/fixtures.rb:881:in `block in require_fixture_classes'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.0/lib/active_record/fixtures.rb:879:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.0/lib/active_record/fixtures.rb:879:in `require_fixture_classes'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.0/lib/active_record/fixtures.rb:857:in `fixtures'
+/Users/court/Development/mobilemiles/test/test_helper.rb:10:in `<class:TestCase>'
+/Users/court/Development/mobilemiles/test/test_helper.rb:5:in `<top (required)>'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `block in require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:232:in `load_dependency'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/test/helpers/fillup_record_helper_test.rb:1:in `<top (required)>'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `block in require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:232:in `load_dependency'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:114:in `block (3 levels) in define'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:114:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:114:in `block (2 levels) in define'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:113:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:113:in `block in define'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:240:in `call'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:240:in `block in execute'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:235:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:235:in `execute'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:179:in `block in invoke_with_call_chain'
+/Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/monitor.rb:211:in `mon_synchronize'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:172:in `invoke_with_call_chain'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:201:in `block in invoke_prerequisites'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:199:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:199:in `invoke_prerequisites'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:178:in `block in invoke_with_call_chain'
+/Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/monitor.rb:211:in `mon_synchronize'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:172:in `invoke_with_call_chain'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:165:in `invoke'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:20:in `invoke_rake_task'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/testing.rake:8:in `block in <top (required)>'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:240:in `call'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:240:in `block in execute'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:235:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:235:in `execute'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:179:in `block in invoke_with_call_chain'
+/Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/monitor.rb:211:in `mon_synchronize'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:172:in `invoke_with_call_chain'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:165:in `invoke'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:150:in `invoke_task'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:106:in `block (2 levels) in top_level'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:106:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:106:in `block in top_level'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:115:in `run_with_threads'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:100:in `top_level'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:78:in `block in run'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:176:in `standard_exception_handling'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:75:in `run'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/bin/rake:33:in `<top (required)>'
+/Users/court/.rvm/gems/ruby-2.1.1/bin/rake:23:in `load'
+/Users/court/.rvm/gems/ruby-2.1.1/bin/rake:23:in `<main>'
+/Users/court/.rvm/gems/ruby-2.1.1/bin/ruby_executable_hooks:15:in `eval'
+/Users/court/.rvm/gems/ruby-2.1.1/bin/ruby_executable_hooks:15:in `<main>'
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "fillup_records"[0m
+SQLite3::SQLException: no such table: fillup_records: DELETE FROM "fillup_records"
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "fillup_records"
+SQLite3::SQLException: no such table: fillup_records: DELETE FROM "fillup_records"
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "fillup_records"[0m
+SQLite3::SQLException: no such table: fillup_records: DELETE FROM "fillup_records"
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "fillup_records"
+SQLite3::SQLException: no such table: fillup_records: DELETE FROM "fillup_records"
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "fillup_records"[0m
+SQLite3::SQLException: no such table: fillup_records: DELETE FROM "fillup_records"
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "fillup_records"
+SQLite3::SQLException: no such table: fillup_records: DELETE FROM "fillup_records"
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "fillup_records"[0m
+SQLite3::SQLException: no such table: fillup_records: DELETE FROM "fillup_records"
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "fillup_records"
+SQLite3::SQLException: no such table: fillup_records: DELETE FROM "fillup_records"
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "fillup_records"[0m
+SQLite3::SQLException: no such table: fillup_records: DELETE FROM "fillup_records"
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "maintenance_records" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "type" varchar(255), "name" varchar(255), "vehicle_id" integer, "user_id" integer, "mileage" integer, "completed_at" datetime, "comment" text, "gallons" float, "price_per_gallon" float, "grade" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_maintenance_records_on_user_id" ON "maintenance_records" ("user_id")[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_maintenance_records_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_maintenance_records_on_user_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_maintenance_records_on_vehicle_id" ON "maintenance_records" ("vehicle_id")[0m
+  [1m[35m (0.1ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "password_digest" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "make" varchar(255), "model" varchar(255), "year" integer, "created_at" datetime, "updated_at" datetime, "user_id" integer) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_vehicles_on_user_id" ON "vehicles" ("user_id")
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140522034601')
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140422233720')[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140426203628')
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140507032111')[0m
+  [1m[35m (0.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140522024357')
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Unable to load fillup_record, underlying cause No such file to load -- fillup_record 
+
+ /Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `block in require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:232:in `load_dependency'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:348:in `require_or_load'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:307:in `depend_on'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:225:in `require_dependency'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.0/lib/active_record/fixtures.rb:862:in `try_to_load_dependency'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.0/lib/active_record/fixtures.rb:881:in `block in require_fixture_classes'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.0/lib/active_record/fixtures.rb:879:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.0/lib/active_record/fixtures.rb:879:in `require_fixture_classes'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.0/lib/active_record/fixtures.rb:857:in `fixtures'
+/Users/court/Development/mobilemiles/test/test_helper.rb:10:in `<class:TestCase>'
+/Users/court/Development/mobilemiles/test/test_helper.rb:5:in `<top (required)>'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `block in require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:232:in `load_dependency'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/test/helpers/session_helper_test.rb:1:in `<top (required)>'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `block in require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:232:in `load_dependency'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:114:in `block (3 levels) in define'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:114:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:114:in `block (2 levels) in define'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:113:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:113:in `block in define'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:240:in `call'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:240:in `block in execute'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:235:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:235:in `execute'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:179:in `block in invoke_with_call_chain'
+/Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/monitor.rb:211:in `mon_synchronize'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:172:in `invoke_with_call_chain'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:201:in `block in invoke_prerequisites'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:199:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:199:in `invoke_prerequisites'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:178:in `block in invoke_with_call_chain'
+/Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/monitor.rb:211:in `mon_synchronize'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:172:in `invoke_with_call_chain'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:165:in `invoke'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:20:in `invoke_rake_task'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/testing.rake:8:in `block in <top (required)>'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:240:in `call'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:240:in `block in execute'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:235:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:235:in `execute'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:179:in `block in invoke_with_call_chain'
+/Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/monitor.rb:211:in `mon_synchronize'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:172:in `invoke_with_call_chain'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:165:in `invoke'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:150:in `invoke_task'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:106:in `block (2 levels) in top_level'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:106:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:106:in `block in top_level'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:115:in `run_with_threads'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:100:in `top_level'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:78:in `block in run'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:176:in `standard_exception_handling'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:75:in `run'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/bin/rake:33:in `<top (required)>'
+/Users/court/.rvm/gems/ruby-2.1.1/bin/rake:23:in `load'
+/Users/court/.rvm/gems/ruby-2.1.1/bin/rake:23:in `<main>'
+/Users/court/.rvm/gems/ruby-2.1.1/bin/ruby_executable_hooks:15:in `eval'
+/Users/court/.rvm/gems/ruby-2.1.1/bin/ruby_executable_hooks:15:in `<main>'
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "maintenance_records" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "type" varchar(255), "name" varchar(255), "vehicle_id" integer, "user_id" integer, "mileage" integer, "completed_at" datetime, "comment" text, "gallons" float, "price_per_gallon" float, "grade" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_maintenance_records_on_user_id" ON "maintenance_records" ("user_id")[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_maintenance_records_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_maintenance_records_on_user_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_maintenance_records_on_vehicle_id" ON "maintenance_records" ("vehicle_id")[0m
+  [1m[35m (0.1ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "password_digest" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "make" varchar(255), "model" varchar(255), "year" integer, "created_at" datetime, "updated_at" datetime, "user_id" integer) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_vehicles_on_user_id" ON "vehicles" ("user_id")
+  [1m[36m (0.2ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.2ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.1ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140522034601')
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140422233720')[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140426203628')
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140507032111')[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140522024357')
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Unable to load fillup_record, underlying cause No such file to load -- fillup_record 
+
+ /Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `block in require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:232:in `load_dependency'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:348:in `require_or_load'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:307:in `depend_on'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:225:in `require_dependency'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.0/lib/active_record/fixtures.rb:862:in `try_to_load_dependency'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.0/lib/active_record/fixtures.rb:881:in `block in require_fixture_classes'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.0/lib/active_record/fixtures.rb:879:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.0/lib/active_record/fixtures.rb:879:in `require_fixture_classes'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.0/lib/active_record/fixtures.rb:857:in `fixtures'
+/Users/court/Development/mobilemiles/test/test_helper.rb:10:in `<class:TestCase>'
+/Users/court/Development/mobilemiles/test/test_helper.rb:5:in `<top (required)>'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `block in require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:232:in `load_dependency'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/test/helpers/maintenance_record_helper_test.rb:1:in `<top (required)>'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `block in require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:232:in `load_dependency'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/activesupport-4.1.0/lib/active_support/dependencies.rb:247:in `require'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:114:in `block (3 levels) in define'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:114:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:114:in `block (2 levels) in define'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:113:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:113:in `block in define'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:240:in `call'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:240:in `block in execute'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:235:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:235:in `execute'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:179:in `block in invoke_with_call_chain'
+/Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/monitor.rb:211:in `mon_synchronize'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:172:in `invoke_with_call_chain'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:201:in `block in invoke_prerequisites'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:199:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:199:in `invoke_prerequisites'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:178:in `block in invoke_with_call_chain'
+/Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/monitor.rb:211:in `mon_synchronize'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:172:in `invoke_with_call_chain'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:165:in `invoke'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/sub_test_task.rb:20:in `invoke_rake_task'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/railties-4.1.0/lib/rails/test_unit/testing.rake:8:in `block in <top (required)>'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:240:in `call'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:240:in `block in execute'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:235:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:235:in `execute'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:179:in `block in invoke_with_call_chain'
+/Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/monitor.rb:211:in `mon_synchronize'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:172:in `invoke_with_call_chain'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/task.rb:165:in `invoke'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:150:in `invoke_task'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:106:in `block (2 levels) in top_level'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:106:in `each'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:106:in `block in top_level'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:115:in `run_with_threads'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:100:in `top_level'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:78:in `block in run'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:176:in `standard_exception_handling'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/lib/rake/application.rb:75:in `run'
+/Users/court/Development/mobilemiles/vendor/bundle/ruby/2.1.0/gems/rake-10.3.1/bin/rake:33:in `<top (required)>'
+/Users/court/.rvm/gems/ruby-2.1.1/bin/rake:23:in `load'
+/Users/court/.rvm/gems/ruby-2.1.1/bin/rake:23:in `<main>'
+/Users/court/.rvm/gems/ruby-2.1.1/bin/ruby_executable_hooks:15:in `eval'
+/Users/court/.rvm/gems/ruby-2.1.1/bin/ruby_executable_hooks:15:in `<main>'

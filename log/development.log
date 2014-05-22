@@ -24638,3 +24638,199 @@ Processing by FillupsController#index as HTML
   [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
   [1m[35mFillup Load (0.7ms)[0m  SELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1
 Completed 200 OK in 5ms (Views: 0.9ms | ActiveRecord: 1.2ms)
+
+
+Started OPTIONS "/vehicles" for 127.0.0.1 at 2014-05-21 22:54:19 -0500
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:54:19 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (1.9ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.8ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 7ms (Views: 1.5ms | ActiveRecord: 2.7ms)
+
+
+Started OPTIONS "/fillups" for 127.0.0.1 at 2014-05-21 22:54:20 -0500
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 22:54:20 -0500
+Processing by FillupsController#index as HTML
+  [1m[36mUser Load (2.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mFillup Load (1.0ms)[0m  SELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1
+Completed 200 OK in 7ms (Views: 1.1ms | ActiveRecord: 3.0ms)
+
+
+Started OPTIONS "/vehicles" for 127.0.0.1 at 2014-05-21 23:04:55 -0500
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:04:55 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.9ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (1.0ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 6ms (Views: 2.1ms | ActiveRecord: 1.8ms)
+
+
+Started OPTIONS "/fillups" for 127.0.0.1 at 2014-05-21 23:04:57 -0500
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 23:04:57 -0500
+Processing by FillupsController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mFillup Load (0.4ms)[0m  SELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1
+Completed 200 OK in 4ms (Views: 0.7ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 23:05:24 -0500
+Processing by FillupsController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mFillup Load (0.7ms)[0m  SELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1
+Completed 200 OK in 10ms (Views: 6.5ms | ActiveRecord: 1.3ms)
+
+
+Started OPTIONS "/vehicles" for 127.0.0.1 at 2014-05-21 23:15:42 -0500
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:15:42 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.5ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.2ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:16:54 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.8ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 6ms (Views: 2.9ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:17:23 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.6ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.3ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:22:17 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.4ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:22:59 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.6ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.2ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:24:38 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.5ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.0ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:25:04 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.4ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.1ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:25:37 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.6ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 1.3ms)
+
+
+Started OPTIONS "/vehicles" for 127.0.0.1 at 2014-05-21 23:25:51 -0500
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:25:51 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.6ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.4ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:26:13 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.7ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.4ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:27:13 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.5ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.2ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:29:08 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.6ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:29:18 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.5ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.2ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:29:31 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (1.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.6ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:33:35 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.6ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 5ms (Views: 1.7ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:33:51 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.6ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 5ms (Views: 1.2ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:34:01 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.5ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.2ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:34:07 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.7ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 5ms (Views: 1.6ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:35:30 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.5ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.3ms | ActiveRecord: 1.1ms)
+
+
+Started OPTIONS "/vehicles" for 127.0.0.1 at 2014-05-21 23:36:25 -0500
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 23:36:25 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.7ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 1.4ms)
