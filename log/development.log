@@ -23608,3 +23608,1033 @@ Processing by VehiclesController#index as HTML
   [1m[35mUser Load (2.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
   [1m[36mVehicle Load (1.1ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
 Completed 200 OK in 8ms (Views: 1.7ms | ActiveRecord: 3.3ms)
+
+
+Started OPTIONS "/session/" for 127.0.0.1 at 2014-05-19 22:55:36 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (1.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+
+Started POST "/session/" for 127.0.0.1 at 2014-05-19 22:55:37 -0500
+Processing by SessionController#create as HTML
+  Parameters: {"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[35mUser Load (3.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."email" = 'zourtney@gmail.com' LIMIT 1
+Completed 201 Created in 132ms (Views: 0.6ms | ActiveRecord: 7.7ms)
+
+
+Started OPTIONS "/vehicles" for 127.0.0.1 at 2014-05-19 22:55:37 -0500
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-19 22:55:37 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (4.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (1.7ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11
+Completed 200 OK in 29ms (Views: 14.9ms | ActiveRecord: 9.4ms)
+
+
+Started OPTIONS "/vehicles/1" for 127.0.0.1 at 2014-05-19 22:55:39 -0500
+
+
+Started GET "/vehicles/1" for 127.0.0.1 at 2014-05-19 22:55:39 -0500
+Processing by VehiclesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.4ms)[0m  SELECT  "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11 AND "vehicles"."id" = 1 LIMIT 1
+Completed 200 OK in 3ms (Views: 0.4ms | ActiveRecord: 0.9ms)
+
+
+Started POST "/session/" for 127.0.0.1 at 2014-05-19 22:55:47 -0500
+Processing by SessionController#create as HTML
+  Parameters: {"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+Completed 201 Created in 97ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-19 22:55:47 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (1.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.6ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
+Completed 200 OK in 9ms (Views: 4.3ms | ActiveRecord: 1.8ms)
+  [1m[36mActiveRecord::SchemaMigration Load (1.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateMaintenanceRecords (20140521034600)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (62.9ms)[0m  [1mCREATE TABLE "maintenance_records" ("id" serial primary key, "name" character varying(255), "vehicle_id" integer, "mileage" integer, "completed_at" timestamp, "comment" text, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (1.3ms)[0m  CREATE  INDEX  "index_maintenance_records_on_vehicle_id" ON "maintenance_records"  ("vehicle_id")
+  [1m[36mSQL (1.9ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20140521034600"]]
+  [1m[35m (174.9ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddUserRefToMaintenanceRecord (20140521035515)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (3.8ms)[0m  [1mALTER TABLE "maintenance_record" ADD COLUMN "user_id" integer[0m
+PG::UndefinedTable: ERROR:  relation "maintenance_record" does not exist
+: ALTER TABLE "maintenance_record" ADD COLUMN "user_id" integer
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddUserRefToMaintenanceRecord (20140521035714)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (3.4ms)[0m  [1mALTER TABLE "maintenance_records" ADD COLUMN "user_id" integer[0m
+  [1m[35m (5.2ms)[0m  CREATE  INDEX  "index_maintenance_records_on_user_id" ON "maintenance_records"  ("user_id")
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20140521035714"]]
+  [1m[35m (1.1ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+
+Started OPTIONS "/vehicles" for 127.0.0.1 at 2014-05-20 23:00:18 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-20 23:00:19 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (4.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.9ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
+Completed 200 OK in 51ms (Views: 9.1ms | ActiveRecord: 11.4ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-20 23:00:25 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.7ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.9ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
+Completed 200 OK in 6ms (Views: 1.6ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-20 23:00:26 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.9ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (1.0ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
+Completed 200 OK in 6ms (Views: 2.2ms | ActiveRecord: 1.9ms)
+
+
+Started OPTIONS "/session/" for 127.0.0.1 at 2014-05-20 23:00:30 -0500
+
+
+Started POST "/session/" for 127.0.0.1 at 2014-05-20 23:00:30 -0500
+Processing by SessionController#create as HTML
+  Parameters: {"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."email" = 'zourtney@gmail.com' LIMIT 1
+Completed 201 Created in 104ms (Views: 0.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-20 23:00:30 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (1.3ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.6ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11
+Completed 200 OK in 6ms (Views: 1.2ms | ActiveRecord: 1.9ms)
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateFillupRecords (20140521040329)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (5.6ms)[0m  [1mCREATE TABLE "fillup_records" ("id" serial primary key, "gallons" float, "price_per_gallon" float, "grade" character varying(255), "maintenance_record_id" integer, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (1.6ms)[0m  CREATE  INDEX  "index_fillup_records_on_maintenance_record_id" ON "fillup_records"  ("maintenance_record_id")
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20140521040329"]]
+  [1m[35m (1.1ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-20 23:07:13 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (1.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.7ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
+Completed 200 OK in 41ms (Views: 10.0ms | ActiveRecord: 7.5ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-20 23:07:41 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.8ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (1.1ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
+Completed 200 OK in 6ms (Views: 1.5ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-20 23:07:52 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (1.9ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.6ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
+Completed 200 OK in 6ms (Views: 1.3ms | ActiveRecord: 2.5ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-20 23:08:35 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.8ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.7ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-20 23:08:51 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.8ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.8ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-20 23:09:43 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (2.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.7ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
+Completed 200 OK in 6ms (Views: 1.4ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-20 23:09:56 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.7ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.5ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
+Completed 200 OK in 4ms (Views: 1.1ms | ActiveRecord: 1.3ms)
+
+
+Started OPTIONS "/vehicles" for 127.0.0.1 at 2014-05-20 23:12:09 -0500
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-20 23:12:09 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.3ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
+Completed 200 OK in 3ms (Views: 0.8ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-20 23:12:55 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (2.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (1.0ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
+Completed 200 OK in 6ms (Views: 1.4ms | ActiveRecord: 3.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-20 23:13:04 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.9ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (1.5ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
+Completed 200 OK in 6ms (Views: 1.7ms | ActiveRecord: 2.4ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-20 23:13:13 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.6ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.5ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
+Completed 200 OK in 4ms (Views: 0.9ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-20 23:13:20 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.3ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 11[0m
+Completed 200 OK in 3ms (Views: 0.7ms | ActiveRecord: 0.7ms)
+
+
+Started OPTIONS "/fillups" for 127.0.0.1 at 2014-05-20 23:19:45 -0500
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-20 23:19:45 -0500
+
+ActionController::RoutingError (No route matches [GET] "/fillups"):
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  vendor/bundle/ruby/2.1.0railties (4.1.0) lib/rails/rack/logger.rb:38:in `call_app'
+  vendor/bundle/ruby/2.1.0railties (4.1.0) lib/rails/rack/logger.rb:20:in `block in call'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/tagged_logging.rb:26:in `tagged'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/tagged_logging.rb:68:in `tagged'
+  vendor/bundle/ruby/2.1.0railties (4.1.0) lib/rails/rack/logger.rb:20:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/methodoverride.rb:21:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/runtime.rb:17:in `call'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/static.rb:64:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/sendfile.rb:112:in `call'
+  vendor/bundle/ruby/2.1.0railties (4.1.0) lib/rails/engine.rb:514:in `call'
+  vendor/bundle/ruby/2.1.0railties (4.1.0) lib/rails/application.rb:144:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/content_length.rb:14:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/handler/webrick.rb:60:in `service'
+  /Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/webrick/httpserver.rb:138:in `service'
+  /Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/webrick/httpserver.rb:94:in `run'
+  /Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.4ms)
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/routes/_route.html.erb (3.3ms)
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/routes/_table.html.erb (9.6ms)
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (50.6ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-20 23:20:57 -0500
+
+ActionController::RoutingError (uninitialized constant FillupsController):
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/inflector/methods.rb:238:in `const_get'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/inflector/methods.rb:238:in `block in constantize'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/inflector/methods.rb:236:in `each'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/inflector/methods.rb:236:in `inject'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/inflector/methods.rb:236:in `constantize'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/routing/route_set.rb:76:in `controller_reference'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/routing/route_set.rb:66:in `controller'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/routing/route_set.rb:44:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/journey/router.rb:71:in `block in call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/journey/router.rb:59:in `each'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/journey/router.rb:59:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/routing/route_set.rb:676:in `call'
+  vendor/bundle/ruby/2.1.0rack-cors (0.2.9) lib/rack/cors.rb:54:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/etag.rb:23:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/conditionalget.rb:25:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/head.rb:11:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/session/abstract/id.rb:225:in `context'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/session/abstract/id.rb:220:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  vendor/bundle/ruby/2.1.0activerecord (4.1.0) lib/active_record/query_cache.rb:36:in `call'
+  vendor/bundle/ruby/2.1.0activerecord (4.1.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  vendor/bundle/ruby/2.1.0activerecord (4.1.0) lib/active_record/migration.rb:380:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  vendor/bundle/ruby/2.1.0railties (4.1.0) lib/rails/rack/logger.rb:38:in `call_app'
+  vendor/bundle/ruby/2.1.0railties (4.1.0) lib/rails/rack/logger.rb:20:in `block in call'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/tagged_logging.rb:26:in `tagged'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/tagged_logging.rb:68:in `tagged'
+  vendor/bundle/ruby/2.1.0railties (4.1.0) lib/rails/rack/logger.rb:20:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/methodoverride.rb:21:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/runtime.rb:17:in `call'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/static.rb:64:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/sendfile.rb:112:in `call'
+  vendor/bundle/ruby/2.1.0railties (4.1.0) lib/rails/engine.rb:514:in `call'
+  vendor/bundle/ruby/2.1.0railties (4.1.0) lib/rails/application.rb:144:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/content_length.rb:14:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/handler/webrick.rb:60:in `service'
+  /Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/webrick/httpserver.rb:138:in `service'
+  /Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/webrick/httpserver.rb:94:in `run'
+  /Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.2ms)
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/routes/_route.html.erb (3.6ms)
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.2ms)
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (42.9ms)
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to RenameFillupRecordToFillups (20140521042502)
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to RenameFillupRecordToFillups (20140521042502)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (1.9ms)[0m  [1mALTER TABLE "fillup_record" RENAME TO "fillups"[0m
+PG::UndefinedTable: ERROR:  relation "fillup_record" does not exist
+: ALTER TABLE "fillup_record" RENAME TO "fillups"
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to RenameFillupRecordToFillups (20140521042502)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (1.2ms)[0m  [1mALTER TABLE "fillup_records" RENAME TO "fillups"[0m
+  [1m[35m (1.1ms)[0m  ALTER TABLE "fillup_records_id_seq" RENAME TO "fillups_id_seq"
+  [1m[36m (1.5ms)[0m  [1mALTER INDEX "index_fillup_records_on_maintenance_record_id" RENAME TO "index_fillups_on_maintenance_record_id"[0m
+  [1m[35mSQL (0.8ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20140521042502"]]
+  [1m[36m (1.0ms)[0m  [1mCOMMIT[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-20 23:28:33 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+LoadError (Unable to autoload constant FillupsController, expected /Users/court/Development/mobilemiles/app/controllers/fillups_controller.rb to define it):
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/dependencies.rb:481:in `load_missing_constant'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/dependencies.rb:180:in `const_missing'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/inflector/methods.rb:238:in `const_get'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/inflector/methods.rb:238:in `block in constantize'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/inflector/methods.rb:236:in `each'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/inflector/methods.rb:236:in `inject'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/inflector/methods.rb:236:in `constantize'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/dependencies.rb:552:in `get'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/dependencies.rb:583:in `constantize'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/routing/route_set.rb:76:in `controller_reference'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/routing/route_set.rb:66:in `controller'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/routing/route_set.rb:44:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/journey/router.rb:71:in `block in call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/journey/router.rb:59:in `each'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/journey/router.rb:59:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/routing/route_set.rb:676:in `call'
+  vendor/bundle/ruby/2.1.0rack-cors (0.2.9) lib/rack/cors.rb:54:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/etag.rb:23:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/conditionalget.rb:25:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/head.rb:11:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/session/abstract/id.rb:225:in `context'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/session/abstract/id.rb:220:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  vendor/bundle/ruby/2.1.0activerecord (4.1.0) lib/active_record/query_cache.rb:36:in `call'
+  vendor/bundle/ruby/2.1.0activerecord (4.1.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  vendor/bundle/ruby/2.1.0activerecord (4.1.0) lib/active_record/migration.rb:380:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  vendor/bundle/ruby/2.1.0railties (4.1.0) lib/rails/rack/logger.rb:38:in `call_app'
+  vendor/bundle/ruby/2.1.0railties (4.1.0) lib/rails/rack/logger.rb:20:in `block in call'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/tagged_logging.rb:26:in `tagged'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/tagged_logging.rb:68:in `tagged'
+  vendor/bundle/ruby/2.1.0railties (4.1.0) lib/rails/rack/logger.rb:20:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/methodoverride.rb:21:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/runtime.rb:17:in `call'
+  vendor/bundle/ruby/2.1.0activesupport (4.1.0) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  vendor/bundle/ruby/2.1.0actionpack (4.1.0) lib/action_dispatch/middleware/static.rb:64:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/sendfile.rb:112:in `call'
+  vendor/bundle/ruby/2.1.0railties (4.1.0) lib/rails/engine.rb:514:in `call'
+  vendor/bundle/ruby/2.1.0railties (4.1.0) lib/rails/application.rb:144:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/content_length.rb:14:in `call'
+  vendor/bundle/ruby/2.1.0rack (1.5.2) lib/rack/handler/webrick.rb:60:in `service'
+  /Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/webrick/httpserver.rb:138:in `service'
+  /Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/webrick/httpserver.rb:94:in `run'
+  /Users/court/.rvm/rubies/ruby-2.1.1/lib/ruby/2.1.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/rescues/_source.erb (0.7ms)
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.4ms)
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (19.7ms)
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (43.2ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-20 23:29:24 -0500
+Processing by FillupsController#index as HTML
+Completed 500 Internal Server Error in 6ms
+
+NoMethodError (undefined method `id' for nil:NilClass):
+  app/controllers/fillups_controller.rb:3:in `index'
+
+
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.1ms)
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.2ms)
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (20.3ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-20 23:29:42 -0500
+Processing by FillupsController#index as HTML
+  [1m[35mUser Load (1.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mFillup Load (2.5ms)[0m  [1mSELECT "fillups".* FROM "fillups"  WHERE "fillups"."user_id" = 11[0m
+PG::UndefinedColumn: ERROR:  column fillups.user_id does not exist
+LINE 1: SELECT "fillups".* FROM "fillups"  WHERE "fillups"."user_id"...
+                                                 ^
+: SELECT "fillups".* FROM "fillups"  WHERE "fillups"."user_id" = 11
+Completed 500 Internal Server Error in 23ms
+
+ActiveRecord::StatementInvalid (PG::UndefinedColumn: ERROR:  column fillups.user_id does not exist
+LINE 1: SELECT "fillups".* FROM "fillups"  WHERE "fillups"."user_id"...
+                                                 ^
+: SELECT "fillups".* FROM "fillups"  WHERE "fillups"."user_id" = 11):
+  app/controllers/fillups_controller.rb:4:in `index'
+
+
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/rescues/_source.erb (0.9ms)
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.5ms)
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.2ms)
+  Rendered vendor/bundle/ruby/2.1.0/gems/actionpack-4.1.0/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (20.9ms)
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateMaintenanceRecords (20140522034600)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (18.4ms)[0m  [1mCREATE TABLE "maintenance_records" ("id" serial primary key, "name" character varying(255), "vehicle_id" integer, "mileage" integer, "completed_at" timestamp, "comment" text, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (1.0ms)[0m  CREATE  INDEX  "index_maintenance_records_on_vehicle_id" ON "maintenance_records"  ("vehicle_id")
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20140522034600"]]
+  [1m[35m (1.2ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddUserRefToMaintenanceRecord (20140522034601)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.7ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20140522034601"]]
+  [1m[35m (2.1ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mSQL (1.4ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (16.5ms)[0m  CREATE TABLE "maintenance_records" ("id" serial primary key, "name" character varying(255), "vehicle_id" integer, "mileage" integer, "completed_at" timestamp, "comment" text, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (1.4ms)[0m  [1mCREATE  INDEX  "index_maintenance_records_on_vehicle_id" ON "maintenance_records" USING btree ("vehicle_id")[0m
+  [1m[35m (7.8ms)[0m  CREATE TABLE "users" ("id" serial primary key, "email" character varying(255), "password_digest" character varying(255), "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (5.2ms)[0m  [1mCREATE TABLE "vehicles" ("id" serial primary key, "name" character varying(255), "make" character varying(255), "model" character varying(255), "year" integer, "created_at" timestamp, "updated_at" timestamp, "user_id" integer) [0m
+  [1m[35m (1.3ms)[0m  CREATE  INDEX  "index_vehicles_on_user_id" ON "vehicles" USING btree ("user_id")
+  [1m[36m (1.5ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) [0m
+  [1m[35m (2.0ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36m (0.6ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.7ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140522034601')
+  [1m[36m (0.5ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140422233720')[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140426203628')
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140507032111')[0m
+  [1m[35m (0.4ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140522034600')
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateMaintenanceRecords (20140522024357)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (7.1ms)[0m  [1mCREATE TABLE "maintenance_records" ("id" serial primary key, "type" character varying(255), "name" character varying(255), "vehicle_id" integer, "user_id" integer, "mileage" integer, "completed_at" timestamp, "comment" text, "gallons" float, "price_per_gallon" float, "grade" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (1.0ms)[0m  CREATE  INDEX  "index_maintenance_records_on_vehicle_id" ON "maintenance_records"  ("vehicle_id")
+  [1m[36m (1.5ms)[0m  [1mCREATE  INDEX  "index_maintenance_records_on_user_id" ON "maintenance_records"  ("user_id")[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20140522024357"]]
+  [1m[36m (1.1ms)[0m  [1mCOMMIT[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+
+
+Started OPTIONS "/vehicles" for 127.0.0.1 at 2014-05-21 21:46:46 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 21:46:46 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (3.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  Rendered text template (0.0ms)
+Filter chain halted as :validate_token rendered or redirected
+Completed 401 Unauthorized in 47ms (Views: 8.5ms | ActiveRecord: 6.5ms)
+
+
+Started OPTIONS "/session/" for 127.0.0.1 at 2014-05-21 21:46:49 -0500
+
+
+Started POST "/session/" for 127.0.0.1 at 2014-05-21 21:46:49 -0500
+Processing by SessionController#create as HTML
+  Parameters: {"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+Completed 401 Unauthorized in 3ms (Views: 0.3ms | ActiveRecord: 1.2ms)
+
+
+Started POST "/session/" for 127.0.0.1 at 2014-05-21 21:46:52 -0500
+Processing by SessionController#create as HTML
+  Parameters: {"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[35mUser Load (0.7ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."email" = 'zourtney@gmail.com' LIMIT 1
+Completed 401 Unauthorized in 2ms (Views: 0.2ms | ActiveRecord: 0.7ms)
+
+
+Started OPTIONS "/users" for 127.0.0.1 at 2014-05-21 21:46:56 -0500
+
+
+Started POST "/users" for 127.0.0.1 at 2014-05-21 21:46:56 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"user"=>{"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mUser Exists (0.4ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mSQL (5.3ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", "2014-05-22 02:46:57.057919"], ["email", "zourtney@gmail.com"], ["password_digest", "$2a$10$VJaqz2DPlgsyHyDLmbMNLutwkbMnKMzUx8gMrsU5oLHWXy/Esgq/O"], ["updated_at", "2014-05-22 02:46:57.057919"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+Completed 201 Created in 133ms (Views: 0.4ms | ActiveRecord: 6.6ms)
+
+
+Started POST "/session/" for 127.0.0.1 at 2014-05-21 21:46:57 -0500
+Processing by SessionController#create as HTML
+  Parameters: {"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+Completed 201 Created in 103ms (Views: 0.8ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 21:46:57 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.6ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (1.9ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 7ms (Views: 0.9ms | ActiveRecord: 2.5ms)
+
+
+Started OPTIONS "/vehicles" for 127.0.0.1 at 2014-05-21 21:47:10 -0500
+
+
+Started POST "/vehicles" for 127.0.0.1 at 2014-05-21 21:47:10 -0500
+Processing by VehiclesController#create as HTML
+  Parameters: {"name"=>"Focus", "year"=>2004, "make"=>"Ford", "model"=>"Focus SVT", "vehicle"=>{"name"=>"Focus", "make"=>"Ford", "model"=>"Focus SVT", "year"=>2004}}
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (9.6ms)[0m  INSERT INTO "vehicles" ("created_at", "make", "model", "name", "updated_at", "user_id", "year") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"  [["created_at", "2014-05-22 02:47:10.939587"], ["make", "Ford"], ["model", "Focus SVT"], ["name", "Focus"], ["updated_at", "2014-05-22 02:47:10.939587"], ["user_id", 1], ["year", 2004]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 21ms (Views: 0.5ms | ActiveRecord: 14.4ms)
+
+
+Started OPTIONS "/vehicles/1" for 127.0.0.1 at 2014-05-21 21:47:11 -0500
+
+
+Started GET "/vehicles/1" for 127.0.0.1 at 2014-05-21 21:47:11 -0500
+Processing by VehiclesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (1.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.9ms)[0m  [1mSELECT  "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1 AND "vehicles"."id" = 1 LIMIT 1[0m
+Completed 200 OK in 6ms (Views: 0.5ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 21:47:14 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.7ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.6ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/vehicles/1" for 127.0.0.1 at 2014-05-21 21:47:15 -0500
+Processing by VehiclesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.7ms)[0m  [1mSELECT  "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1 AND "vehicles"."id" = 1 LIMIT 1[0m
+Completed 200 OK in 5ms (Views: 0.7ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 21:47:16 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.6ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (1.0ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 7ms (Views: 2.6ms | ActiveRecord: 1.6ms)
+
+
+Started OPTIONS "/fillups" for 127.0.0.1 at 2014-05-21 21:47:20 -0500
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 21:47:20 -0500
+Processing by FillupsController#index as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mFillup Load (1.4ms)[0m  [1mSELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1[0m
+Completed 200 OK in 38ms (Views: 1.1ms | ActiveRecord: 5.7ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 21:47:23 -0500
+Processing by FillupsController#index as HTML
+  [1m[35mUser Load (0.6ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mFillup Load (0.6ms)[0m  [1mSELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1[0m
+Completed 200 OK in 4ms (Views: 0.6ms | ActiveRecord: 1.2ms)
+
+
+Started OPTIONS "/fillups" for 127.0.0.1 at 2014-05-21 22:11:45 -0500
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 22:11:45 -0500
+Processing by FillupsController#index as HTML
+  [1m[35mUser Load (0.7ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mFillup Load (1.5ms)[0m  [1mSELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1[0m
+Completed 200 OK in 6ms (Views: 1.1ms | ActiveRecord: 2.2ms)
+
+
+Started OPTIONS "/vehicles" for 127.0.0.1 at 2014-05-21 22:11:46 -0500
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:11:46 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.6ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.6ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:11:50 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.7ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.7ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 5ms (Views: 1.2ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:12:10 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.6ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.9ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:12:13 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (1.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (1.4ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 7ms (Views: 1.5ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:12:17 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.8ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.7ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:12:18 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.6ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 6ms (Views: 1.8ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:12:42 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.8ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.6ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 22:12:45 -0500
+Processing by FillupsController#index as HTML
+  [1m[35mUser Load (0.7ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mFillup Load (1.0ms)[0m  [1mSELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1[0m
+Completed 200 OK in 5ms (Views: 0.9ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 22:14:02 -0500
+Processing by FillupsController#index as HTML
+  [1m[35mUser Load (0.6ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mFillup Load (0.8ms)[0m  [1mSELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1[0m
+Completed 200 OK in 4ms (Views: 0.9ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 22:14:35 -0500
+Processing by FillupsController#index as HTML
+  [1m[35mUser Load (1.6ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mFillup Load (1.0ms)[0m  [1mSELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1[0m
+Completed 200 OK in 6ms (Views: 0.9ms | ActiveRecord: 2.6ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 22:15:10 -0500
+Processing by FillupsController#index as HTML
+  [1m[35mUser Load (0.7ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mFillup Load (0.7ms)[0m  [1mSELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1[0m
+Completed 200 OK in 4ms (Views: 1.1ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:15:11 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (1.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.5ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:15:13 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.6ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 5ms (Views: 1.7ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:15:25 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (1.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.5ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:15:26 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.6ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.5ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 4ms (Views: 1.1ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:15:27 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.8ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 6ms (Views: 1.9ms | ActiveRecord: 1.8ms)
+
+
+Started OPTIONS "/vehicles/1" for 127.0.0.1 at 2014-05-21 22:15:29 -0500
+
+
+Started GET "/vehicles/1" for 127.0.0.1 at 2014-05-21 22:15:29 -0500
+Processing by VehiclesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.5ms)[0m  [1mSELECT  "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1 AND "vehicles"."id" = 1 LIMIT 1[0m
+Completed 200 OK in 3ms (Views: 0.4ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/vehicles/1" for 127.0.0.1 at 2014-05-21 22:15:54 -0500
+Processing by VehiclesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.6ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.8ms)[0m  [1mSELECT  "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1 AND "vehicles"."id" = 1 LIMIT 1[0m
+Completed 200 OK in 5ms (Views: 0.5ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:15:54 -0500
+Processing by VehiclesController#index as HTML
+  Rendered text template (0.0ms)
+Filter chain halted as :validate_token rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:15:54 -0500
+Processing by VehiclesController#index as HTML
+  Rendered text template (0.0ms)
+Filter chain halted as :validate_token rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:15:54 -0500
+Processing by VehiclesController#index as HTML
+  Rendered text template (0.0ms)
+Filter chain halted as :validate_token rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:15:55 -0500
+Processing by VehiclesController#index as HTML
+  Rendered text template (0.0ms)
+Filter chain halted as :validate_token rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:16:03 -0500
+Processing by VehiclesController#index as HTML
+  Rendered text template (0.0ms)
+Filter chain halted as :validate_token rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:16:36 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.8ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.8ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:16:37 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.7ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.6ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 5ms (Views: 1.6ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:16:43 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (0.7ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.9ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 7ms (Views: 1.7ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:16:51 -0500
+Processing by VehiclesController#index as HTML
+  Rendered text template (0.0ms)
+Filter chain halted as :validate_token rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.7ms | ActiveRecord: 0.0ms)
+
+
+Started OPTIONS "/session/" for 127.0.0.1 at 2014-05-21 22:19:47 -0500
+
+
+Started POST "/session/" for 127.0.0.1 at 2014-05-21 22:19:47 -0500
+Processing by SessionController#create as HTML
+  Parameters: {"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[35mUser Load (20.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."email" = 'zourtney@gmail.com' LIMIT 1
+Completed 201 Created in 128ms (Views: 1.9ms | ActiveRecord: 20.3ms)
+
+
+Started OPTIONS "/vehicles" for 127.0.0.1 at 2014-05-21 22:19:47 -0500
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:19:47 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (2.3ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.7ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 7ms (Views: 1.6ms | ActiveRecord: 3.0ms)
+
+
+Started OPTIONS "/vehicles/1" for 127.0.0.1 at 2014-05-21 22:19:49 -0500
+
+
+Started GET "/vehicles/1" for 127.0.0.1 at 2014-05-21 22:19:49 -0500
+Processing by VehiclesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.6ms)[0m  SELECT  "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1 AND "vehicles"."id" = 1 LIMIT 1
+Completed 200 OK in 4ms (Views: 0.4ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:19:50 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (1.5ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 6ms (Views: 1.3ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:19:54 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (1.0ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 5ms (Views: 1.2ms | ActiveRecord: 2.0ms)
+
+
+Started OPTIONS "/fillups" for 127.0.0.1 at 2014-05-21 22:20:00 -0500
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 22:20:00 -0500
+Processing by FillupsController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mFillup Load (0.7ms)[0m  SELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1
+Completed 200 OK in 4ms (Views: 0.8ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 22:21:12 -0500
+Processing by FillupsController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mFillup Load (0.5ms)[0m  SELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1
+Completed 200 OK in 4ms (Views: 0.7ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 22:21:30 -0500
+Processing by FillupsController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mFillup Load (0.7ms)[0m  SELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.0ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 22:22:02 -0500
+Processing by FillupsController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mFillup Load (0.8ms)[0m  SELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1
+Completed 200 OK in 5ms (Views: 1.0ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 22:22:18 -0500
+Processing by FillupsController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mFillup Load (0.6ms)[0m  SELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1
+Completed 200 OK in 4ms (Views: 0.8ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 22:23:01 -0500
+Processing by FillupsController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mFillup Load (0.6ms)[0m  SELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1
+Completed 200 OK in 4ms (Views: 0.8ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 22:23:09 -0500
+Processing by FillupsController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mFillup Load (0.5ms)[0m  SELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1
+Completed 200 OK in 4ms (Views: 0.7ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 22:23:21 -0500
+Processing by FillupsController#index as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mFillup Load (0.6ms)[0m  SELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1
+Completed 200 OK in 4ms (Views: 0.8ms | ActiveRecord: 1.4ms)
+
+
+Started OPTIONS "/vehicles" for 127.0.0.1 at 2014-05-21 22:38:30 -0500
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:38:30 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.3ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 3ms (Views: 0.8ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:40:10 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.5ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.3ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:41:40 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.4ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.2ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:41:55 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.6ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.3ms | ActiveRecord: 1.2ms)
+
+
+Started OPTIONS "/session/" for 127.0.0.1 at 2014-05-21 22:42:00 -0500
+
+
+Started POST "/session/" for 127.0.0.1 at 2014-05-21 22:42:00 -0500
+Processing by SessionController#create as HTML
+  Parameters: {"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+Completed 201 Created in 94ms (Views: 0.5ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:42:00 -0500
+Processing by VehiclesController#index as HTML
+  [1m[35mUser Load (1.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1
+  [1m[36mVehicle Load (0.8ms)[0m  [1mSELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1[0m
+Completed 200 OK in 6ms (Views: 1.2ms | ActiveRecord: 2.2ms)
+
+
+Started POST "/session/" for 127.0.0.1 at 2014-05-21 22:42:45 -0500
+Processing by SessionController#create as HTML
+  Parameters: {"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"zourtney@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."email" = 'zourtney@gmail.com' LIMIT 1
+Completed 201 Created in 96ms (Views: 0.4ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:42:45 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.7ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 4ms (Views: 1.2ms | ActiveRecord: 1.3ms)
+
+
+Started OPTIONS "/vehicles/1" for 127.0.0.1 at 2014-05-21 22:42:46 -0500
+
+
+Started GET "/vehicles/1" for 127.0.0.1 at 2014-05-21 22:42:46 -0500
+Processing by VehiclesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.4ms)[0m  SELECT  "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1 AND "vehicles"."id" = 1 LIMIT 1
+Completed 200 OK in 4ms (Views: 0.5ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:42:47 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (2.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (2.5ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 9ms (Views: 2.6ms | ActiveRecord: 4.6ms)
+
+
+Started OPTIONS "/fillups" for 127.0.0.1 at 2014-05-21 22:42:49 -0500
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 22:42:49 -0500
+Processing by FillupsController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mFillup Load (1.2ms)[0m  SELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1
+Completed 200 OK in 6ms (Views: 1.1ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:45:20 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (1.0ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:45:49 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.3ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 3ms (Views: 0.9ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/vehicles/1" for 127.0.0.1 at 2014-05-21 22:45:52 -0500
+Processing by VehiclesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (1.3ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.7ms)[0m  SELECT  "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1 AND "vehicles"."id" = 1 LIMIT 1
+Completed 200 OK in 6ms (Views: 0.6ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2014-05-21 22:46:06 -0500
+Processing by VehiclesController#index as HTML
+  [1m[36mUser Load (2.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mVehicle Load (0.6ms)[0m  SELECT "vehicles".* FROM "vehicles"  WHERE "vehicles"."user_id" = 1
+Completed 200 OK in 6ms (Views: 1.3ms | ActiveRecord: 2.7ms)
+
+
+Started GET "/fillups" for 127.0.0.1 at 2014-05-21 22:46:09 -0500
+Processing by FillupsController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1 AND "users"."email" = 'zourtney@gmail.com' LIMIT 1[0m
+  [1m[35mFillup Load (0.7ms)[0m  SELECT "maintenance_records".* FROM "maintenance_records"  WHERE "maintenance_records"."type" IN ('Fillup') AND "maintenance_records"."user_id" = 1
+Completed 200 OK in 5ms (Views: 0.9ms | ActiveRecord: 1.2ms)

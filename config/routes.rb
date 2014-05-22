@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+
   root 'session#index'
 
   resources :vehicles
   resources :users
+  resources :fillups
   
   resources :session
   delete 'session', to: 'session#destroy'   # override "DELETE /session/:id' with just 'DELETE /session'

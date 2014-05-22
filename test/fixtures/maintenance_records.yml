@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  name: MyString
+  vehicle_id: 
+  user_id: 
+  mileage: 1
+  completed_at: 2014-05-21 21:44:22
+  comment: MyText
+  gallons: 1.5
+  price_per_gallon: 1.5
+  grade: MyString
+
+two:
+  type: 
+  name: MyString
+  vehicle_id: 
+  user_id: 
+  mileage: 1
+  completed_at: 2014-05-21 21:44:22
+  comment: MyText
+  gallons: 1.5
+  price_per_gallon: 1.5
+  grade: MyString

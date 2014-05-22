@@ -1,0 +1,2 @@
+class Fillup < MaintenanceRecord
+end

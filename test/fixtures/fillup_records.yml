@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  gallons: 1.5
+  price_per_gallon: 1.5
+  grade: MyString
+  maintenance_record_id: 
+
+two:
+  gallons: 1.5
+  price_per_gallon: 1.5
+  grade: MyString
+  maintenance_record_id: 

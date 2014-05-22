@@ -11,10 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140507032111) do
+ActiveRecord::Schema.define(version: 20140522034601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "maintenance_records", force: true do |t|
+    t.string   "type"
+    t.string   "name"
+    t.integer  "vehicle_id"
+    t.integer  "user_id"
+    t.integer  "mileage"
+    t.datetime "completed_at"
+    t.text     "comment"
+    t.float    "gallons"
+    t.float    "price_per_gallon"
+    t.string   "grade"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "maintenance_records", ["user_id"], name: "index_maintenance_records_on_user_id", using: :btree
+  add_index "maintenance_records", ["vehicle_id"], name: "index_maintenance_records_on_vehicle_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email"

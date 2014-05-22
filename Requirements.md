@@ -18,8 +18,8 @@ long
 is_favorite
 
 
-Maintenance
------------
+MaintenanceRecord
+-----------------
 name
 vehicle
 mileage
@@ -28,7 +28,7 @@ date
 comment
 
 
-Fillups [extends Maintenance]
+Fillups [extends MaintenanceRecord]
 -----------------------------
 gallons
 price_per_gallon
@@ -42,7 +42,7 @@ name
 
 Alerts
 ------
-maintenance_type
+maintenance_record_type
 mileage
 date
 reminder_type

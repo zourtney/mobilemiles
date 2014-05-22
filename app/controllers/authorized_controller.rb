@@ -15,13 +15,6 @@ private
       end
 
       #TODO: check token expiration
-
-      # puts user
-      # puts payload['user_id']
-      # puts payload['email']
-      # puts session[:user_id]
-      # puts header
-      #user = User.find_by_email(payload[9][:user_id])
     rescue
       render nothing: true, status: :unauthorized
     end
