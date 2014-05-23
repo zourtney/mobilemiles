@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :vehicles
   resources :users
-  resources :fillups
+  resources :fillups, controller: 'maintenance_records', type: 'Fillup' 
   
   resources :session
   delete 'session', to: 'session#destroy'   # override "DELETE /session/:id' with just 'DELETE /session'

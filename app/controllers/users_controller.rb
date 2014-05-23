@@ -9,18 +9,6 @@ class UsersController < ApplicationController
     render :json => @user
   end
 
-  # For some reason (I'm giving up for now), the username and password must be
-  # sent in through a nested `user` object. So the JSON request should look
-  # something like:
-  #   {
-  #     "authenticity_token": "oeuidhtnrcfyp.o7qjk8iuceohqjkx=",
-  #     "user": {
-  #       "email": "zourtney@gmail.com",
-  #       "password": "aoesunth",
-  #       "password_confirmation": "aoeusnth"
-  #     }
-  #   }
-  #
   def create
     @user = User.new(user_params)
     if @user.save
