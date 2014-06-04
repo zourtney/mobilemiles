@@ -18,3 +18,5 @@
 /vendor/bundle/
 
 .DS_Store
+
+/log/development.log
