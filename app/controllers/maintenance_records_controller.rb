@@ -44,7 +44,13 @@ class MaintenanceRecordsController < AuthorizedController
     end
   end
 
-  def delete
+  def destroy
+    record = find_record
+    if record.destroy
+      render :json => {}, :status => 200
+    else
+      render :json => { error: 'Failed to destroy' }, :status => 500
+    end
   end
 
 private
