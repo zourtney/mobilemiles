@@ -18,12 +18,10 @@ class MaintenanceRecordsController < AuthorizedController
       render :json => { error: 'Invalid vehicle' }, :status => :bad_request
     else
       record = type_class.new(maintenance_record_params)
+      
       record.user_id = @user.id
-
-      if not params[:completed_at]
-        record.completed_at = Time.now
-      end
-
+      record.completed_at = params[:completed_at] ? Time.at(params[:completed_at] / 1000) : Time.now
+      
       record.save
       render :json => record
     end
@@ -33,10 +31,15 @@ class MaintenanceRecordsController < AuthorizedController
     record = find_record
     if not record
       render :json => { error: 'Record not found' }, :status => :not_found
+    elsif not find_vehicle
+      render :json => { error: 'Invalid vehicle' }, :status => :bad_request
     else
-      if not find_vehicle
-        render :json => { error: 'Invalid vehicle' }, :status => :bad_request
-      elsif not record.update(maintenance_record_params)
+      data = maintenance_record_params
+
+      # Parse 'completed_at' time to a Time object
+      data['completed_at'] = Time.at(data['completed_at'] / 1000)
+
+      if not record.update(data)
         render :json => { error: 'Failed to update record' }, :status => 500
       else
         render :json => record
