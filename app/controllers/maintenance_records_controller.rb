@@ -1,6 +1,11 @@
 class MaintenanceRecordsController < AuthorizedController
   def index
-    records = type_class.where(user_id: @user.id)
+    #TODO: (very soon) allow a "count_only" mode -- all-around faster!!
+    if params[:vehicle_id]
+      records = type_class.where(user_id: @user.id, vehicle_id: params[:vehicle_id])
+    else
+      records = type_class.where(user_id: @user.id)
+    end
     render :json => records
   end
 
