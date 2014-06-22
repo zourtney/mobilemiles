@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140610032100) do
+ActiveRecord::Schema.define(version: 20140622023702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,9 @@ ActiveRecord::Schema.define(version: 20140610032100) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "price"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "google_place"
   end
 
   add_index "maintenance_records", ["user_id"], name: "index_maintenance_records_on_user_id", using: :btree

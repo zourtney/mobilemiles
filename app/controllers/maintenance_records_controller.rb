@@ -70,6 +70,6 @@ private
   end
 
   def maintenance_record_params
-    params.require(:maintenance_record).permit(:name, :vehicle_id, :gallons, :price_per_gallon, :grade, :mileage, :price, :completed_at, :comment)
+    params.require(:maintenance_record).permit(:name, :vehicle_id, :gallons, :price_per_gallon, :grade, :mileage, :price, :completed_at, :comment, :latitude, :longitude, :google_place)
   end
 end
