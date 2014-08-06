@@ -1,64 +1,20 @@
-<!DOCTYPE html>
-<html>
+---
+layout: default
+---
 
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Mobilemiles : Track fuel consumption, oil changes, and more -- straight from your phone">
+<div class="home">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+  <h1>Posts</h1>
 
-    <title>Mobilemiles</title>
-  </head>
+  <ul class="posts">
+    {% for post in site.posts %}
+      <li>
+        <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
 
-  <body>
+  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/zourtney/mobilemiles">View on GitHub</a>
-
-          <h1 id="project_title">Mobilemiles</h1>
-          <h2 id="project_tagline">Track fuel consumption, oil changes, and more -- straight from your phone</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/zourtney/mobilemiles/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/zourtney/mobilemiles/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>
-<a name="mobilemiles" class="anchor" href="#mobilemiles"><span class="octicon octicon-link"></span></a>Mobilemiles</h1>
-
-<p><a href="https://travis-ci.org/zourtney/mobilemiles"><img src="https://travis-ci.org/zourtney/mobilemiles.svg" alt="Build Status"></a></p>
-
-<p>Mobilemiles is a simple application for tracking vehicle maintenance and fill-up statistics. Originally bred out of a simple web interface for a Google Spreadsheet to track gas mileage, this latest version harnesses the power of Ruby and modern web application technologies.</p>
-
-<h2>
-<a name="official-webapp" class="anchor" href="#official-webapp"><span class="octicon octicon-link"></span></a>Official webapp</h2>
-
-<p>A full-featured webapp is being built out in conjunction with this revision of the API. A hosted version is available on <a href="http://mobilemiles-ui.herokuapp.com/">mobilemiles-ui.herokuapp.com</a>. Full source code for that project is also available on my <a href="https://github.com/zourtney/mobilemiles-ui">mobilemiles-ui repo</a>.</p>
-
-<h2>
-<a name="previous-version" class="anchor" href="#previous-version"><span class="octicon octicon-link"></span></a>Previous version</h2>
-
-<p>The previous version has been deprecated, but will continue to be hosted at <a href="http://gas.randomland.net">gas.randomland.net</a>. The source can be found in the <a href="https://github.com/zourtney/mobilemiles/tree/1.0">1.0 tag</a> of this project.</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Mobilemiles maintained by <a href="https://github.com/zourtney">zourtney</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
-  </body>
-</html>
+</div>
