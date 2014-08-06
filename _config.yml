@@ -2,7 +2,7 @@
 title: Mobilemiles
 version: 2.0-beta
 email: zourtney@gmail.com
-description: "A simple, open source tool for tracking fuel consumption, oil changes and more -- straight from your mobile device."
+description: "Mobilemiles is a simple, open source tool for tracking fuel consumption, oil changes and more -- straight from your mobile device."
 baseurl: "/mobilemiles"
 url: "http://zourtney.github.io/mobilemiles"
 twitter_username: zourtney
@@ -11,3 +11,4 @@ github_username:  zourtney
 # Build settings
 markdown: kramdown
 permalink: pretty
+

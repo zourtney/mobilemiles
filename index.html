@@ -5,9 +5,18 @@ layout: default
 <div class="home">
 
   <h1>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</h1>
-  <h3>{{ site.version }}</h3>
+  <h2>{{ site.version }}</h2>
 
   <p class="text">{{ site.description }}</p>
+
+  <div class="home-links-primary">
+    <a href="http://mobilemiles-ui.herokuapp.com" class="home-link hosted-ui">Enter</a>
+  </div>
+
+  <div class="home-links-secondary">
+    <a href="https://github.com/zourtney/mobilemiles" class="home-link src-api">API on GitHub</a>
+    <a href="https://github.com/zourtney/mobilemiles-ui" class="home-link src-ui">UI on GitHub</a>
+  </div>
 
 
   <!--<h1>Posts</h1>
