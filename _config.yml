@@ -1,5 +1,6 @@
 # Site settings
 title: Mobilemiles
+version: 2.0-beta
 email: zourtney@gmail.com
 description: "A simple, open source tool for tracking fuel consumption, oil changes and more -- straight from your mobile device."
 baseurl: "/mobilemiles"
