@@ -6,22 +6,35 @@ h1 {
   font-size: 48px;
   font-weight: 100;
 }
+
 h2 {
   font-weight: 200;
 }
 
+a {
+  font-weight: 600;
+}
+
 a, .btn.btn-link {
-  color: #aaa;
+  color: #555;
   &:hover,
   &:active,
   &:focus {
-    color: white;
+    color: black;
   }
 }
 
-a {
-  font-weight: 500;
+body.marketing {
+  a, .btn.btn-link {
+    color: #aaa;
+    &:hover,
+    &:active,
+    &:focus {
+      color: white;
+    }
+  }
 }
+
 
 
 @import "colors";

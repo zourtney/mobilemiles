@@ -1,20 +1,42 @@
 .navbar {
-  background: #444;
+  background: $bg-light-nav;
   border-radius: 0;
-  border-bottom: 1px solid $bg-dark-pin-stripe;
+  border-bottom: 1px solid $bg-light-pin-stripe;
 
   a {
     font-weight: 300;
   }
 
   li {
-    border-right: 1px solid #555;
+    border-right: 1px solid $fg-light-nav;
 
     a {
       &:hover,
       &:active,
       &:focus {
-        background: #555;
+        background: $fg-light-nav;
+      }
+    }
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+}
+
+
+body.marketing .navbar {
+  background: $bg-dark-nav;
+  border-bottom: 1px solid $bg-dark-pin-stripe;
+
+  li {
+    border-right: 1px solid $fg-dark-nav;
+
+    a {
+      &:hover,
+      &:active,
+      &:focus {
+        background: $fg-dark-nav;
       }
     }
 
