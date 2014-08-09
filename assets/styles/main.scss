@@ -2,6 +2,9 @@
 
 ---
 
+//
+// Headings
+//
 h1 {
   font-size: 48px;
   font-weight: 100;
@@ -11,6 +14,10 @@ h2 {
   font-weight: 200;
 }
 
+
+//
+// Links
+//
 a {
   font-weight: 600;
 }
@@ -24,19 +31,31 @@ a, .btn.btn-link {
   }
 }
 
+.text-muted a,
+.text-muted .btn.btn-link {
+  color: #777;
+}
+
 body.marketing {
   a, .btn.btn-link {
-    color: #aaa;
+    color: #ccc;
     &:hover,
     &:active,
     &:focus {
       color: white;
     }
   }
+
+  .text-muted a,
+  .text-muted .btn.btn-link {
+    color: #aaa
+  }
 }
 
 
-
+//
+// Imports
+//
 @import "colors";
 @import "header";
 @import "footer";
