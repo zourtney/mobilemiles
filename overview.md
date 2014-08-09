@@ -1,7 +1,7 @@
 ---
 layout: page
-title: About
-permalink: /about/
+title: Overview
+permalink: /overview/
 ---
 
 MobileMiles is a simple application specifically designed to help you track everyday vehicle records. For now, its main focus is tracking fuel consumption.
