@@ -9,9 +9,9 @@ This guide will help you set up your own instance of the MobileMiles server. It 
 What you'll need
 ----------------
 
-First off, you'll probably want a box running a relatively modern Linux build. I'll be using [Ubuntu 14.04 LTS server](http://www.ubuntu.com/download/server) for this tutorial, but use whatever works best for you.
+I'll be using [Ubuntu 14.04 LTS server](http://www.ubuntu.com/download/server) for this tutorial. Use whatever works best for you, and if you have any suggestions, shoot them to me at [{{ site.email }}](mailto:{{ site.email }}).
 
-Additionally, you'll need:
+You will need the following packages installed:
 
 - [git](http://www.git-scm.com/)
 - [nodejs](http://nodejs.org/) (0.10.x recommended)
