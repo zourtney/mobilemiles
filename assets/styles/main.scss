@@ -3,14 +3,29 @@
 ---
 
 h1 {
+  font-size: 48px;
   font-weight: 100;
 }
 h2 {
   font-weight: 200;
 }
 
+a, .btn.btn-link {
+  color: #aaa;
+  &:hover,
+  &:active,
+  &:focus {
+    color: white;
+  }
+}
+
+a {
+  font-weight: 500;
+}
+
 
 @import "colors";
+@import "header";
 @import "footer";
 @import "marketing";
 

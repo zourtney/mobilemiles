@@ -1,0 +1,25 @@
+.navbar {
+  background: #444;
+  border-radius: 0;
+  border-bottom: 1px solid $bg-dark-pin-stripe;
+
+  a {
+    font-weight: 300;
+  }
+
+  li {
+    border-right: 1px solid #555;
+
+    a {
+      &:hover,
+      &:active,
+      &:focus {
+        background: #555;
+      }
+    }
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+}
