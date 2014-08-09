@@ -1,14 +1,20 @@
 # Site settings
-title: Mobilemiles
-version: 2.0-beta
+title: mobilemiles
+version: 2.0-alpha
 email: zourtney@gmail.com
-description: "Mobilemiles is a simple, open source tool for tracking fuel consumption, oil changes and more -- straight from your mobile device."
+description: "A simple, open source tool for tracking everyday vehicle records. Wherever you're at."
 baseurl: "/mobilemiles"
 url: "http://zourtney.github.io/mobilemiles"
+company_name: "Fullcourt Development"
+company_url: "http://www.fullcourtdev.com"
 twitter_username: zourtney
 github_username:  zourtney
 
 # Build settings
 markdown: kramdown
 permalink: pretty
+
+
+sass:
+  sass_dir: assets/styles/_sass
 

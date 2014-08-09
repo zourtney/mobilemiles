@@ -1,36 +1,30 @@
 ---
-layout: default
+layout: marketing
 ---
 
-<div class="home">
-
+<div class="main-event container">
   <h1>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</h1>
-  <h2>{{ site.version }}</h2>
+  <div class="version">{{ site.version }}</div>
 
-  <p class="text">{{ site.description }}</p>
+  <h2 class="description">{{ site.description }}</h2>
 
   <div class="home-links-primary">
-    <a href="http://mobilemiles-ui.herokuapp.com" class="home-link hosted-ui">Enter</a>
+    <a href="http://mobilemiles-ui.herokuapp.com" class="btn btn-default btn-lg home-link hosted-ui" title="Launch the official webapp, powered by Heroku. It's free and easy.">Launch now</a>
   </div>
 
   <div class="home-links-secondary">
-    <a href="https://github.com/zourtney/mobilemiles" class="home-link src-api">API on GitHub</a>
-    <a href="https://github.com/zourtney/mobilemiles-ui" class="home-link src-ui">UI on GitHub</a>
+    <a href="https://github.com/zourtney/mobilemiles-ui" class="btn btn-link home-link src-ui">
+      <i class="fa fa-github"></i>
+      UI on GitHub
+    </a>
+    <a href="https://github.com/zourtney/mobilemiles" class="btn btn-link home-link src-api">
+      <i class="fa fa-github"></i>
+      API on GitHub
+    </a>
   </div>
 
-
-  <!--<h1>Posts</h1>
-
-  <ul class="posts">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
-        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-      </li>
-    {% endfor %}
-  </ul>
-
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
-  -->
-
+  <p class="learn-more text-muted">
+    MobileMiles has always been &ndash; and will always be &ndash; free and open source.
+    <br />Want to spin up a server of your own? Learn how.
+  </p>
 </div>

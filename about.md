@@ -4,7 +4,9 @@ title: About
 permalink: /about/
 ---
 
-Mobilemiles is a simple web application specifically designed to help you track everyday vehicle records. For now, its main focus is tracking fuel consumption. Whenever you're at the pump, simply open the "New fill-up" page on your smartphone, fill out a few fields, and save. Over time, you'll amass a good data set that can tell you average gas mileage, fuel cost trends, and more.
+Mobilemiles is a simple web application specifically designed to help you track everyday vehicle records. For now, its main focus is tracking fuel consumption.
+
+Whenever you're at the pump, simply open the "New fill-up" page on your smartphone, fill out a few fields, and submit it. Over time, you'll amass a good set of data that can help you predict cost and consumptions trends.
 
 Version 2 is built from the ground up on modern technologies. This allows for powerful new features:
 

@@ -1,0 +1,45 @@
+body.marketing {
+
+  background: $bg-dark;
+  color: $fg-dark;
+
+  .main-event {
+    padding: 40px 0 100px 0;
+    text-align: center;
+
+    h1 {
+      margin-bottom: 0;
+      font-size: 120px;
+    }
+
+    .version {
+      margin-top: 0;
+      font-size: 20px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: $bg-dark;
+      text-shadow:  -1px -1px 0 $fg-dark-muted,
+                     1px -1px 0 $fg-dark-muted,
+                    -1px  1px 0 $fg-dark-muted,
+                     1px  1px 0 $fg-dark-muted;
+    }
+
+    h2 {
+      margin: 40px auto;
+      max-width: 700px;
+      font-size: 1.8em;
+    }
+
+    .home-links-primary .btn {
+      background: none;
+      color: $fg-dark;
+      margin: 10px 0 20px 0;
+    }
+  }
+
+  .learn-more {
+    margin: 60px auto;
+  }
+
+}
