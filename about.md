@@ -4,9 +4,7 @@ title: About
 permalink: /about/
 ---
 
-Mobilemiles is a simple web application specifically designed to help you track everyday vehicle records. For now, its main focus is tracking fuel consumption.
-
-Whenever you're at the pump, simply open the "New fill-up" page on your smartphone, fill out a few fields, and submit it. Over time, you'll amass a good set of data that can help you predict cost and consumptions trends.
+MobileMiles is a simple application specifically designed to help you track everyday vehicle records. For now, its main focus is tracking fuel consumption.
 
 Version 2 is built from the ground up on modern technologies. This allows for powerful new features:
 
@@ -18,17 +16,19 @@ Version 2 is built from the ground up on modern technologies. This allows for po
 - Historical trends *coming soon*
 - Upcoming maintenance alerts *coming soon*
 
+Official webapp
+---------------
+
+A full-featured webapp has been built from the ground up in version 2, available from any modern web browser at [mobilemiles-ui.herokuapp.com](http://mobilemiles-ui.herokuapp.com/).
+
+Whenever you're at the pump, simply open the "New fill-up" page on your smartphone, fill out a few fields, and submit it. Over time, you'll amass a good set of data that can help you predict cost and consumptions trends.
+
 As an API
 ---------
 
 From its inception, version 2 has been built around the idea that a good application needs a good API. The [back-end](https://github.com/zourtney/mobilemiles) code is headless, and yet fully complete. A hosted version is available at [mobilemiles.herokuapp.com](http://mobilemiles.herokuapp.com).
 
 API documentation coming soon...
-
-Official webapp
----------------
-
-A full-featured webapp has been built in conjuction with the version 2 API. To enforce front- and back-end separation of concerns, it is a completely separate project, available on [GitHub](https://github.com/zourtney/mobilemiles-ui). A hosted version is available at [mobilemiles-ui.herokuapp.com](http://mobilemiles-ui.herokuapp.com/).
 
 Previous version
 ----------------
