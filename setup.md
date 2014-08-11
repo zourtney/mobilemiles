@@ -51,6 +51,8 @@ Next, install [rvm](https://rvm.io/), a version manager for Ruby and default to 
     rvm install 2.1.2
     rvm use 2.1.2 --default
 
+**Note:** installing RVM is not strictly necessary. You may install Ruby 2.1.2 directly, if you wish.
+
 ### Nginx and Phusion Passenger
 
 Next we need to install Nginx and Phusion Passenger to actually serve the MobileMiles front- and back-end code. The following steps were mostly taken from [here](https://www.phusionpassenger.com/documentation/Users%20guide%20Nginx.html#install_on_debian_ubuntu).
