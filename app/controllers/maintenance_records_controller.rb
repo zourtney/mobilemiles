@@ -1,5 +1,7 @@
 class MaintenanceRecordsController < AuthorizedController
   def index
+    # puts send(params[:type].underscore + '_params')
+      
     records = type_class.where(user_id: @user.id)
     render :json => records
   end
@@ -70,6 +72,12 @@ private
   end
 
   def maintenance_record_params
-    params.require(:maintenance_record).permit(:name, :vehicle_id, :gallons, :price_per_gallon, :grade, :mileage, :price, :completed_at, :comment, :latitude, :longitude, :google_place)
+    if params[:type] == 'OilChange'
+      params.require(:maintenance_record).permit(:name, :vehicle_id, :oil_brand, :oil_weight, :oil_quantity)
+    elsif params[:type] == 'Fillup'
+      params.require(:maintenance_record).permit(:name, :vehicle_id, :gallons, :price_per_gallon, :grade, :mileage, :price, :completed_at, :comment, :latitude, :longitude, :google_place)
+    else
+      throw 'Unsupported maintenance record type'
+    end
   end
 end

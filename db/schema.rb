@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140622023702) do
+ActiveRecord::Schema.define(version: 20140830214128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,12 @@ ActiveRecord::Schema.define(version: 20140622023702) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "google_place"
+    t.string   "oil_weight"
+    t.string   "oil_type"
+    t.string   "oil_brand"
+    t.string   "oil_filter_part_number"
+    t.string   "oil_filter_brand"
+    t.float    "oil_quantity"
   end
 
   add_index "maintenance_records", ["user_id"], name: "index_maintenance_records_on_user_id", using: :btree

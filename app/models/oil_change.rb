@@ -1,0 +1,2 @@
+class OilChange < MaintenanceRecord
+end
