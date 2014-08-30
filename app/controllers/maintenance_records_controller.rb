@@ -73,9 +73,9 @@ private
 
   def maintenance_record_params
     if params[:type] == 'OilChange'
-      params.require(:maintenance_record).permit(:name, :vehicle_id, :oil_brand, :oil_weight, :oil_quantity)
+      params.require(:maintenance_record).permit(:name, :vehicle_id, :mileage, :price, :completed_at, :comment, :oil_type, :oil_brand, :oil_weight, :oil_quantity, :oil_filter_brand, :oil_filter_part_number)
     elsif params[:type] == 'Fillup'
-      params.require(:maintenance_record).permit(:name, :vehicle_id, :gallons, :price_per_gallon, :grade, :mileage, :price, :completed_at, :comment, :latitude, :longitude, :google_place)
+      params.require(:maintenance_record).permit(:name, :vehicle_id, :mileage, :price, :completed_at, :comment, :gallons, :price_per_gallon, :grade, :latitude, :longitude, :google_place)
     else
       throw 'Unsupported maintenance record type'
     end
